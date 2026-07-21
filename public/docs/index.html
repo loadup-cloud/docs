@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<html lang="en-us"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=loadup-parent/livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <title> | LoadUp Framework</title>
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LoadUp Framework — enterprise-grade backend platform SDK">
+    <meta name="keywords" content="Documentation, Hugo, Hugo Theme, Bootstrap" />
+    <meta name="author" content="Colin Wilson - Lotus Labs" />
+    <meta name="email" content="support@aigis.uk" />
+    <meta name="website" content="https://lotusdocs.dev" />
+    <meta name="Version" content="v0.1.0" />
+    
+    <link rel="icon" href="http://localhost:1313/loadup-parent/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="http://localhost:1313/loadup-parent/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/loadup-parent/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/loadup-parent/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/loadup-parent/favicon-16x16.png">
+<link rel="manifest" crossorigin="use-credentials" href="http://localhost:1313/loadup-parent/site.webmanifest">
+<meta property="og:title" content="" />
+<meta property="og:description" content="LoadUp Framework link
+
+🚀 项目简介 linkLoadUp Framework 是一个基于 Spring Boot 的企业级微服务开发框架，采用 Monorepo（单仓库）多模块架构
+设计，提供了一系列可复用的基础组件和最佳实践，帮助团队快速构建高质量、高性能的企业应用。
+核心特性 link
+✅ 模块化设计 - 清晰的模块边界，单一职责原则，严格的依赖管理
+✅ 开箱即用 - 自动配置，最小化配置原则，快速启动
+✅ 高性能 - 基于 JDK 21 虚拟线程，优化的数据库访问和缓存策略
+✅ 可扩展 - 插件化架构，支持业务定制扩展
+✅ 企业级 - 完善的安全机制、链路追踪、监控告警
+✅ 测试友好 - 内置测试框架 Testify，支持单元测试和集成测试
+
+
+📚 技术栈 link
+	
+			
+					技术领域
+					技术选型
+					版本
+			
+	
+	
+			
+					编程语言
+					Java
+					21
+			
+			
+					应用框架
+					Spring Boot
+					4.1.0
+			
+			
+					持久层框架
+					MyBatis-Flex
+					1.11.7
+			
+			
+					数据库
+					MySQL
+					8.0&#43;
+			
+			
+					缓存
+					Redis (Redisson)
+					3.x
+			
+			
+					API 网关
+					Custom Gateway
+					-
+			
+			
+					认证授权
+					JWT &#43; RBAC
+					-
+			
+			
+					API 文档
+					knife4j &#43; OpenAPI v3
+					4.5.0
+			
+			
+					链路追踪
+					OpenTelemetry
+					1.43.0
+			
+			
+					任务调度
+					Quartz/XXL-Job
+					-
+			
+			
+					API 文档
+					OpenAPI (Swagger)
+					v3
+			
+			
+					测试框架
+					JUnit 5, Mockito, Testcontainers
+					-
+			
+			
+					构建工具
+					Maven
+					3.6&#43;
+			
+	
+
+
+🏗️ 架构概览 linkLoadUp Framework 采用分层架构设计，各模块职责清晰，依赖关系单向：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/loadup-parent/docs/" /><meta property="og:image" content="http://localhost:1313/loadup-parent/opengraph/card-base-2_hu_ffd0205e2460bd09.png"/><meta property="article:section" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://localhost:1313/loadup-parent/opengraph/card-base-2_hu_ffd0205e2460bd09.png"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="LoadUp Framework link
+
+🚀 项目简介 linkLoadUp Framework 是一个基于 Spring Boot 的企业级微服务开发框架，采用 Monorepo（单仓库）多模块架构
+设计，提供了一系列可复用的基础组件和最佳实践，帮助团队快速构建高质量、高性能的企业应用。
+核心特性 link
+✅ 模块化设计 - 清晰的模块边界，单一职责原则，严格的依赖管理
+✅ 开箱即用 - 自动配置，最小化配置原则，快速启动
+✅ 高性能 - 基于 JDK 21 虚拟线程，优化的数据库访问和缓存策略
+✅ 可扩展 - 插件化架构，支持业务定制扩展
+✅ 企业级 - 完善的安全机制、链路追踪、监控告警
+✅ 测试友好 - 内置测试框架 Testify，支持单元测试和集成测试
+
+
+📚 技术栈 link
+	
+			
+					技术领域
+					技术选型
+					版本
+			
+	
+	
+			
+					编程语言
+					Java
+					21
+			
+			
+					应用框架
+					Spring Boot
+					4.1.0
+			
+			
+					持久层框架
+					MyBatis-Flex
+					1.11.7
+			
+			
+					数据库
+					MySQL
+					8.0&#43;
+			
+			
+					缓存
+					Redis (Redisson)
+					3.x
+			
+			
+					API 网关
+					Custom Gateway
+					-
+			
+			
+					认证授权
+					JWT &#43; RBAC
+					-
+			
+			
+					API 文档
+					knife4j &#43; OpenAPI v3
+					4.5.0
+			
+			
+					链路追踪
+					OpenTelemetry
+					1.43.0
+			
+			
+					任务调度
+					Quartz/XXL-Job
+					-
+			
+			
+					API 文档
+					OpenAPI (Swagger)
+					v3
+			
+			
+					测试框架
+					JUnit 5, Mockito, Testcontainers
+					-
+			
+			
+					构建工具
+					Maven
+					3.6&#43;
+			
+	
+
+
+🏗️ 架构概览 linkLoadUp Framework 采用分层架构设计，各模块职责清晰，依赖关系单向："/>
+
+    
+        <link rel="alternate" type="application/atom+xml" title="Atom feed for LoadUp Framework" href="/index.xml" />
+    
+    
+    
+            
+                <script type="text/javascript" src="http://localhost:1313/loadup-parent/docs/js/flexsearch.bundle.js"></script>
+            
+        
+    
+    
+
+    <link rel="stylesheet" href="/loadup-parent/docs/scss/style.css" crossorigin="anonymous">
+    
+    
+    </head>
+<body>
+        <div class="content">
+            <div class="page-wrapper toggled">
+<nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-brand">
+        <a href='/loadup-parent/' aria-label="HomePage" alt="HomePage">
+            
+                <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="m143,39.5c-18,0-18,18-18,18,0,0,0-18-18-18H22c-2.76,0-5,2.24-5,5v143c0,2.76,2.24,5,5,5h76c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h76c2.76,0,5-2.24,5-5V44.5c0-2.76-2.24-5-5-5h-85Zm63,123.5c0,1.38-1.12,2.5-2.5,2.5h-60.5c-18,0-18,18-18,18,0,0,0-18-18-18h-60.5c-1.38,0-2.5-1.12-2.5-2.5v-94c0-1.38,1.12-2.5,2.5-2.5h51.5c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h51.5c1.38,0,2.5,1.12,2.5,2.5v94Z" style="fill:#06f;"/></svg>
+            
+        </a>
+    </div>
+    <div class="sidebar-content" style="height: calc(100% - 131px);">
+        <ul class="sidebar-menu">
+            
+        </ul>
+        
+    </div>
+    
+        <ul class="sidebar-footer list-unstyled mb-0">
+            
+        </ul>
+    
+</nav>
+
+                    <main class="page-content bg-transparent">
+                        
+<div id="top-header" class="top-header d-print-none">
+    <div class="header-bar d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+            <a href='/loadup-parent/' class="logo-icon me-3" aria-label="HomePage" alt="HomePage">
+                <div class="small">
+                    
+                            <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="m143,39.5c-18,0-18,18-18,18,0,0,0-18-18-18H22c-2.76,0-5,2.24-5,5v143c0,2.76,2.24,5,5,5h76c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h76c2.76,0,5-2.24,5-5V44.5c0-2.76-2.24-5-5-5h-85Zm63,123.5c0,1.38-1.12,2.5-2.5,2.5h-60.5c-18,0-18,18-18,18,0,0,0-18-18-18h-60.5c-1.38,0-2.5-1.12-2.5-2.5v-94c0-1.38,1.12-2.5,2.5-2.5h51.5c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h51.5c1.38,0,2.5,1.12,2.5,2.5v94Z" style="fill:#06f;"/></svg>
+                    
+                </div>
+                <div class="big">
+                    
+                            <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="m143,39.5c-18,0-18,18-18,18,0,0,0-18-18-18H22c-2.76,0-5,2.24-5,5v143c0,2.76,2.24,5,5,5h76c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h76c2.76,0,5-2.24,5-5V44.5c0-2.76-2.24-5-5-5h-85Zm63,123.5c0,1.38-1.12,2.5-2.5,2.5h-60.5c-18,0-18,18-18,18,0,0,0-18-18-18h-60.5c-1.38,0-2.5-1.12-2.5-2.5v-94c0-1.38,1.12-2.5,2.5-2.5h51.5c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h51.5c1.38,0,2.5,1.12,2.5,2.5v94Z" style="fill:#06f;"/></svg>
+                    
+                </div>
+            </a>
+            <button id="close-sidebar" class="btn btn-icon btn-soft">
+                <span class="material-icons size-20 menu-icon align-middle">menu</span>
+            </button>
+            
+            
+                    
+                    <button id="flexsearch-button" class="ms-3 btn btn-soft" data-bs-toggle="collapse" data-bs-target="#FlexSearchCollapse" aria-expanded="false" aria-controls="FlexSearchCollapse">
+                        <span class="material-icons size-20 menu-icon align-middle">search</span>
+                        <span class="flexsearch-button-placeholder ms-1 me-2 d-none d-sm-block">Search</span>
+                        <div class="d-none d-sm-block">
+                            <span class="flexsearch-button-keys">
+                                <kbd class="flexsearch-button-cmd-key">
+                                    <svg width="44" height="15"><path d="M2.118,11.5A1.519,1.519,0,0,1,1,11.042,1.583,1.583,0,0,1,1,8.815a1.519,1.519,0,0,1,1.113-.458h.715V6.643H2.118A1.519,1.519,0,0,1,1,6.185,1.519,1.519,0,0,1,.547,5.071,1.519,1.519,0,0,1,1,3.958,1.519,1.519,0,0,1,2.118,3.5a1.519,1.519,0,0,1,1.114.458A1.519,1.519,0,0,1,3.69,5.071v.715H5.4V5.071A1.564,1.564,0,0,1,6.976,3.5,1.564,1.564,0,0,1,8.547,5.071,1.564,1.564,0,0,1,6.976,6.643H6.261V8.357h.715a1.575,1.575,0,0,1,1.113,2.685,1.583,1.583,0,0,1-2.227,0A1.519,1.519,0,0,1,5.4,9.929V9.214H3.69v.715a1.519,1.519,0,0,1-.458,1.113A1.519,1.519,0,0,1,2.118,11.5Zm0-.857a.714.714,0,0,0,.715-.714V9.214H2.118a.715.715,0,1,0,0,1.429Zm4.858,0a.715.715,0,1,0,0-1.429H6.261v.715a.714.714,0,0,0,.715.714ZM3.69,8.357H5.4V6.643H3.69ZM2.118,5.786h.715V5.071a.714.714,0,0,0-.715-.714.715.715,0,0,0-.5,1.22A.686.686,0,0,0,2.118,5.786Zm4.143,0h.715a.715.715,0,0,0,.5-1.22.715.715,0,0,0-1.22.5Z" fill="currentColor"></path><path d="M12.4,11.475H11.344l3.879-7.95h1.056Z" fill="currentColor"></path><path d="M25.073,5.384l-.864.576a2.121,2.121,0,0,0-1.786-.923,2.207,2.207,0,0,0-2.266,2.326,2.206,2.206,0,0,0,2.266,2.325,2.1,2.1,0,0,0,1.782-.918l.84.617a3.108,3.108,0,0,1-2.622,1.293,3.217,3.217,0,0,1-3.349-3.317,3.217,3.217,0,0,1,3.349-3.317A3.046,3.046,0,0,1,25.073,5.384Z" fill="currentColor"></path><path d="M30.993,5.142h-2.07v5.419H27.891V5.142h-2.07V4.164h5.172Z" fill="currentColor"></path><path d="M34.67,4.164c1.471,0,2.266.658,2.266,1.851,0,1.087-.832,1.809-2.134,1.855l2.107,2.691h-1.28L33.591,7.87H33.07v2.691H32.038v-6.4Zm-1.6.969v1.8h1.572c.832,0,1.22-.3,1.22-.918s-.411-.882-1.22-.882Z" fill="currentColor"></path><path d="M42.883,10.561H38.31v-6.4h1.033V9.583h3.54Z" fill="currentColor"></path></svg>
+                                </kbd>
+                                <kbd class="flexsearch-button-key">
+                                    <svg width="15" height="15"><path d="M5.926,12.279H4.41L9.073,2.721H10.59Z" fill="currentColor"/></svg>
+                                </kbd>
+                            </span>
+                        </div>
+                    </button>
+                
+            </div>
+
+        <div class="d-flex align-items-center">
+            <ul class="list-unstyled mb-0">
+                
+            </ul>
+            
+        </div>
+    </div>
+    
+    
+            <div class="collapse" id="FlexSearchCollapse">
+                <div class="flexsearch-container">
+                    <div class="flexsearch-keymap">
+                        <li>
+                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8M10.5 8.5l-3 3-3-3"></path></g></svg></kbd>
+                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8M10.5 6.5l-3-3-3 3"></path></g></svg></kbd>
+                            <span class="flexsearch-key-label">to navigate</span>
+                        </li>
+                        <li>
+                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4M7 11.53088l-3-3 3-3"></path></g></svg></kbd>
+                            <span class="flexsearch-key-label">to select</span>
+                        </li>
+                        <li>
+                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956"></path></g></svg></kbd>
+                            <span class="flexsearch-key-label">to close</span>
+                        </li>
+                    </div>
+                    <form class="flexsearch position-relative flex-grow-1 ms-2 me-2">
+                        <div class="d-flex flex-row">
+                            <input id="flexsearch" class="form-control" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                            <button id="hideFlexsearch" type="button" class="ms-2 btn btn-soft">
+                                cancel
+                            </button>
+                        </div>
+                        <div id="suggestions" class="shadow rounded-1 d-none"></div>
+                    </form>
+                </div>
+            </div>
+        
+    
+    
+</div>
+
+
+                            <div class="container-fluid">
+                                <div class="layout-spacing">
+                                    
+                                        <div class="d-md-flex justify-content-between align-items-center"><nav aria-label="breadcrumb" class="d-inline-block pb-2 mt-1 mt-sm-0">
+    <ul id="breadcrumbs" class="breadcrumb bg-transparent mb-0" itemscope itemtype="https://schema.org/BreadcrumbList">
+        
+        
+            <li class="breadcrumb-item text-capitalize active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span itemprop="name"></span>
+                <meta itemprop="position" content='1' />
+            </li>
+        
+    </ul>
+</nav></div>
+                                    
+                                    <div class="row flex-xl-nowrap">
+                                        
+                                        <div class="docs-toc col-xl-3    d-xl-block"><toc>
+    <div class="fw-bold text-uppercase mb-2">On this page</div>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-项目简介">🚀 项目简介</a>
+      <ul>
+        <li><a href="#核心特性">核心特性</a></li>
+      </ul>
+    </li>
+    <li><a href="#-技术栈">📚 技术栈</a></li>
+    <li><a href="#-架构概览">🏗️ 架构概览</a>
+      <ul>
+        <li><a href="#核心模块说明">核心模块说明</a></li>
+        <li><a href="#依赖关系规则">依赖关系规则</a></li>
+      </ul>
+    </li>
+    <li><a href="#-快速开始">🎯 快速开始</a>
+      <ul>
+        <li><a href="#前置要求">前置要求</a></li>
+        <li><a href="#第一步引入-bom-依赖管理">第一步：引入 BOM 依赖管理</a></li>
+        <li><a href="#第二步添加所需组件">第二步：添加所需组件</a></li>
+        <li><a href="#第三步启动应用">第三步：启动应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#-核心组件">📦 核心组件</a>
+      <ul>
+        <li><a href="#commons-通用基础层">Commons 通用基础层</a></li>
+        <li><a href="#components-技术组件层">Components 技术组件层</a></li>
+        <li><a href="#modules-业务模块层">Modules 业务模块层</a></li>
+        <li><a href="#gateway-网关模块">Gateway 网关模块</a></li>
+        <li><a href="#testify-测试框架">Testify 测试框架</a></li>
+      </ul>
+    </li>
+    <li><a href="#-开发指南">🛠️ 开发指南</a>
+      <ul>
+        <li><a href="#ai-辅助开发">AI 辅助开发</a></li>
+        <li><a href="#代码规范">代码规范</a></li>
+        <li><a href="#最佳实践">最佳实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#-故障排查">🔧 故障排查</a></li>
+    <li><a href="#-完整文档导航">📖 完整文档导航</a>
+      <ul>
+        <li><a href="#入门指南">入门指南</a></li>
+      </ul>
+    </li>
+    <li><a href="#-文档导航">📚 文档导航</a>
+      <ul>
+        <li><a href="#核心文档">核心文档</a></li>
+        <li><a href="#开发者资源">开发者资源</a></li>
+      </ul>
+    </li>
+    <li><a href="#-参与贡献">🤝 参与贡献</a></li>
+    <li><a href="#-许可证">📄 许可证</a></li>
+    <li><a href="#-联系我们">📞 联系我们</a></li>
+  </ul>
+</nav>
+    </toc></div>
+                                        
+                                        
+                                        <div class="docs-toc-mobile    d-print-none d-xl-none">
+                                            <button id="toc-dropdown-btn" class="btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="false">
+                                                Table of Contents
+                                            </button>
+<nav id="toc-mobile">
+  <ul class="dropdown-menu">
+    <li><a href="#-项目简介">🚀 项目简介</a>
+      <ul>
+        <li><a href="#核心特性">核心特性</a></li>
+      </ul>
+    </li>
+    <li><a href="#-技术栈">📚 技术栈</a></li>
+    <li><a href="#-架构概览">🏗️ 架构概览</a>
+      <ul>
+        <li><a href="#核心模块说明">核心模块说明</a></li>
+        <li><a href="#依赖关系规则">依赖关系规则</a></li>
+      </ul>
+    </li>
+    <li><a href="#-快速开始">🎯 快速开始</a>
+      <ul>
+        <li><a href="#前置要求">前置要求</a></li>
+        <li><a href="#第一步引入-bom-依赖管理">第一步：引入 BOM 依赖管理</a></li>
+        <li><a href="#第二步添加所需组件">第二步：添加所需组件</a></li>
+        <li><a href="#第三步启动应用">第三步：启动应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#-核心组件">📦 核心组件</a>
+      <ul>
+        <li><a href="#commons-通用基础层">Commons 通用基础层</a></li>
+        <li><a href="#components-技术组件层">Components 技术组件层</a></li>
+        <li><a href="#modules-业务模块层">Modules 业务模块层</a></li>
+        <li><a href="#gateway-网关模块">Gateway 网关模块</a></li>
+        <li><a href="#testify-测试框架">Testify 测试框架</a></li>
+      </ul>
+    </li>
+    <li><a href="#-开发指南">🛠️ 开发指南</a>
+      <ul>
+        <li><a href="#ai-辅助开发">AI 辅助开发</a></li>
+        <li><a href="#代码规范">代码规范</a></li>
+        <li><a href="#最佳实践">最佳实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#-故障排查">🔧 故障排查</a></li>
+    <li><a href="#-完整文档导航">📖 完整文档导航</a>
+      <ul>
+        <li><a href="#入门指南">入门指南</a></li>
+      </ul>
+    </li>
+    <li><a href="#-文档导航">📚 文档导航</a>
+      <ul>
+        <li><a href="#核心文档">核心文档</a></li>
+        <li><a href="#开发者资源">开发者资源</a></li>
+      </ul>
+    </li>
+    <li><a href="#-参与贡献">🤝 参与贡献</a></li>
+    <li><a href="#-许可证">📄 许可证</a></li>
+    <li><a href="#-联系我们">📞 联系我们</a></li>
+  </ul>
+</nav></div>
+                                        <div class="docs-content col-12 col-xl-9 mt-0">
+                                            <div class="mb-0 d-flex">
+                                                
+                                                <h1 class="content-title mb-0">
+                                                    
+                                                    
+                                                </h1>
+                                            </div>
+                                            
+                                            <div id="content" class="main-content" >
+                                                
+    
+    <div data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-error="">
+        <h1 id="loadup-framework">LoadUp Framework <a href="#loadup-framework" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h1><!-- raw HTML omitted -->
+<hr>
+<h2 id="-项目简介">🚀 项目简介 <a href="#-%e9%a1%b9%e7%9b%ae%e7%ae%80%e4%bb%8b" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>LoadUp Framework 是一个基于 Spring Boot 的企业级微服务开发框架，采用 <strong>Monorepo（单仓库）多模块架构</strong>
+设计，提供了一系列可复用的基础组件和最佳实践，帮助团队快速构建高质量、高性能的企业应用。</p>
+<h3 id="核心特性">核心特性 <a href="#%e6%a0%b8%e5%bf%83%e7%89%b9%e6%80%a7" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li>✅ <strong>模块化设计</strong> - 清晰的模块边界，单一职责原则，严格的依赖管理</li>
+<li>✅ <strong>开箱即用</strong> - 自动配置，最小化配置原则，快速启动</li>
+<li>✅ <strong>高性能</strong> - 基于 JDK 21 虚拟线程，优化的数据库访问和缓存策略</li>
+<li>✅ <strong>可扩展</strong> - 插件化架构，支持业务定制扩展</li>
+<li>✅ <strong>企业级</strong> - 完善的安全机制、链路追踪、监控告警</li>
+<li>✅ <strong>测试友好</strong> - 内置测试框架 Testify，支持单元测试和集成测试</li>
+</ul>
+<hr>
+<h2 id="-技术栈">📚 技术栈 <a href="#-%e6%8a%80%e6%9c%af%e6%a0%88" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><table>
+	<thead>
+			<tr>
+					<th>技术领域</th>
+					<th>技术选型</th>
+					<th>版本</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>编程语言</td>
+					<td>Java</td>
+					<td>21</td>
+			</tr>
+			<tr>
+					<td>应用框架</td>
+					<td>Spring Boot</td>
+					<td>4.1.0</td>
+			</tr>
+			<tr>
+					<td>持久层框架</td>
+					<td>MyBatis-Flex</td>
+					<td>1.11.7</td>
+			</tr>
+			<tr>
+					<td>数据库</td>
+					<td>MySQL</td>
+					<td>8.0+</td>
+			</tr>
+			<tr>
+					<td>缓存</td>
+					<td>Redis (Redisson)</td>
+					<td>3.x</td>
+			</tr>
+			<tr>
+					<td>API 网关</td>
+					<td>Custom Gateway</td>
+					<td>-</td>
+			</tr>
+			<tr>
+					<td>认证授权</td>
+					<td>JWT + RBAC</td>
+					<td>-</td>
+			</tr>
+			<tr>
+					<td>API 文档</td>
+					<td>knife4j + OpenAPI v3</td>
+					<td>4.5.0</td>
+			</tr>
+			<tr>
+					<td>链路追踪</td>
+					<td>OpenTelemetry</td>
+					<td>1.43.0</td>
+			</tr>
+			<tr>
+					<td>任务调度</td>
+					<td>Quartz/XXL-Job</td>
+					<td>-</td>
+			</tr>
+			<tr>
+					<td>API 文档</td>
+					<td>OpenAPI (Swagger)</td>
+					<td>v3</td>
+			</tr>
+			<tr>
+					<td>测试框架</td>
+					<td>JUnit 5, Mockito, Testcontainers</td>
+					<td>-</td>
+			</tr>
+			<tr>
+					<td>构建工具</td>
+					<td>Maven</td>
+					<td>3.6+</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="-架构概览">🏗️ 架构概览 <a href="#-%e6%9e%b6%e6%9e%84%e6%a6%82%e8%a7%88" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>LoadUp Framework 采用分层架构设计，各模块职责清晰，依赖关系单向：</p>
+<pre class="mermaid">graph TD
+    A[Application 启动层] --&gt; B[Modules 业务模块层]
+    G[Gateway 网关] --&gt; C[Components 组件层]
+    B --&gt; C
+    C --&gt; D[Commons 通用层]
+    D --&gt; E[Dependencies 依赖管理]
+    F[Testify 测试框架] -.独立.-&gt; C
+    
+    style A fill:#e1f5ff
+    style G fill:#fff4e1
+    style B fill:#f0f7ff
+    style C fill:#e8f5e9
+    style D fill:#fff9e1
+    style E fill:#f3e5f5
+    style F fill:#fce4ec
+</pre>
+<h3 id="核心模块说明">核心模块说明 <a href="#%e6%a0%b8%e5%bf%83%e6%a8%a1%e5%9d%97%e8%af%b4%e6%98%8e" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><table>
+	<thead>
+			<tr>
+					<th>模块</th>
+					<th>说明</th>
+					<th>主要功能</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>loadup-dependencies</strong></td>
+					<td>依赖管理 BOM</td>
+					<td>统一管理所有依赖版本，避免版本冲突</td>
+			</tr>
+			<tr>
+					<td><strong>loadup-commons</strong></td>
+					<td>通用基础层</td>
+					<td>提供 API 定义、DTO、工具类等基础能力</td>
+			</tr>
+			<tr>
+					<td><strong>loadup-components</strong></td>
+					<td>技术组件层</td>
+					<td>封装缓存、数据库、调度、追踪等技术组件</td>
+			</tr>
+			<tr>
+					<td><strong>loadup-modules</strong></td>
+					<td>业务模块层</td>
+					<td>业务功能模块（如 UPMS 用户权限管理）</td>
+			</tr>
+			<tr>
+					<td><strong>loadup-gateway</strong></td>
+					<td>API 网关</td>
+					<td>统一路由、认证、鉴权、限流、监控</td>
+			</tr>
+			<tr>
+					<td><strong>loadup-application</strong></td>
+					<td>应用启动层</td>
+					<td>Spring Boot 启动器，整合所有模块</td>
+			</tr>
+			<tr>
+					<td><strong>loadup-testify</strong></td>
+					<td>测试框架</td>
+					<td>提供完整的测试解决方案（独立模块）</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="依赖关系规则">依赖关系规则 <a href="#%e4%be%9d%e8%b5%96%e5%85%b3%e7%b3%bb%e8%a7%84%e5%88%99" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>遵循<strong>严格单向依赖</strong>原则，避免循环依赖：</p>
+
+
+    
+    <pre tabindex="0"><code>dependencies (基础)
+    ↑
+commons (通用层)
+    ↑
+components (组件层)
+    ↑
+modules (业务模块层)
+    ↑
+application (应用层)
+
+gateway (独立) ← → commons, components
+testify (独立测试框架)</code></pre>
+<p>详细架构设计请查看：📖 <a href="">架构设计文档</a></p>
+<hr>
+<h2 id="-快速开始">🎯 快速开始 <a href="#-%e5%bf%ab%e9%80%9f%e5%bc%80%e5%a7%8b" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="前置要求">前置要求 <a href="#%e5%89%8d%e7%bd%ae%e8%a6%81%e6%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li>JDK 21+</li>
+<li>Maven 3.6+</li>
+<li>MySQL 8.0+</li>
+<li>Redis 5.0+</li>
+</ul>
+<h3 id="第一步引入-bom-依赖管理">第一步：引入 BOM 依赖管理 <a href="#%e7%ac%ac%e4%b8%80%e6%ad%a5%e5%bc%95%e5%85%a5-bom-%e4%be%9d%e8%b5%96%e7%ae%a1%e7%90%86" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>在项目 <code>pom.xml</code> 中添加：</p>
+
+
+    
+    <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#7ee787">&lt;dependencyManagement&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;groupId&gt;</span>io.github.loadup<span style="color:#7ee787">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;artifactId&gt;</span>loadup-dependencies<span style="color:#7ee787">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;version&gt;</span>1.0.0-SNAPSHOT<span style="color:#7ee787">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;type&gt;</span>pom<span style="color:#7ee787">&lt;/type&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;scope&gt;</span>import<span style="color:#7ee787">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;/dependencies&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#7ee787">&lt;/dependencyManagement&gt;</span></span></span></code></pre></div>
+<h3 id="第二步添加所需组件">第二步：添加所需组件 <a href="#%e7%ac%ac%e4%ba%8c%e6%ad%a5%e6%b7%bb%e5%8a%a0%e6%89%80%e9%9c%80%e7%bb%84%e4%bb%b6" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3>
+
+    
+    <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#7ee787">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">&lt;!-- 数据库组件 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;groupId&gt;</span>io.github.loadup<span style="color:#7ee787">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;artifactId&gt;</span>loadup-components-database<span style="color:#7ee787">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">&lt;!-- 缓存组件 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;groupId&gt;</span>io.github.loadup<span style="color:#7ee787">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;artifactId&gt;</span>loadup-components-cache<span style="color:#7ee787">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">&lt;!-- 更多组件... --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#7ee787">&lt;/dependencies&gt;</span></span></span></code></pre></div>
+<h3 id="第三步启动应用">第三步：启动应用 <a href="#%e7%ac%ac%e4%b8%89%e6%ad%a5%e5%90%af%e5%8a%a8%e5%ba%94%e7%94%a8" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3>
+
+    
+    <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@SpringBootApplication</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#6e7681"> </span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Application</span><span style="color:#6e7681"> </span>{<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#ff7b72">public</span><span style="color:#6e7681"> </span><span style="color:#ff7b72">static</span><span style="color:#6e7681"> </span><span style="color:#ff7b72">void</span><span style="color:#6e7681"> </span><span style="color:#d2a8ff;font-weight:bold">main</span>(String<span style="color:#ff7b72;font-weight:bold">[]</span><span style="color:#6e7681"> </span>args)<span style="color:#6e7681"> </span>{<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>SpringApplication.run(Application.class,<span style="color:#6e7681"> </span>args);<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>}<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>完整的快速开始指南：📖 <a href="">快速开始文档</a></p>
+<hr>
+<h2 id="-核心组件">📦 核心组件 <a href="#-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="commons-通用基础层">Commons 通用基础层 <a href="#commons-%e9%80%9a%e7%94%a8%e5%9f%ba%e7%a1%80%e5%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>提供项目的基础能力和通用工具：</p>
+<ul>
+<li><strong><a href="">loadup-commons-api</a></strong> - API 定义、异常体系、常量定义</li>
+<li><strong><a href="">loadup-commons-dto</a></strong> - 通用 DTO、分页对象、响应封装</li>
+<li><strong><a href="">loadup-commons-util</a></strong> - 工具类库（日期、字符串、JSON 等）</li>
+</ul>
+<h3 id="components-技术组件层">Components 技术组件层 <a href="#components-%e6%8a%80%e6%9c%af%e7%bb%84%e4%bb%b6%e5%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>可复用的技术组件，开箱即用：</p>
+<table>
+	<thead>
+			<tr>
+					<th>组件</th>
+					<th>说明</th>
+					<th>文档</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Database</strong></td>
+					<td>数据库访问（MyBatis-Flex + 审计）</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Cache</strong></td>
+					<td>缓存管理（Redis + Caffeine）</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Authorization</strong></td>
+					<td>认证授权（JWT + RBAC）</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Tracer</strong></td>
+					<td>链路追踪（OpenTelemetry）</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Scheduler</strong></td>
+					<td>任务调度（Quartz/XXL-Job）</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Captcha</strong></td>
+					<td>验证码生成</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>DFS</strong></td>
+					<td>分布式文件存储</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Liquibase</strong></td>
+					<td>数据库版本管理</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Extension</strong></td>
+					<td>扩展点机制</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+			<tr>
+					<td><strong>Testcontainers</strong></td>
+					<td>测试容器集成</td>
+					<td><a href="">查看文档</a></td>
+			</tr>
+	</tbody>
+</table>
+<p>更多组件说明：📖 <a href="">Components 概览</a></p>
+<h3 id="modules-业务模块层">Modules 业务模块层 <a href="#modules-%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9d%97%e5%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>封装业务功能的可复用模块：</p>
+<ul>
+<li><strong><a href="modules/upms.md">UPMS (User Permission Management System)</a></strong> - 用户权限管理系统
+<ul>
+<li>用户管理</li>
+<li>角色管理</li>
+<li>权限管理</li>
+<li>组织架构管理</li>
+</ul>
+</li>
+</ul>
+<p>更多模块：📖 <a href="/loadup-parent/docs/modules/">Modules 概览</a></p>
+<h3 id="gateway-网关模块">Gateway 网关模块 <a href="#gateway-%e7%bd%91%e5%85%b3%e6%a8%a1%e5%9d%97" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>统一的 API 网关，提供：</p>
+<ul>
+<li>✅ 动态路由配置</li>
+<li>✅ JWT 认证与鉴权</li>
+<li>✅ 签名验签机制</li>
+<li>✅ 限流与熔断</li>
+<li>✅ 请求转发（HTTP/RPC/SpringBean）</li>
+<li>✅ 监控与日志</li>
+</ul>
+<p>详细文档：📖 <a href="">Gateway 网关文档</a></p>
+<h3 id="testify-测试框架">Testify 测试框架 <a href="#testify-%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>独立的测试解决方案：</p>
+<ul>
+<li>单元测试支持</li>
+<li>集成测试支持</li>
+<li>Mock 数据生成</li>
+<li>断言增强</li>
+<li>Testcontainers 集成</li>
+</ul>
+<p>详细文档：📖 <a href="">Testify 测试框架</a></p>
+<hr>
+<h2 id="-开发指南">🛠️ 开发指南 <a href="#-%e5%bc%80%e5%8f%91%e6%8c%87%e5%8d%97" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="ai-辅助开发">AI 辅助开发 <a href="#ai-%e8%be%85%e5%8a%a9%e5%bc%80%e5%8f%91" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>我们提供了完善的 AI 编码指令，帮助你使用 GitHub Copilot 或 Cursor 快速生成符合项目规范的代码：</p>
+<ul>
+<li>📖 <a href="copilot-instructions.md">GitHub Copilot 指令</a></li>
+<li>📖 <a href="">AI 项目上下文</a></li>
+</ul>
+<h3 id="代码规范">代码规范 <a href="#%e4%bb%a3%e7%a0%81%e8%a7%84%e8%8c%83" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li>遵循阿里巴巴 Java 开发手册</li>
+<li>使用 Spotless 自动格式化代码</li>
+<li>代码审查通过 CI/CD 自动检查</li>
+</ul>
+<h3 id="最佳实践">最佳实践 <a href="#%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li><strong>安全</strong>：所有密码字段必须 <code>@JsonIgnore</code>，敏感信息脱敏</li>
+<li><strong>性能</strong>：合理使用缓存，避免 N+1 查询问题</li>
+<li><strong>测试</strong>：单元测试覆盖率 ≥ 70%</li>
+<li><strong>日志</strong>：统一使用 <code>@Slf4j</code>，分级记录</li>
+<li><strong>异常</strong>：统一异常处理，使用 <code>BusinessException</code></li>
+</ul>
+<hr>
+<h2 id="-故障排查">🔧 故障排查 <a href="#-%e6%95%85%e9%9a%9c%e6%8e%92%e6%9f%a5" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>遇到问题？查看我们的故障排查指南：</p>
+<ul>
+<li>🔍 <a href="troubleshooting/">常见问题 FAQ</a></li>
+<li>🐛 <a href="">401 认证错误修复</a></li>
+<li>💡 <a href="">快速修复指南</a></li>
+</ul>
+<hr>
+<h2 id="-完整文档导航">📖 完整文档导航 <a href="#-%e5%ae%8c%e6%95%b4%e6%96%87%e6%a1%a3%e5%af%bc%e8%88%aa" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="入门指南">入门指南 <a href="#%e5%85%a5%e9%97%a8%e6%8c%87%e5%8d%97" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li><a href="">项目概览</a> - 深入了解项目背景和设计理念</li>
+<li><a href="">架构设计</a> - 详细的架构设计和模块划分</li>
+<li><a href="">快速开始</a> - 从零开始构建第一个应用</li>
+</ul>
+<h2 id="-文档导航">📚 文档导航 <a href="#-%e6%96%87%e6%a1%a3%e5%af%bc%e8%88%aa" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="核心文档">核心文档 <a href="#%e6%a0%b8%e5%bf%83%e6%96%87%e6%a1%a3" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li><a href="">项目规划与路线图</a> - 项目发展规划、技术演进、业务模块规划</li>
+<li><a href="">Dependencies 依赖管理</a></li>
+<li><a href="">Commons 通用层</a></li>
+<li><a href="">Components 组件层</a></li>
+<li><a href="/loadup-parent/docs/modules/">Modules 业务模块</a></li>
+<li><a href="">Gateway 网关</a></li>
+<li><a href="">Application 应用层</a></li>
+<li><a href="">Testify 测试框架</a></li>
+</ul>
+<h3 id="开发者资源">开发者资源 <a href="#%e5%bc%80%e5%8f%91%e8%80%85%e8%b5%84%e6%ba%90" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
+<li><a href="">AI 编码指南</a></li>
+<li><a href="copilot-instructions.md">GitHub Copilot 指令</a></li>
+<li><a href="troubleshooting/">故障排查</a></li>
+</ul>
+<hr>
+<h2 id="-参与贡献">🤝 参与贡献 <a href="#-%e5%8f%82%e4%b8%8e%e8%b4%a1%e7%8c%ae" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>我们欢迎任何形式的贡献！</p>
+<ul>
+<li>🐛 提交 Bug 报告</li>
+<li>💡 提出新功能建议</li>
+<li>📖 改进文档</li>
+<li>🔧 提交代码 Pull Request</li>
+</ul>
+<p>详细贡献指南请查看项目的 CONTRIBUTING.md 文件。</p>
+<hr>
+<h2 id="-许可证">📄 许可证 <a href="#-%e8%ae%b8%e5%8f%af%e8%af%81" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>LoadUp Framework 采用 <a href="/loadup-parent/docs/LICENSE">Apache License 2.0</a> 开源协议。</p>
+<hr>
+<h2 id="-联系我们">📞 联系我们 <a href="#-%e8%81%94%e7%b3%bb%e6%88%91%e4%bb%ac" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><ul>
+<li><strong>GitHub</strong>: <a href="https://github.com/loadup-cloud/loadup-framework" rel="external" target="_blank">https://github.com/loadup-cloud/loadup-framework<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M14 5c-.552 0-1-.448-1-1s.448-1 1-1h6c.552 0 1 .448 1 1v6c0 .552-.448 1-1 1s-1-.448-1-1v-3.586l-7.293 7.293c-.391.39-1.024.39-1.414 0-.391-.391-.391-1.024 0-1.414l7.293-7.293h-3.586zm-9 2c-.552 0-1 .448-1 1v11c0 .552.448 1 1 1h11c.552 0 1-.448 1-1v-4.563c0-.552.448-1 1-1s1 .448 1 1v4.563c0 1.657-1.343 3-3 3h-11c-1.657 0-3-1.343-3-3v-11c0-1.657 1.343-3 3-3h4.563c.552 0 1 .448 1 1s-.448 1-1 1h-4.563z"/></svg></a></li>
+<li><strong>文档站</strong>: <a href="https://loadup-cloud.laysan.site" rel="external" target="_blank">https://loadup-cloud.laysan.site<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M14 5c-.552 0-1-.448-1-1s.448-1 1-1h6c.552 0 1 .448 1 1v6c0 .552-.448 1-1 1s-1-.448-1-1v-3.586l-7.293 7.293c-.391.39-1.024.39-1.414 0-.391-.391-.391-1.024 0-1.414l7.293-7.293h-3.586zm-9 2c-.552 0-1 .448-1 1v11c0 .552.448 1 1 1h11c.552 0 1-.448 1-1v-4.563c0-.552.448-1 1-1s1 .448 1 1v4.563c0 1.657-1.343 3-3 3h-11c-1.657 0-3-1.343-3-3v-11c0-1.657 1.343-3 3-3h4.563c.552 0 1 .448 1 1s-.448 1-1 1h-4.563z"/></svg></a></li>
+</ul>
+<hr>
+<!-- raw HTML omitted -->
+
+    </div>
+
+    
+    
+    
+    <script src="/loadup-parent/docs/js/mermaid.min.js" ></script>
+    <script>
+        const config = {
+            startOnLoad:true,
+            logLevel: "error",
+            align: "center",
+            theme:"null"
+        };
+        mermaid.initialize(config);
+    </script>
+    
+
+    
+                                            </div>
+                                            <div><hr class="doc-hr">
+<div id="doc-nav" class="d-print-none">
+
+	<div class="row flex-xl-nowrap flex-row-reverse">
+	</div>
+</div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<footer class="shadow py-3 d-print-none">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="text-sm-start text-center mx-md-2">
+                    <p class="mb-0">
+                        
+                        
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</main>
+            </div>
+        </div>
+
+        
+        
+        <button onclick="topFunction()" id="back-to-top" aria-label="Back to Top Button" class="back-to-top fs-5"><svg width="24" height="24"><path d="M12,10.224l-6.3,6.3L4.32,15.152,12,7.472l7.68,7.68L18.3,16.528Z" style="fill:#fff"/></svg></button>
+        
+        
+
+        
+        
+
+
+
+
+    
+    
+    
+
+
+
+
+
+
+    <script src="/loadup-parent/docs/js/bootstrap.js" defer></script>
+
+
+    <script type="text/javascript" src="http://localhost:1313/loadup-parent/docs/js/bundle.js" defer></script>
+
+        
+
+        
+        <script type="module">
+    var suggestions = document.getElementById('suggestions');
+    var search = document.getElementById('flexsearch');
+
+    const flexsearchContainer = document.getElementById('FlexSearchCollapse');
+
+    const hideFlexsearchBtn = document.getElementById('hideFlexsearch');
+
+    const configObject = { toggle: false }
+    const flexsearchContainerCollapse = new Collapse(flexsearchContainer, configObject) 
+
+    if (search !== null) {
+        document.addEventListener('keydown', inputFocus);
+        flexsearchContainer.addEventListener('shown.bs.collapse', function () {
+            search.focus();
+        });
+        
+        var topHeader = document.getElementById("top-header");
+        document.addEventListener('click', function(elem) {
+            if (!flexsearchContainer.contains(elem.target) && !topHeader.contains(elem.target))
+                flexsearchContainerCollapse.hide();
+        });
+    }
+
+    hideFlexsearchBtn.addEventListener('click', () =>{
+        flexsearchContainerCollapse.hide()
+    })
+
+    function inputFocus(e) {
+        if (e.ctrlKey && e.key === '/') {
+            e.preventDefault();
+            flexsearchContainerCollapse.toggle();
+        }
+        if (e.key === 'Escape' ) {
+            search.blur();
+            
+            flexsearchContainerCollapse.hide();
+        }
+    };
+
+    document.addEventListener('click', function(event) {
+
+    var isClickInsideElement = suggestions.contains(event.target);
+
+    if (!isClickInsideElement) {
+        suggestions.classList.add('d-none');
+    }
+
+    });
+
+    
+
+
+    document.addEventListener('keydown',suggestionFocus);
+
+    function suggestionFocus(e) {
+    const suggestionsHidden = suggestions.classList.contains('d-none');
+    if (suggestionsHidden) return;
+
+    const focusableSuggestions= [...suggestions.querySelectorAll('a')];
+    if (focusableSuggestions.length === 0) return;
+
+    const index = focusableSuggestions.indexOf(document.activeElement);
+
+    if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const nextIndex = index > 0 ? index - 1 : 0;
+        focusableSuggestions[nextIndex].focus();
+    }
+    else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const nextIndex= index + 1 < focusableSuggestions.length ? index + 1 : index;
+        focusableSuggestions[nextIndex].focus();
+    }
+
+    }
+
+    
+
+
+    (function(){
+
+    var index = new FlexSearch.Document({
+        
+        tokenize: "forward",
+        minlength:  0 ,
+        cache:  100 ,
+        optimize:  true ,
+        document: {
+        id: 'id',
+        store: [
+            "href", "title", "description"
+        ],
+        index: ["title", "description", "content"]
+        }
+    });
+
+
+    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+
+    
+
+    index.add(
+            {
+                id:  0 ,
+                href: "\/loadup-parent\/docs\/modules\/",
+                title: "Modules Overview",
+                description: "loadup-modules link该目录包含业务模块的概览与链接，例如 upms（系统管理）。每个业务模块的 README/ARCHITECTURE 已迁移到 docs/modules/ 以便于文档站展示。\n",
+                content: "loadup-modules link该目录包含业务模块的概览与链接，例如 upms（系统管理）。每个业务模块的 README/ARCHITECTURE 已迁移到 docs/modules/ 以便于文档站展示。\n"
+            }
+        );
+    search.addEventListener('input', show_results, true);
+
+    function show_results(){
+        const maxResult =  5 ;
+        const minlength =  0 ;
+        var searchQuery = sanitizeHTML(this.value);
+        var results = index.search(searchQuery, {limit: maxResult, enrich: true});
+
+        
+        const flatResults = new Map(); 
+        for (const result of results.flatMap(r => r.result)) {
+        if (flatResults.has(result.doc.href)) continue;
+        flatResults.set(result.doc.href, result.doc);
+        }
+
+        suggestions.innerHTML = "";
+        suggestions.classList.remove('d-none');
+
+        
+        if (searchQuery.length < minlength) {
+            const minCharMessage = document.createElement('div')
+            minCharMessage.innerHTML = `Please type at least <strong>${minlength}</strong> characters`
+            minCharMessage.classList.add("suggestion__no-results");
+            suggestions.appendChild(minCharMessage);
+            return;
+        } else {
+            
+            if (flatResults.size === 0 && searchQuery) {
+                const noResultsMessage = document.createElement('div')
+                noResultsMessage.innerHTML = "No results for" + ` "<strong>${searchQuery}</strong>"`
+                noResultsMessage.classList.add("suggestion__no-results");
+                suggestions.appendChild(noResultsMessage);
+                return;
+            }
+        }
+
+        
+        for(const [href, doc] of flatResults) {
+            const entry = document.createElement('div');
+            suggestions.appendChild(entry);
+
+            const a = document.createElement('a');
+            a.href = href;
+            entry.appendChild(a);
+
+            const title = document.createElement('span');
+            title.textContent = doc.title;
+            title.classList.add("suggestion__title");
+            a.appendChild(title);
+
+            const description = document.createElement('span');
+            description.textContent = doc.description;
+            description.classList.add("suggestion__description");
+            a.appendChild(description);
+
+            suggestions.appendChild(entry);
+
+            if(suggestions.childElementCount == maxResult) break;
+        }
+    }
+    }());
+</script>
+        
+    </body>
+</html>

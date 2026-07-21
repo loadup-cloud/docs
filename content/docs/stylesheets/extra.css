@@ -1,0 +1,4 @@
+/* 适配暗色模式下的 Mermaid 图表 */
+[data-md-color-scheme="slate"] .mermaid {
+    filter: invert(0.9) hue-rotate(180deg);
+}

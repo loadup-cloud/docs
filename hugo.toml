@@ -1,0 +1,34 @@
+baseURL = 'https://loadup-cloud.github.io/loadup-parent/'
+languageCode = 'en-us'
+title = 'LoadUp Framework'
+theme = 'lotusdocs'
+
+[module]
+  [[module.imports]]
+    path = "github.com/colinwilson/lotusdocs"
+    disable = false
+  [[module.imports]]
+    path = "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
+    disable = false
+
+[params]
+  description = "LoadUp Framework — enterprise-grade backend platform SDK"
+  author = "LoadUp Cloud"
+  # Lotus Docs specific settings
+  docsVersion = "0.0.2"
+  logo = "img/logo.svg"
+  favicon = "img/favicon.ico"
+  # Navbar menu
+  [[params.menu]]
+    name = "Docs"
+    url = "/docs/"
+    weight = 100
+
+[markup]
+  [markup.highlight]
+    style = "github-dark"
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+# Auto-generated content from module README sync lives under content/docs/
