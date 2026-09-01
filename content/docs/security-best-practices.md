@@ -239,15 +239,7 @@ LoadUp Gateway 使用 JWT Bearer Token，天然防御 CSRF（Token 无法通过 
 
 ## 六、依赖安全（OWASP A06）
 
-### 6.1 检查高危漏洞
 
-```bash
-# OWASP Dependency-Check（本地）
-mvn org.owasp:dependency-check-maven:check
-
-# 查看报告
-open target/dependency-check-report.html
-```
 
 ### 6.2 版本管理规范
 
