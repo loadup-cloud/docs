@@ -17,24 +17,19 @@ UPMS 与授权服务器之间的可选认证适配模块。
 </dependency>
 ```
 
-## 装配与配置
+## 登录接口
 
-模块提供以下自动配置入口；实际启用条件和配置项以对应类及父模块 README 为准：
+引入本模块和 `loadup-components-authserver-binder-sas` 后，前端调用 `POST /api/auth/login`，以 JSON 提交 `{"username":"admin","password":"..."}`。成功响应的 `data` 包含 `accessToken`、`tokenType`、`expiresIn`；后续受保护请求携带 `Authorization: Bearer <accessToken>`。失败响应同样使用 `result`、`data` 报文。设置 `loadup.security.auth-server.protocol-endpoints-enabled: false` 可关闭不需要的 OAuth2 协议端点。
 
-- `UpmsAuthServerAutoConfiguration`
-
-## 设计
-
-内部边界、依赖与源码入口见 [ARCHITECTURE.md](./#architecture)。
-
-## 接入步骤
-
-接入 Spring MVC 时引入 web 与所需 app/infra；需要登录签发时增加 upms-authserver。
+引入可选的 `loadup-components-springdoc` 后，可在 `/scalar` 查阅登录接口。Controller 的 `@Tag`、`@Operation` 和字段说明会显示在页面中；登录接口通过 `@SecurityRequirements` 声明公开访问。该接口还需在 `loadup.security.resource-server.permit-all` 中放行；实际访问规则以 Spring Security 配置为准。
 
 ## 自动装配
 
 - [`UpmsAuthServerAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
-  - 启用条件：`@ConditionalOnProperty( prefix = "loadup.security.auth-server", name = "protocol-endpoints-enabled", havingValue = "true", matchIfMissing = true)`。
+
+## 设计
+
+内部边界、依赖与源码入口见 [ARCHITECTURE.md](./#architecture)。
 
 ---
 

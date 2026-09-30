@@ -10,6 +10,8 @@ title: "本地集成启动器"
 
 在本地准备 `application.yml` 所需的外部服务与环境变量，再运行应用主类。示例接口请求位于 `src/main/resources/Router.http`。修改依赖组合或配置后，应按需运行该模块的验证；数据库与认证配置由本应用的资源文件管理。
 
+启动后访问 `/scalar` 浏览 UPMS 等 Spring MVC 接口，或访问 `/v3/api-docs` 获取 OpenAPI JSON。接口请求示例见 `src/main/resources/Router.http`。
+
 ## 设计
 
 依赖组合和源码入口见 [ARCHITECTURE.md](./#architecture)。
