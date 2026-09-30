@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LoadUp Framework – Loadup Modules</title>
-    <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/</link>
+    <link>https://loadup-docs.laysan.site/docs/modules/</link>
     <description>Recent content in Loadup Modules on LoadUp Framework</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     
-	  <atom:link href="https://loadup-cloud.github.io/loadup-parent/docs/modules/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://loadup-docs.laysan.site/docs/modules/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Loadup Modules UPMS App Layer</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-app/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-app/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-app/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-app/</guid>
       <description>
         
         
@@ -144,10 +144,10 @@
     
     <item>
       <title>Loadup Modules UPMS Client Layer</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-client/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-client/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-client/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-client/</guid>
       <description>
         
         
@@ -235,10 +235,10 @@
     
     <item>
       <title>Loadup Modules UPMS Domain Layer</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-domain/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-domain/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-domain/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-domain/</guid>
       <description>
         
         
@@ -333,10 +333,10 @@
     
     <item>
       <title>Loadup Modules UPMS Infrastructure Layer</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-infrastructure/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-infrastructure/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-infrastructure/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-infrastructure/</guid>
       <description>
         
         
@@ -434,10 +434,10 @@
     
     <item>
       <title>LoadUp UPMS Authorization Server Adapter</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-authserver/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-authserver/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-authserver/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-authserver/</guid>
       <description>
         
         
@@ -538,10 +538,10 @@
     
     <item>
       <title>UPMS</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms/</guid>
       <description>
         
         
@@ -673,10 +673,10 @@
     
     <item>
       <title>UPMS Web 适配</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-web/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-web/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-web/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-web/</guid>
       <description>
         
         
@@ -766,10 +766,10 @@
     
     <item>
       <title>UPMS 测试模块</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-test/</link>
+      <link>https://loadup-docs.laysan.site/docs/modules/upms-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/modules/upms-test/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/modules/upms-test/</guid>
       <description>
         
         

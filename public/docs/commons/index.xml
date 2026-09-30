@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LoadUp Framework – Loadup Commons</title>
-    <link>https://loadup-cloud.github.io/loadup-parent/docs/commons/</link>
+    <link>https://loadup-docs.laysan.site/docs/commons/</link>
     <description>Recent content in Loadup Commons on LoadUp Framework</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     
-	  <atom:link href="https://loadup-cloud.github.io/loadup-parent/docs/commons/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://loadup-docs.laysan.site/docs/commons/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Loadup Common DTO</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-dto/</link>
+      <link>https://loadup-docs.laysan.site/docs/commons/loadup-commons-dto/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-dto/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/commons/loadup-commons-dto/</guid>
       <description>
         
         
@@ -107,10 +107,10 @@
     
     <item>
       <title>LoadUp Common Log</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-log/</link>
+      <link>https://loadup-docs.laysan.site/docs/commons/loadup-commons-log/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-log/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/commons/loadup-commons-log/</guid>
       <description>
         
         
@@ -279,10 +279,10 @@ spans or require a tracer SDK.&lt;/p&gt;
     
     <item>
       <title>LoadUp Common Tracer</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-tracer/</link>
+      <link>https://loadup-docs.laysan.site/docs/commons/loadup-commons-tracer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-tracer/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/commons/loadup-commons-tracer/</guid>
       <description>
         
         
@@ -875,10 +875,10 @@ TracerAutoConfiguration.resolveExporter()
     
     <item>
       <title>Loadup Common Utils</title>
-      <link>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-util/</link>
+      <link>https://loadup-docs.laysan.site/docs/commons/loadup-commons-util/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-util/</guid>
+      <guid>https://loadup-docs.laysan.site/docs/commons/loadup-commons-util/</guid>
       <description>
         
         

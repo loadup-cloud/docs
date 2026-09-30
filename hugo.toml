@@ -1,4 +1,4 @@
-baseURL = 'https://loadup-cloud.github.io/loadup-parent/'
+baseURL = 'https://loadup-docs.laysan.site/'
 locale = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
 title = 'LoadUp Framework'

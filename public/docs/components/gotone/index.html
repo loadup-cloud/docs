@@ -2,15 +2,15 @@
 <html lang="zh-cn" dir="ltr"><head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="index, follow" />
-  <link rel="icon shortcut" href="/loadup-parent/favicon.ico" sizes="32x32" />
-<link rel="icon" href="/loadup-parent/favicon.svg" type="image/svg+xml" id="favicon-svg" />
-<link rel="icon" href="/loadup-parent/favicon-16x16.png" type="image/png" sizes="16x16" />
-<link rel="icon" href="/loadup-parent/favicon-32x32.png" type="image/png" sizes="32x32" />
-<link rel="apple-touch-icon" href="/loadup-parent/apple-touch-icon.png" sizes="180x180" />
-<link fetchpriority="low" href="/loadup-parent/site.webmanifest" rel="manifest" />
+  <link rel="icon shortcut" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" id="favicon-svg" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>LoadUp Gotone – LoadUp Framework</title>
   <meta name="description" content=" 基于 ServiceCode 驱动的统一通知组件：业务代码只注入 NotificationService，通过 serviceCode 路由到 email / sms / push / webhook 渠道，不感知任何渠道 SDK。采用 Mode B（多 Provider 共存 &#43; 运行时配置驱动路由），存储与发送引擎解耦。
-模块结构 模块 职责 -api NotificationService facade &#43; NotificationChannelProvider SPI &#43; 可选存储 SPI -engine 纯发送引擎（零存储、零 DB）：可用性过滤、provider 降级链、resilience4j 包装、异步发送、模板渲染 -store-jdbc 默认存储实现（MyBatis-Flex，3 张表，Flyway 自动迁移） -binder-email SMTP（Spring Mail），真实实现 -binder-sms aliyun / huawei / yunpian（stub，待接厂商 SDK） -binder-push fcm（stub，待接 Firebase Admin SDK） -binder-webhook dingtalk / wechat / feishu，JDK HttpClient 真实 HTTP 发送 -test 引擎单测 &#43; webhook 本地 HTTP 测试 &#43; JDBC 存储容器测试 引入 先引入 BOM，再按需添加 engine、binder 与 store：" /><link rel="canonical" href="https://loadup-cloud.github.io/loadup-parent/docs/components/gotone/" itemprop="url" />
+模块结构 模块 职责 -api NotificationService facade &#43; NotificationChannelProvider SPI &#43; 可选存储 SPI -engine 纯发送引擎（零存储、零 DB）：可用性过滤、provider 降级链、resilience4j 包装、异步发送、模板渲染 -store-jdbc 默认存储实现（MyBatis-Flex，3 张表，Flyway 自动迁移） -binder-email SMTP（Spring Mail），真实实现 -binder-sms aliyun / huawei / yunpian（stub，待接厂商 SDK） -binder-push fcm（stub，待接 Firebase Admin SDK） -binder-webhook dingtalk / wechat / feishu，JDK HttpClient 真实 HTTP 发送 -test 引擎单测 &#43; webhook 本地 HTTP 测试 &#43; JDBC 存储容器测试 引入 先引入 BOM，再按需添加 engine、binder 与 store：" /><link rel="canonical" href="https://loadup-docs.laysan.site/docs/components/gotone/" itemprop="url" />
 
 <meta property="og:title" content="LoadUp Gotone">
 <meta
@@ -73,7 +73,7 @@
   content="
     article
   ">
-<meta property="og:url" content="https://loadup-cloud.github.io/loadup-parent/docs/components/gotone/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://loadup-docs.laysan.site/docs/components/gotone/"><meta property="article:section" content="docs">
 
 
 
@@ -87,8 +87,8 @@
 	<meta name="twitter:description" content="基于 ServiceCode 驱动的统一通知组件：业务代码只注入 NotificationService，通过 serviceCode 路由到 email / sms / push / webhook 渠道，不感知任何渠道 SDK。采用 Mode B（多 Provider 共存 &#43; 运行时配置驱动路由），存储与发送引擎解耦。
 模块结构 模块 职责 -api NotificationService facade &#43; NotificationChannelProvider SPI &#43; 可选存储 SPI -engine 纯发送引擎（零存储、零 DB）：可用性过滤、provider 降级链、resilience4j 包装、异步发送、模板渲染 -store-jdbc 默认存储实现（MyBatis-Flex，3 张表，Flyway 自动迁移） -binder-email SMTP（Spring Mail），真实实现 -binder-sms aliyun / huawei / yunpian（stub，待接厂商 SDK） -binder-push fcm（stub，待接 Firebase Admin SDK） -binder-webhook dingtalk / wechat / feishu，JDK HttpClient 真实 HTTP 发送 -test 引擎单测 &#43; webhook 本地 HTTP 测试 &#43; JDBC 存储容器测试 引入 先引入 BOM，再按需添加 engine、binder 与 store：">
 
-    <link rel="preload" href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" as="style" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
-    <link href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" rel="stylesheet" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
+    <link rel="preload" href="/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" as="style" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
+    <link href="/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" rel="stylesheet" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
 
   
 
@@ -97,7 +97,7 @@
 
 
 
-<script src="/loadup-parent/js/main-head.min.94da6f95b126542222dab3a6e07ffefe1aaf63ec3ca555e827b58b80e7d3f0b7.js" integrity="sha256-lNpvlbEmVCIi2rOm4H/&#43;/hqvY&#43;w8pVXoJ7WLgOfT8Lc="></script>
+<script src="/js/main-head.min.94da6f95b126542222dab3a6e07ffefe1aaf63ec3ca555e827b58b80e7d3f0b7.js" integrity="sha256-lNpvlbEmVCIi2rOm4H/&#43;/hqvY&#43;w8pVXoJ7WLgOfT8Lc="></script>
 
   
   
@@ -109,12 +109,12 @@
   ></div>
 
   <nav class="hextra-max-navbar-width hx:mx-auto hx:flex hx:items-center hx:justify-end hx:gap-2 hx:h-16 hx:px-6">
-    <a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="/loadup-parent/">
+    <a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="/">
     <span class="hx:mr-2 hx:font-extrabold hx:inline hx:select-none">LoadUp Framework</span>
 </a>
 <a
   title=""
-  href="/loadup-parent/docs"
+  href="/docs"
   
   class="hx:text-sm hx:contrast-more:text-gray-700 hx:contrast-more:dark:text-gray-100 hx:relative hx:-ml-2 hx:hidden hx:whitespace-nowrap hx:p-2 hx:md:inline-flex hx:items-center hx:gap-1 hx:font-medium"
 ><span class="hx:text-center">文档</span>
@@ -192,7 +192,7 @@
               <li class="open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/"
+      href="/docs/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">文档</span>
@@ -202,7 +202,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/dependencies/"
+      href="/docs/dependencies/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp BOM</span>
@@ -212,7 +212,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/"
+      href="/docs/commons/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Commons</span>
@@ -223,7 +223,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-dto/"
+      href="/docs/commons/loadup-commons-dto/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Common DTO</span>
@@ -233,7 +233,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-log/"
+      href="/docs/commons/loadup-commons-log/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Log</span>
@@ -243,7 +243,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-tracer/"
+      href="/docs/commons/loadup-commons-tracer/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Tracer</span>
@@ -253,7 +253,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-util/"
+      href="/docs/commons/loadup-commons-util/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Common Utils</span>
@@ -265,7 +265,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/modules/"
+      href="/docs/modules/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Modules</span>
@@ -276,7 +276,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/modules/upms/"
+      href="/docs/modules/upms/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">UPMS</span>
@@ -288,7 +288,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/testing/"
+      href="/docs/testing/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Testify</span>
@@ -299,7 +299,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/application/"
+      href="/docs/application/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">本地集成启动器</span>
@@ -309,7 +309,7 @@
             </li><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/"
+      href="/docs/components/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">技术组件</span>
@@ -320,7 +320,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/authorization/"
+      href="/docs/components/authorization/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Authorization</span>
@@ -330,7 +330,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/authserver/"
+      href="/docs/components/authserver/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">AuthServer</span>
@@ -340,7 +340,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/cache/"
+      href="/docs/components/cache/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Cache Component</span>
@@ -350,7 +350,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/database/"
+      href="/docs/components/database/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Database</span>
@@ -360,7 +360,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/extension/"
+      href="/docs/components/extension/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Components Extension</span>
@@ -370,7 +370,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/globalunique/"
+      href="/docs/components/globalunique/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Global Unique</span>
@@ -380,7 +380,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/pipeline/"
+      href="/docs/components/pipeline/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Pipeline</span>
@@ -390,7 +390,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/signature/"
+      href="/docs/components/signature/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Signature</span>
@@ -400,7 +400,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/springdoc/"
+      href="/docs/components/springdoc/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components SpringDoc</span>
@@ -410,7 +410,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/testcontainers/"
+      href="/docs/components/testcontainers/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components TestContainers</span>
@@ -420,7 +420,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/dfs/"
+      href="/docs/components/dfs/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp DFS</span>
@@ -430,7 +430,7 @@
             </li><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
-      href="/loadup-parent/docs/components/gotone/"
+      href="/docs/components/gotone/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Gotone</span>
@@ -497,7 +497,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/resilience4j/"
+      href="/docs/components/resilience4j/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resilience4j</span>
@@ -507,7 +507,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/resource-server/"
+      href="/docs/components/resource-server/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resource Server</span>
@@ -517,7 +517,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/retrytask/"
+      href="/docs/components/retrytask/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp RetryTask</span>
@@ -527,7 +527,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/scheduler/"
+      href="/docs/components/scheduler/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Scheduler</span>
@@ -537,7 +537,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/captcha/"
+      href="/docs/components/captcha/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">loadup-components-captcha</span>
@@ -547,7 +547,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/configcenter/"
+      href="/docs/components/configcenter/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">loadup-components-configcenter</span>
@@ -557,7 +557,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/webmvc/"
+      href="/docs/components/webmvc/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Web MVC</span>
@@ -575,7 +575,7 @@
             <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/dependencies/"
+      href="/docs/dependencies/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp BOM</span>
@@ -584,7 +584,7 @@
             <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/"
+      href="/docs/commons/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Commons</span>
@@ -594,7 +594,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-dto/"
+      href="/docs/commons/loadup-commons-dto/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Common DTO</span>
@@ -604,7 +604,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-log/"
+      href="/docs/commons/loadup-commons-log/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Log</span>
@@ -614,7 +614,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-tracer/"
+      href="/docs/commons/loadup-commons-tracer/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Tracer</span>
@@ -624,7 +624,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/commons/loadup-commons-util/"
+      href="/docs/commons/loadup-commons-util/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Common Utils</span>
@@ -636,7 +636,7 @@
             <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/modules/"
+      href="/docs/modules/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Modules</span>
@@ -646,7 +646,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/modules/upms/"
+      href="/docs/modules/upms/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">UPMS</span>
@@ -658,7 +658,7 @@
             <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/testing/"
+      href="/docs/testing/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Testify</span>
@@ -668,7 +668,7 @@
             <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/application/"
+      href="/docs/application/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">本地集成启动器</span>
@@ -677,7 +677,7 @@
             <li class="open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/"
+      href="/docs/components/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">技术组件</span>
@@ -687,7 +687,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/authorization/"
+      href="/docs/components/authorization/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Authorization</span>
@@ -697,7 +697,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/authserver/"
+      href="/docs/components/authserver/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">AuthServer</span>
@@ -707,7 +707,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/cache/"
+      href="/docs/components/cache/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Cache Component</span>
@@ -717,7 +717,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/database/"
+      href="/docs/components/database/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Database</span>
@@ -727,7 +727,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/extension/"
+      href="/docs/components/extension/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Loadup Components Extension</span>
@@ -737,7 +737,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/globalunique/"
+      href="/docs/components/globalunique/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Global Unique</span>
@@ -747,7 +747,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/pipeline/"
+      href="/docs/components/pipeline/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Pipeline</span>
@@ -757,7 +757,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/signature/"
+      href="/docs/components/signature/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Signature</span>
@@ -767,7 +767,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/springdoc/"
+      href="/docs/components/springdoc/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components SpringDoc</span>
@@ -777,7 +777,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/testcontainers/"
+      href="/docs/components/testcontainers/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components TestContainers</span>
@@ -787,7 +787,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/dfs/"
+      href="/docs/components/dfs/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp DFS</span>
@@ -797,7 +797,7 @@
             </li><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
-      href="/loadup-parent/docs/components/gotone/"
+      href="/docs/components/gotone/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Gotone</span>
@@ -807,7 +807,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/resilience4j/"
+      href="/docs/components/resilience4j/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resilience4j</span>
@@ -817,7 +817,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/resource-server/"
+      href="/docs/components/resource-server/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resource Server</span>
@@ -827,7 +827,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/retrytask/"
+      href="/docs/components/retrytask/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp RetryTask</span>
@@ -837,7 +837,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/scheduler/"
+      href="/docs/components/scheduler/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">LoadUp Scheduler</span>
@@ -847,7 +847,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/captcha/"
+      href="/docs/components/captcha/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">loadup-components-captcha</span>
@@ -857,7 +857,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/configcenter/"
+      href="/docs/components/configcenter/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">loadup-components-configcenter</span>
@@ -867,7 +867,7 @@
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
       class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-      href="/loadup-parent/docs/components/webmvc/"
+      href="/docs/components/webmvc/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">Web MVC</span>
@@ -1060,10 +1060,10 @@
       <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
         <div class="hx:mt-1.5 hx:flex hx:items-center hx:gap-1 hx:overflow-hidden hx:text-sm hx:text-gray-500 hx:dark:text-gray-400 hx:contrast-more:text-current">
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
-          <a href="/loadup-parent/docs/" class="hx:inline-block hx:rounded-sm hx:hextra-focus-visible-inset">文档</a>
+          <a href="/docs/" class="hx:inline-block hx:rounded-sm hx:hextra-focus-visible-inset">文档</a>
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
-          <a href="/loadup-parent/docs/components/" class="hx:inline-block hx:rounded-sm hx:hextra-focus-visible-inset">技术组件</a>
+          <a href="/docs/components/" class="hx:inline-block hx:rounded-sm hx:hextra-focus-visible-inset">技术组件</a>
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">LoadUp Gotone</div>
   </div>
 
@@ -1416,11 +1416,11 @@ SPI，注册为 bean 即可替换默认 JDBC 存储。</li>
 
         </div>
         <div class="hx:mt-16"></div><div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/loadup-parent/docs/components/dfs/"
+        href="/docs/components/dfs/"
         title="LoadUp DFS"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
       ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>LoadUp DFS</a><a
-        href="/loadup-parent/docs/components/gotone-api/"
+        href="/docs/components/gotone-api/"
         title="LoadUp Gotone API"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
       >LoadUp Gotone API<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
@@ -1436,7 +1436,7 @@ SPI，注册为 bean 即可替换默认 JDBC 存储。</li>
   </a></div></div>
     </div></footer>
     
-    <script defer src="/loadup-parent/js/main.min.9a1b5d15c36c03e9817853e264daacde0ea2e36a2eaaf18eadbc46be0834f075.js" integrity="sha256-mhtdFcNsA&#43;mBeFPiZNqs3g6i42ouqvGOrbxGvgg08HU="></script>
-<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.min.cc565e7b92ec00037d832d8f5782eb9cc5cb2a661da19649eb1738eb47868d53.js" integrity="sha256-zFZee5LsAAN9gy2PV4LrnMXLKmYdoZZJ6xc460eGjVM="></script>
+    <script defer src="/js/main.min.d9fbefbbac8caeb66025dbb14d569c30defac0effcba45486a78209fba9360af.js" integrity="sha256-2fvvu6yMrrZgJduxTVacMN76wO/8ukVIanggn7qTYK8="></script>
+<script defer src="/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/zh-cn.search.min.f57dc36a8a77191d279c6158b8f264ec2fd35411e13a7b85007218781aa5d56c.js" integrity="sha256-9X3Daop3GR0nnGFYuPJk7C/TVBHhOnuFAHIYeBql1Ww="></script>
   </body>
 </html>
