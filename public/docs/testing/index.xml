@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LoadUp Framework – LoadUp Testify</title>
-    <link>http://localhost:51736/loadup-parent/docs/testing/</link>
+    <link>https://loadup-cloud.github.io/loadup-parent/docs/testing/</link>
     <description>Recent content in LoadUp Testify on LoadUp Framework</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     
-	  <atom:link href="http://localhost:51736/loadup-parent/docs/testing/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://loadup-cloud.github.io/loadup-parent/docs/testing/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>LoadUp Testify Spring Boot Starter</title>
-      <link>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-spring-boot-starter/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-spring-boot-starter/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-spring-boot-starter/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-spring-boot-starter/</guid>
       <description>
         
         
@@ -260,10 +260,10 @@
     
     <item>
       <title>Testify Assert Engine</title>
-      <link>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-assert-engine/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-assert-engine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-assert-engine/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-assert-engine/</guid>
       <description>
         
         
@@ -353,10 +353,10 @@
     
     <item>
       <title>Testify Core</title>
-      <link>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-core/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-core/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-core/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-core/</guid>
       <description>
         
         
@@ -424,10 +424,10 @@
     
     <item>
       <title>Testify Data Engine</title>
-      <link>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-data-engine/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-data-engine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-data-engine/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-data-engine/</guid>
       <description>
         
         
@@ -514,10 +514,10 @@
     
     <item>
       <title>Testify Demo</title>
-      <link>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/testing/loadup-testify-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/testing/loadup-testify-test/</guid>
       <description>
         
         

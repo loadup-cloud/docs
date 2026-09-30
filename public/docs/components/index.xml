@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LoadUp Framework – 技术组件</title>
-    <link>http://localhost:51736/loadup-parent/docs/components/</link>
+    <link>https://loadup-cloud.github.io/loadup-parent/docs/components/</link>
     <description>Recent content in 技术组件 on LoadUp Framework</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     
-	  <atom:link href="http://localhost:51736/loadup-parent/docs/components/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://loadup-cloud.github.io/loadup-parent/docs/components/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Authorization</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/authorization/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/authorization/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/authorization/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/authorization/</guid>
       <description>
         
         
@@ -152,10 +152,10 @@
     
     <item>
       <title>AuthServer</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/authserver/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/authserver/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver/</guid>
       <description>
         
         
@@ -253,10 +253,10 @@
     
     <item>
       <title>Cache Caffeine Binder</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/cache-binder-caffeine/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-binder-caffeine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/cache-binder-caffeine/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-binder-caffeine/</guid>
       <description>
         
         
@@ -361,10 +361,10 @@
     
     <item>
       <title>Cache Redis Binder</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/cache-binder-redis/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-binder-redis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/cache-binder-redis/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-binder-redis/</guid>
       <description>
         
         
@@ -460,10 +460,10 @@
     
     <item>
       <title>DFS API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/dfs-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/dfs-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-api/</guid>
       <description>
         
         
@@ -581,10 +581,10 @@
     
     <item>
       <title>DFS database binder</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/dfs-binder-database/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-binder-database/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/dfs-binder-database/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-binder-database/</guid>
       <description>
         
         
@@ -721,10 +721,10 @@
     
     <item>
       <title>DFS local binder</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/dfs-binder-local/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-binder-local/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/dfs-binder-local/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-binder-local/</guid>
       <description>
         
         
@@ -825,10 +825,10 @@
     
     <item>
       <title>DFS S3 binder</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/dfs-binder-s3/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-binder-s3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/dfs-binder-s3/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-binder-s3/</guid>
       <description>
         
         
@@ -936,10 +936,10 @@
     
     <item>
       <title>DFS tests</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/dfs-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/dfs-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs-test/</guid>
       <description>
         
         
@@ -998,10 +998,10 @@
     
     <item>
       <title>Loadup Cache Binder JetCache</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/cache-binder-jetcache/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-binder-jetcache/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/cache-binder-jetcache/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-binder-jetcache/</guid>
       <description>
         
         
@@ -1141,10 +1141,10 @@
     
     <item>
       <title>LoadUp Cache Component</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/cache/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/cache/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/cache/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/cache/</guid>
       <description>
         
         
@@ -1426,10 +1426,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>Loadup Cache Test</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/cache-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/cache-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-test/</guid>
       <description>
         
         
@@ -1500,10 +1500,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Captcha Binder Nanocaptcha</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/captcha-binder-nanocaptcha/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-binder-nanocaptcha/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/captcha-binder-nanocaptcha/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-binder-nanocaptcha/</guid>
       <description>
         
         
@@ -1639,10 +1639,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Captcha Binder Tianai</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/captcha-binder-tianai/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-binder-tianai/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/captcha-binder-tianai/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-binder-tianai/</guid>
       <description>
         
         
@@ -1779,10 +1779,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Captcha Components API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/captcha-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/captcha-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-api/</guid>
       <description>
         
         
@@ -1908,10 +1908,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Captcha Test</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/captcha-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/captcha-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/captcha-test/</guid>
       <description>
         
         
@@ -1974,10 +1974,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Components AuthServer API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/authserver-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/authserver-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver-api/</guid>
       <description>
         
         
@@ -2079,10 +2079,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Components AuthServer Binder SAS</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/authserver-binder-sas/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver-binder-sas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/authserver-binder-sas/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver-binder-sas/</guid>
       <description>
         
         
@@ -2181,10 +2181,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Components AuthServer Test</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/authserver-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/authserver-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/authserver-test/</guid>
       <description>
         
         
@@ -2253,10 +2253,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Components Cache API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/cache-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/cache-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/cache-api/</guid>
       <description>
         
         
@@ -2361,10 +2361,10 @@ JetCache 用每次写入的 &lt;code&gt;expire&lt;/code&gt; 参数，保证同�
     
     <item>
       <title>LoadUp Components Database</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/database/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/database/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/database/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/database/</guid>
       <description>
         
         
@@ -2544,10 +2544,10 @@ properties. This module does not select a database vendor.&lt;/p&gt;
     
     <item>
       <title>Loadup Components Extension</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/extension/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/extension/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/extension/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/extension/</guid>
       <description>
         
         
@@ -2644,10 +2644,10 @@ properties. This module does not select a database vendor.&lt;/p&gt;
     
     <item>
       <title>LoadUp Components Global Unique</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/globalunique/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/globalunique/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/globalunique/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/globalunique/</guid>
       <description>
         
         
@@ -2813,10 +2813,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>LoadUp Components Pipeline</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/pipeline/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/pipeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/pipeline/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/pipeline/</guid>
       <description>
         
         
@@ -3582,10 +3582,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>Loadup Components Retrytask Binder JobRunr</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/retrytask-binder-jobrunr/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/retrytask-binder-jobrunr/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/retrytask-binder-jobrunr/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/retrytask-binder-jobrunr/</guid>
       <description>
         
         
@@ -3699,10 +3699,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>Loadup Components Retrytask Facade</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/retrytask-facade/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/retrytask-facade/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/retrytask-facade/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/retrytask-facade/</guid>
       <description>
         
         
@@ -3781,10 +3781,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>Loadup Components Retrytask Test</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/retrytask-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/retrytask-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/retrytask-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/retrytask-test/</guid>
       <description>
         
         
@@ -3861,10 +3861,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>LoadUp Components Signature</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/signature/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/signature/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/signature/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/signature/</guid>
       <description>
         
         
@@ -4053,10 +4053,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>LoadUp Components SpringDoc</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/springdoc/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/springdoc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/springdoc/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/springdoc/</guid>
       <description>
         
         
@@ -4164,10 +4164,10 @@ targets the project database baseline, MySQL 8, and contains the five standard c
     
     <item>
       <title>LoadUp Components TestContainers</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/testcontainers/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/testcontainers/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/testcontainers/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/testcontainers/</guid>
       <description>
         
         
@@ -6056,10 +6056,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp ConfigCenter Binder Apollo</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/configcenter-binder-apollo/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-binder-apollo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/configcenter-binder-apollo/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-binder-apollo/</guid>
       <description>
         
         
@@ -6194,10 +6194,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp ConfigCenter Binder Local</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/configcenter-binder-local/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-binder-local/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/configcenter-binder-local/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-binder-local/</guid>
       <description>
         
         
@@ -6331,10 +6331,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp ConfigCenter Binder Nacos</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/configcenter-binder-nacos/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-binder-nacos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/configcenter-binder-nacos/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-binder-nacos/</guid>
       <description>
         
         
@@ -6472,10 +6472,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp ConfigCenter Components API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/configcenter-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/configcenter-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-api/</guid>
       <description>
         
         
@@ -6604,10 +6604,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp ConfigCenter Test</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/configcenter-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/configcenter-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/configcenter-test/</guid>
       <description>
         
         
@@ -6670,10 +6670,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp DFS</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/dfs/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/dfs/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/dfs/</guid>
       <description>
         
         
@@ -6813,10 +6813,10 @@ RedisInitializer 注入容器属性
     
     <item>
       <title>LoadUp Gotone</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone/</guid>
       <description>
         
         
@@ -7165,10 +7165,10 @@ SPI，注册为 bean 即可替换默认 JDBC 存储。&lt;/li&gt;
     
     <item>
       <title>LoadUp Gotone API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-api/</guid>
       <description>
         
         
@@ -7266,10 +7266,10 @@ MyBatis / 渠道 SDK）。业务代码只依赖本模块。&lt;/p&gt;
     
     <item>
       <title>LoadUp Gotone Binder Email</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-binder-email/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-email/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-binder-email/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-email/</guid>
       <description>
         
         
@@ -7408,10 +7408,10 @@ MyBatis / 渠道 SDK）。业务代码只依赖本模块。&lt;/p&gt;
     
     <item>
       <title>LoadUp Gotone Binder Push</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-binder-push/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-push/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-binder-push/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-push/</guid>
       <description>
         
         
@@ -7523,10 +7523,10 @@ MyBatis / 渠道 SDK）。业务代码只依赖本模块。&lt;/p&gt;
     
     <item>
       <title>LoadUp Gotone Binder SMS</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-binder-sms/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-sms/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-binder-sms/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-sms/</guid>
       <description>
         
         
@@ -7659,10 +7659,10 @@ SPI 契约与配置结构已定型，业务侧与引擎不受影响。&lt;/p&gt;
     
     <item>
       <title>Loadup Gotone Binder Webhook</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-binder-webhook/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-webhook/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-binder-webhook/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-binder-webhook/</guid>
       <description>
         
         
@@ -7766,10 +7766,10 @@ SPI 契约与配置结构已定型，业务侧与引擎不受影响。&lt;/p&gt;
     
     <item>
       <title>LoadUp Gotone Channel Binders</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/channels/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/channels/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/channels/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/channels/</guid>
       <description>
         
         
@@ -7863,10 +7863,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>Loadup Gotone Engine</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-engine/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-engine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-engine/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-engine/</guid>
       <description>
         
         
@@ -7978,10 +7978,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>Loadup Gotone Store JDBC</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-store-jdbc/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-store-jdbc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-store-jdbc/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-store-jdbc/</guid>
       <description>
         
         
@@ -8089,10 +8089,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>Loadup Gotone Test</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/gotone-test/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/gotone-test/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/gotone-test/</guid>
       <description>
         
         
@@ -8173,10 +8173,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>LoadUp Resilience4j</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/resilience4j/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/resilience4j/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/resilience4j/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/resilience4j/</guid>
       <description>
         
         
@@ -8392,10 +8392,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>Loadup Resilience4j API</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/resilience4j-api/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/resilience4j-api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/resilience4j-api/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/resilience4j-api/</guid>
       <description>
         
         
@@ -8493,10 +8493,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>Loadup Resilience4j Binder Core</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/resilience4j-binder-core/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/resilience4j-binder-core/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/resilience4j-binder-core/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/resilience4j-binder-core/</guid>
       <description>
         
         
@@ -8642,10 +8642,10 @@ the &lt;code&gt;channelConfig&lt;/code&gt; map of the matched &lt;code&gt;Channe
     
     <item>
       <title>LoadUp Resource Server</title>
-      <link>http://localhost:51736/loadup-parent/docs/components/resource-server/</link>
+      <link>https://loadup-cloud.github.io/loadup-parent/docs/components/resource-server/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:51736/loadup-parent/docs/components/resource-server/</guid>
+      <guid>https://loadup-cloud.github.io/loadup-parent/docs/components/resource-server/</guid>
       <description>
         
         

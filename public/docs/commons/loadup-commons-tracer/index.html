@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=51736&amp;path=loadup-parent/livereload" data-no-instant defer></script>
+<html lang="zh-cn" dir="ltr"><head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="index, follow" />
   <link rel="icon shortcut" href="/loadup-parent/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/loadup-parent/favicon.svg" type="image/svg+xml" id="favicon-svg" />
 <link rel="icon" href="/loadup-parent/favicon-16x16.png" type="image/png" sizes="16x16" />
@@ -10,7 +10,7 @@
 <link fetchpriority="low" href="/loadup-parent/site.webmanifest" rel="manifest" />
 <title>LoadUp Common Tracer – LoadUp Framework</title>
   <meta name="description" content=" 基于 OpenTelemetry 的分布式链路追踪薄集成（MVC 模式，无 WebFlux 依赖）： @Traced 注解 &#43; TraceUtil 编程式 API &#43; HTTP Filter 自动追踪 &#43; 异步线程 Context 传播。 facade 直接采用 OpenTelemetry 标准 API（Tracer / Span / Context），不自创平行接口。
-引入 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-commons-tracer&lt;/artifactId&gt; &lt;/dependency&gt; 使用 @Traced(name = &#34;OrderService.create&#34;, includeParameters = true) public Order createOrder(OrderDTO dto) { ... } // 编程式 Span span = TraceUtil.createSpan(&#34;PaymentGateway.charge&#34;); try { ... } finally { span.end(); } 日志通过 loadup-commons-log 自动关联 traceId / spanId（MDC），无需额外配置。 HTTP 响应头同时返回 traceId 和 traceparent，便于客户端把错误与服务端日志关联。默认追踪所有 Servlet 请求；通过 loadup.tracer.exclude-patterns 显式排除的路径不会生成追踪头。" /><link rel="canonical" href="http://localhost:51736/loadup-parent/docs/commons/loadup-commons-tracer/" itemprop="url" />
+引入 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-commons-tracer&lt;/artifactId&gt; &lt;/dependency&gt; 使用 @Traced(name = &#34;OrderService.create&#34;, includeParameters = true) public Order createOrder(OrderDTO dto) { ... } // 编程式 Span span = TraceUtil.createSpan(&#34;PaymentGateway.charge&#34;); try { ... } finally { span.end(); } 日志通过 loadup-commons-log 自动关联 traceId / spanId（MDC），无需额外配置。 HTTP 响应头同时返回 traceId 和 traceparent，便于客户端把错误与服务端日志关联。默认追踪所有 Servlet 请求；通过 loadup.tracer.exclude-patterns 显式排除的路径不会生成追踪头。" /><link rel="canonical" href="https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-tracer/" itemprop="url" />
 
 <meta property="og:title" content="LoadUp Common Tracer">
 <meta
@@ -58,7 +58,7 @@ HTTP 响应头同时返回 traceId 和 traceparent，便于客户端把错误与
   content="
     article
   ">
-<meta property="og:url" content="http://localhost:51736/loadup-parent/docs/commons/loadup-commons-tracer/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://loadup-cloud.github.io/loadup-parent/docs/commons/loadup-commons-tracer/"><meta property="article:section" content="docs">
 
 
 
@@ -71,12 +71,18 @@ HTTP 响应头同时返回 traceId 和 traceparent，便于客户端把错误与
 	<meta name="twitter:title" content="LoadUp Common Tracer">
 	<meta name="twitter:description" content="基于 OpenTelemetry 的分布式链路追踪薄集成（MVC 模式，无 WebFlux 依赖）： @Traced 注解 &#43; TraceUtil 编程式 API &#43; HTTP Filter 自动追踪 &#43; 异步线程 Context 传播。 facade 直接采用 OpenTelemetry 标准 API（Tracer / Span / Context），不自创平行接口。
 引入 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-commons-tracer&lt;/artifactId&gt; &lt;/dependency&gt; 使用 @Traced(name = &#34;OrderService.create&#34;, includeParameters = true) public Order createOrder(OrderDTO dto) { ... } // 编程式 Span span = TraceUtil.createSpan(&#34;PaymentGateway.charge&#34;); try { ... } finally { span.end(); } 日志通过 loadup-commons-log 自动关联 traceId / spanId（MDC），无需额外配置。 HTTP 响应头同时返回 traceId 和 traceparent，便于客户端把错误与服务端日志关联。默认追踪所有 Servlet 请求；通过 loadup.tracer.exclude-patterns 显式排除的路径不会生成追踪头。">
-<link href="/loadup-parent/css/compiled/main.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/variables.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/custom.css" rel="stylesheet" />
+
+    <link rel="preload" href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" as="style" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
+    <link href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" rel="stylesheet" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
 
   
-<script src="/loadup-parent/js/main-head.js" integrity=""></script>
+
+
+
+
+
+
+<script src="/loadup-parent/js/main-head.min.94da6f95b126542222dab3a6e07ffefe1aaf63ec3ca555e827b58b80e7d3f0b7.js" integrity="sha256-lNpvlbEmVCIi2rOm4H/&#43;/hqvY&#43;w8pVXoJ7WLgOfT8Lc="></script>
 
   
   
@@ -1647,7 +1653,7 @@ TracerAutoConfiguration.resolveExporter()
   </a></div></div>
     </div></footer>
     
-    <script defer src="/loadup-parent/js/main.js" integrity=""></script>
-<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.js" integrity=""></script>
+    <script defer src="/loadup-parent/js/main.min.9a1b5d15c36c03e9817853e264daacde0ea2e36a2eaaf18eadbc46be0834f075.js" integrity="sha256-mhtdFcNsA&#43;mBeFPiZNqs3g6i42ouqvGOrbxGvgg08HU="></script>
+<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.min.cc565e7b92ec00037d832d8f5782eb9cc5cb2a661da19649eb1738eb47868d53.js" integrity="sha256-zFZee5LsAAN9gy2PV4LrnMXLKmYdoZZJ6xc460eGjVM="></script>
   </body>
 </html>

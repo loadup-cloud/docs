@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=51736&amp;path=loadup-parent/livereload" data-no-instant defer></script>
+<html lang="zh-cn" dir="ltr"><head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="index, follow" />
   <link rel="icon shortcut" href="/loadup-parent/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/loadup-parent/favicon.svg" type="image/svg+xml" id="favicon-svg" />
 <link rel="icon" href="/loadup-parent/favicon-16x16.png" type="image/png" sizes="16x16" />
@@ -11,7 +11,7 @@
 <title>LoadUp Cache Component – LoadUp Framework</title>
   <meta name="description" content=" 以 Spring Cache 标准门面（@Cacheable / @CacheEvict / @CachePut）提供缓存能力， 底层中间件（Caffeine / Redis / JetCache）通过 binder 热插拔。业务代码只写 Spring Cache 注解， 不依赖任何 LoadUp 缓存类；切换底层实现时业务代码零修改。
 引入 先引入 loadup-dependencies BOM（版本由 BOM 统一管理），业务模块依赖 api，集成方工程按需加 binder：
-&lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-api&lt;/artifactId&gt; &lt;/dependency&gt; &lt;!-- 三选一，与 loadup.cache.type 对应 --&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-caffeine&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-redis&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-jetcache&lt;/artifactId&gt; &lt;/dependency&gt; 使用 @Cacheable(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public Product getProduct(Long id) { ... } @CachePut(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public Product updateProduct(Long id, String name) { ... } @CacheEvict(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public void deleteProduct(Long id) { ... } 配置 loadup: cache: type: redis # caffeine（默认）/ redis / jetcache / none default-ttl: 30m # 默认过期；不配置 = 永不过期 caches: product: ttl: 5m random-expiration-range: 30s # 随机过期防雪崩 allow-null-values: false # 默认 true # binder 特有配置 # redis: loadup.cache.binder.redis.key-prefix # caffeine: loadup.cache.binder.caffeine.maximum-size # jetcache: loadup.cache.binder.jetcache.default-cache-type (LOCAL/REMOTE/BOTH) # loadup.cache.binder.jetcache.sync-local / penetration-protect / remote-key-prefix 能力矩阵（契约） 能力 Spring Cache 注解 caffeine redis jetcache 读/写/更新 @Cacheable @CachePut ✓ ✓ ✓ 失效 @CacheEvict（单键/全清） ✓ ✓ ✓ 空值缓存 allow-null-values ✓ ✓ ✓ 按 cache 名 TTL loadup.cache.caches.*.ttl ✓ ✓ ✓ 随机过期防雪崩 random-expiration-range ✓ ✓ ✓ 本地/分布式/多级 type 本地 分布式 多级（可选同步） 防击穿/防穿透 JetCache 特有 ✗ ✗ penetration-protect 集成方只承诺 ✓ 的能力；切换 binder 零代码修改的前提是业务只用契约内能力。" /><link rel="canonical" href="http://localhost:51736/loadup-parent/docs/components/cache/" itemprop="url" />
+&lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-api&lt;/artifactId&gt; &lt;/dependency&gt; &lt;!-- 三选一，与 loadup.cache.type 对应 --&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-caffeine&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-redis&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-jetcache&lt;/artifactId&gt; &lt;/dependency&gt; 使用 @Cacheable(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public Product getProduct(Long id) { ... } @CachePut(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public Product updateProduct(Long id, String name) { ... } @CacheEvict(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public void deleteProduct(Long id) { ... } 配置 loadup: cache: type: redis # caffeine（默认）/ redis / jetcache / none default-ttl: 30m # 默认过期；不配置 = 永不过期 caches: product: ttl: 5m random-expiration-range: 30s # 随机过期防雪崩 allow-null-values: false # 默认 true # binder 特有配置 # redis: loadup.cache.binder.redis.key-prefix # caffeine: loadup.cache.binder.caffeine.maximum-size # jetcache: loadup.cache.binder.jetcache.default-cache-type (LOCAL/REMOTE/BOTH) # loadup.cache.binder.jetcache.sync-local / penetration-protect / remote-key-prefix 能力矩阵（契约） 能力 Spring Cache 注解 caffeine redis jetcache 读/写/更新 @Cacheable @CachePut ✓ ✓ ✓ 失效 @CacheEvict（单键/全清） ✓ ✓ ✓ 空值缓存 allow-null-values ✓ ✓ ✓ 按 cache 名 TTL loadup.cache.caches.*.ttl ✓ ✓ ✓ 随机过期防雪崩 random-expiration-range ✓ ✓ ✓ 本地/分布式/多级 type 本地 分布式 多级（可选同步） 防击穿/防穿透 JetCache 特有 ✗ ✗ penetration-protect 集成方只承诺 ✓ 的能力；切换 binder 零代码修改的前提是业务只用契约内能力。" /><link rel="canonical" href="https://loadup-cloud.github.io/loadup-parent/docs/components/cache/" itemprop="url" />
 
 <meta property="og:title" content="LoadUp Cache Component">
 <meta
@@ -161,7 +161,7 @@ loadup:
   content="
     article
   ">
-<meta property="og:url" content="http://localhost:51736/loadup-parent/docs/components/cache/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://loadup-cloud.github.io/loadup-parent/docs/components/cache/"><meta property="article:section" content="docs">
 
 
 
@@ -176,12 +176,18 @@ loadup:
 	<meta name="twitter:description" content="以 Spring Cache 标准门面（@Cacheable / @CacheEvict / @CachePut）提供缓存能力， 底层中间件（Caffeine / Redis / JetCache）通过 binder 热插拔。业务代码只写 Spring Cache 注解， 不依赖任何 LoadUp 缓存类；切换底层实现时业务代码零修改。
 引入 先引入 loadup-dependencies BOM（版本由 BOM 统一管理），业务模块依赖 api，集成方工程按需加 binder：
 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-api&lt;/artifactId&gt; &lt;/dependency&gt; &lt;!-- 三选一，与 loadup.cache.type 对应 --&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-caffeine&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-redis&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-cache-binder-jetcache&lt;/artifactId&gt; &lt;/dependency&gt; 使用 @Cacheable(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public Product getProduct(Long id) { ... } @CachePut(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public Product updateProduct(Long id, String name) { ... } @CacheEvict(cacheNames = &#34;product&#34;, key = &#34;#id&#34;) public void deleteProduct(Long id) { ... } 配置 loadup: cache: type: redis # caffeine（默认）/ redis / jetcache / none default-ttl: 30m # 默认过期；不配置 = 永不过期 caches: product: ttl: 5m random-expiration-range: 30s # 随机过期防雪崩 allow-null-values: false # 默认 true # binder 特有配置 # redis: loadup.cache.binder.redis.key-prefix # caffeine: loadup.cache.binder.caffeine.maximum-size # jetcache: loadup.cache.binder.jetcache.default-cache-type (LOCAL/REMOTE/BOTH) # loadup.cache.binder.jetcache.sync-local / penetration-protect / remote-key-prefix 能力矩阵（契约） 能力 Spring Cache 注解 caffeine redis jetcache 读/写/更新 @Cacheable @CachePut ✓ ✓ ✓ 失效 @CacheEvict（单键/全清） ✓ ✓ ✓ 空值缓存 allow-null-values ✓ ✓ ✓ 按 cache 名 TTL loadup.cache.caches.*.ttl ✓ ✓ ✓ 随机过期防雪崩 random-expiration-range ✓ ✓ ✓ 本地/分布式/多级 type 本地 分布式 多级（可选同步） 防击穿/防穿透 JetCache 特有 ✗ ✗ penetration-protect 集成方只承诺 ✓ 的能力；切换 binder 零代码修改的前提是业务只用契约内能力。">
-<link href="/loadup-parent/css/compiled/main.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/variables.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/custom.css" rel="stylesheet" />
+
+    <link rel="preload" href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" as="style" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
+    <link href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" rel="stylesheet" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
 
   
-<script src="/loadup-parent/js/main-head.js" integrity=""></script>
+
+
+
+
+
+
+<script src="/loadup-parent/js/main-head.min.94da6f95b126542222dab3a6e07ffefe1aaf63ec3ca555e827b58b80e7d3f0b7.js" integrity="sha256-lNpvlbEmVCIi2rOm4H/&#43;/hqvY&#43;w8pVXoJ7WLgOfT8Lc="></script>
 
   
   
@@ -1413,7 +1419,7 @@ JetCache 用每次写入的 <code>expire</code> 参数，保证同一配置在�
   </a></div></div>
     </div></footer>
     
-    <script defer src="/loadup-parent/js/main.js" integrity=""></script>
-<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.js" integrity=""></script>
+    <script defer src="/loadup-parent/js/main.min.9a1b5d15c36c03e9817853e264daacde0ea2e36a2eaaf18eadbc46be0834f075.js" integrity="sha256-mhtdFcNsA&#43;mBeFPiZNqs3g6i42ouqvGOrbxGvgg08HU="></script>
+<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.min.cc565e7b92ec00037d832d8f5782eb9cc5cb2a661da19649eb1738eb47868d53.js" integrity="sha256-zFZee5LsAAN9gy2PV4LrnMXLKmYdoZZJ6xc460eGjVM="></script>
   </body>
 </html>

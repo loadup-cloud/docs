@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=51736&amp;path=loadup-parent/livereload" data-no-instant defer></script>
+<html lang="zh-cn" dir="ltr"><head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="index, follow" />
   <link rel="icon shortcut" href="/loadup-parent/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/loadup-parent/favicon.svg" type="image/svg+xml" id="favicon-svg" />
 <link rel="icon" href="/loadup-parent/favicon-16x16.png" type="image/png" sizes="16x16" />
@@ -15,7 +15,7 @@
 接入步骤 此目录是 Maven 聚合模块，不作为业务运行依赖。按用途选择子模块：
 loadup-commons-dto：运行实现。 loadup-commons-log：运行实现。 loadup-commons-tracer：运行实现。 loadup-commons-util：运行实现。 设计与实现 Commons 位于依赖链底部，供技术组件和业务模块复用，不依赖上层模块。
 DTO：统一响应、分页、BaseDO 与 MapStruct 配置。 Util：JSON、日期、字符串等无业务归属的工具。 Log：日志格式及 MDC 键约定。 Tracer：OpenTelemetry span、Servlet 请求追踪与上下文传播，复用 Log 的 MDC 约定。 数据库审计字段在 Java/JSON 中统一为 createdAt、updatedAt，列名为 created_at、updated_at。通用类型不承载业务授权、HTTP 路由或具体存储决策。
-分层与调用路径 loadup-commons └─ loadup-commons-dto └─ loadup-commons-log └─ loadup-commons-tracer └─ loadup-commons-util 聚合 POM 组织模块与版本，运行时依赖由子模块决定。" /><link rel="canonical" href="http://localhost:51736/loadup-parent/docs/commons/" itemprop="url" />
+分层与调用路径 loadup-commons └─ loadup-commons-dto └─ loadup-commons-log └─ loadup-commons-tracer └─ loadup-commons-util 聚合 POM 组织模块与版本，运行时依赖由子模块决定。" /><link rel="canonical" href="https://loadup-cloud.github.io/loadup-parent/docs/commons/" itemprop="url" />
 
 <meta property="og:title" content="Loadup Commons">
 <meta
@@ -30,7 +30,7 @@ DTO：统一响应、分页、BaseDO 与 MapStruct 配置。 Util：JSON、日�
   content="
     website
   ">
-<meta property="og:url" content="http://localhost:51736/loadup-parent/docs/commons/">
+<meta property="og:url" content="https://loadup-cloud.github.io/loadup-parent/docs/commons/">
 
 
 	<meta itemprop="name" content="Loadup Commons">
@@ -51,12 +51,18 @@ DTO：统一响应、分页、BaseDO 与 MapStruct 配置。 Util：JSON、日�
 loadup-commons-dto：运行实现。 loadup-commons-log：运行实现。 loadup-commons-tracer：运行实现。 loadup-commons-util：运行实现。 设计与实现 Commons 位于依赖链底部，供技术组件和业务模块复用，不依赖上层模块。
 DTO：统一响应、分页、BaseDO 与 MapStruct 配置。 Util：JSON、日期、字符串等无业务归属的工具。 Log：日志格式及 MDC 键约定。 Tracer：OpenTelemetry span、Servlet 请求追踪与上下文传播，复用 Log 的 MDC 约定。 数据库审计字段在 Java/JSON 中统一为 createdAt、updatedAt，列名为 created_at、updated_at。通用类型不承载业务授权、HTTP 路由或具体存储决策。
 分层与调用路径 loadup-commons └─ loadup-commons-dto └─ loadup-commons-log └─ loadup-commons-tracer └─ loadup-commons-util 聚合 POM 组织模块与版本，运行时依赖由子模块决定。">
-<link href="/loadup-parent/css/compiled/main.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/variables.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/custom.css" rel="stylesheet" />
+
+    <link rel="preload" href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" as="style" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
+    <link href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" rel="stylesheet" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
 
   
-<script src="/loadup-parent/js/main-head.js" integrity=""></script>
+
+
+
+
+
+
+<script src="/loadup-parent/js/main-head.min.94da6f95b126542222dab3a6e07ffefe1aaf63ec3ca555e827b58b80e7d3f0b7.js" integrity="sha256-lNpvlbEmVCIi2rOm4H/&#43;/hqvY&#43;w8pVXoJ7WLgOfT8Lc="></script>
 
   
   
@@ -990,7 +996,7 @@ DTO：统一响应、分页、BaseDO 与 MapStruct 配置。 Util：JSON、日�
   </a></div></div>
     </div></footer>
     
-    <script defer src="/loadup-parent/js/main.js" integrity=""></script>
-<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.js" integrity=""></script>
+    <script defer src="/loadup-parent/js/main.min.9a1b5d15c36c03e9817853e264daacde0ea2e36a2eaaf18eadbc46be0834f075.js" integrity="sha256-mhtdFcNsA&#43;mBeFPiZNqs3g6i42ouqvGOrbxGvgg08HU="></script>
+<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.min.cc565e7b92ec00037d832d8f5782eb9cc5cb2a661da19649eb1738eb47868d53.js" integrity="sha256-zFZee5LsAAN9gy2PV4LrnMXLKmYdoZZJ6xc460eGjVM="></script>
   </body>
 </html>

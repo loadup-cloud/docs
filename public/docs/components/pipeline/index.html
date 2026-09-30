@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=51736&amp;path=loadup-parent/livereload" data-no-instant defer></script>
+<html lang="zh-cn" dir="ltr"><head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="index, follow" />
   <link rel="icon shortcut" href="/loadup-parent/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/loadup-parent/favicon.svg" type="image/svg+xml" id="favicon-svg" />
 <link rel="icon" href="/loadup-parent/favicon-16x16.png" type="image/png" sizes="16x16" />
@@ -10,7 +10,7 @@
 <link fetchpriority="low" href="/loadup-parent/site.webmanifest" rel="manifest" />
 <title>LoadUp Components Pipeline – LoadUp Framework</title>
   <meta name="description" content=" 基于 Spring Boot 4 的流程编排组件，将业务逻辑拆分为验参 → 准备 → 处理 → 组装四个固定阶段，通过类型安全的 Fluent DSL 声明式地定义和执行流程。
-核心特性 ✅ 四阶段标准流程 — verify → prepare → process → assemble，职责清晰 ✅ 类型安全 DSL — 链式 Builder，编译期保证阶段顺序正确 ✅ 两种 Stage 定义方式 — Spring Bean 类 / Lambda 内联函数 ✅ 控制流 — IControlStage 支持条件性提前结束流程 ✅ Finally 阶段 — IFinallyStage 保证清理逻辑必然执行 ✅ 类型化异常路由 — ExceptionHandlerBus 按异常类型分发，支持 overflow / bottom 降级 ✅ Spring 事务集成 — startTx / endTx 包裹任意阶段，使用 PlatformTransactionManager ✅ 零私有依赖 — 纯 Spring 原生，不依赖任何云厂商 SDK 快速开始 1. 添加依赖 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-pipeline&lt;/artifactId&gt; &lt;/dependency&gt; 2. 定义 Stage // 参数校验 @Component public class CreateOrderVerifyStage implements IParamVerifyStage&lt;CreateOrderCmd&gt; { @Override public void verify(CreateOrderCmd cmd) { Assert.hasText(cmd.getUserId(), &#34;userId 不能为空&#34;); Assert.notEmpty(cmd.getItems(), &#34;订单商品不能为空&#34;); } } // 数据准备 @Component public class CreateOrderPrepareStage implements IDataPrepareStage&lt;OrderDO&gt; { private final OrderGateway gateway; @Override public OrderDO prepare(PipelineContext ctx) { CreateOrderCmd cmd = ctx.getRequest(CreateOrderCmd.class); return OrderDO.create(cmd.getUserId(), cmd.getItems()); } } // 业务处理 @Component public class CreateOrderProcessStage implements IBizProcessStage { private final OrderGateway gateway; @Override public void process(PipelineContext ctx) { OrderDO order = ctx.getModel(OrderDO.class); gateway.save(order); } } // 结果组装 @Component public class CreateOrderAssembleStage implements IResultAssembleStage&lt;OrderDTO&gt; { @Override public OrderDTO assemble(PipelineContext ctx) { OrderDO order = ctx.getModel(OrderDO.class); return OrderConverter.toDTO(order); } } 3. 定义 Pipeline @Service public class CreateOrderPipelineDefinition implements IPipelineDefinition { @Override public PipelineSpec definePipeline() { return PipelineBuilder.builder() .verify(CreateOrderVerifyStage.class) .prepare(CreateOrderPrepareStage.class) .process(CreateOrderProcessStage.class) .assemble(CreateOrderAssembleStage.class) .build(); } @Override public ExceptionHandlerBus exceptions() { return ExceptionHandlerBus.builder() .register(BizException.class, OrderBizExceptionHandler.class) .bottom(OrderSystemExceptionHandler.class); } } 4. 执行流程 @Service @RequiredArgsConstructor public class OrderService { private final PipelineExecutor pipelineExecutor; private final CreateOrderPipelineDefinition createOrderPipeline; public OrderDTO createOrder(CreateOrderCmd cmd) { return pipelineExecutor.execute(createOrderPipeline, cmd); } } Lambda 内联写法 无需创建 Stage Bean，直接内联 Lambda：" /><link rel="canonical" href="http://localhost:51736/loadup-parent/docs/components/pipeline/" itemprop="url" />
+核心特性 ✅ 四阶段标准流程 — verify → prepare → process → assemble，职责清晰 ✅ 类型安全 DSL — 链式 Builder，编译期保证阶段顺序正确 ✅ 两种 Stage 定义方式 — Spring Bean 类 / Lambda 内联函数 ✅ 控制流 — IControlStage 支持条件性提前结束流程 ✅ Finally 阶段 — IFinallyStage 保证清理逻辑必然执行 ✅ 类型化异常路由 — ExceptionHandlerBus 按异常类型分发，支持 overflow / bottom 降级 ✅ Spring 事务集成 — startTx / endTx 包裹任意阶段，使用 PlatformTransactionManager ✅ 零私有依赖 — 纯 Spring 原生，不依赖任何云厂商 SDK 快速开始 1. 添加依赖 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-pipeline&lt;/artifactId&gt; &lt;/dependency&gt; 2. 定义 Stage // 参数校验 @Component public class CreateOrderVerifyStage implements IParamVerifyStage&lt;CreateOrderCmd&gt; { @Override public void verify(CreateOrderCmd cmd) { Assert.hasText(cmd.getUserId(), &#34;userId 不能为空&#34;); Assert.notEmpty(cmd.getItems(), &#34;订单商品不能为空&#34;); } } // 数据准备 @Component public class CreateOrderPrepareStage implements IDataPrepareStage&lt;OrderDO&gt; { private final OrderGateway gateway; @Override public OrderDO prepare(PipelineContext ctx) { CreateOrderCmd cmd = ctx.getRequest(CreateOrderCmd.class); return OrderDO.create(cmd.getUserId(), cmd.getItems()); } } // 业务处理 @Component public class CreateOrderProcessStage implements IBizProcessStage { private final OrderGateway gateway; @Override public void process(PipelineContext ctx) { OrderDO order = ctx.getModel(OrderDO.class); gateway.save(order); } } // 结果组装 @Component public class CreateOrderAssembleStage implements IResultAssembleStage&lt;OrderDTO&gt; { @Override public OrderDTO assemble(PipelineContext ctx) { OrderDO order = ctx.getModel(OrderDO.class); return OrderConverter.toDTO(order); } } 3. 定义 Pipeline @Service public class CreateOrderPipelineDefinition implements IPipelineDefinition { @Override public PipelineSpec definePipeline() { return PipelineBuilder.builder() .verify(CreateOrderVerifyStage.class) .prepare(CreateOrderPrepareStage.class) .process(CreateOrderProcessStage.class) .assemble(CreateOrderAssembleStage.class) .build(); } @Override public ExceptionHandlerBus exceptions() { return ExceptionHandlerBus.builder() .register(BizException.class, OrderBizExceptionHandler.class) .bottom(OrderSystemExceptionHandler.class); } } 4. 执行流程 @Service @RequiredArgsConstructor public class OrderService { private final PipelineExecutor pipelineExecutor; private final CreateOrderPipelineDefinition createOrderPipeline; public OrderDTO createOrder(CreateOrderCmd cmd) { return pipelineExecutor.execute(createOrderPipeline, cmd); } } Lambda 内联写法 无需创建 Stage Bean，直接内联 Lambda：" /><link rel="canonical" href="https://loadup-cloud.github.io/loadup-parent/docs/components/pipeline/" itemprop="url" />
 
 <meta property="og:title" content="LoadUp Components Pipeline">
 <meta
@@ -157,7 +157,7 @@ Lambda 内联写法
   content="
     article
   ">
-<meta property="og:url" content="http://localhost:51736/loadup-parent/docs/components/pipeline/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://loadup-cloud.github.io/loadup-parent/docs/components/pipeline/"><meta property="article:section" content="docs">
 
 
 
@@ -170,12 +170,18 @@ Lambda 内联写法
 	<meta name="twitter:title" content="LoadUp Components Pipeline">
 	<meta name="twitter:description" content="基于 Spring Boot 4 的流程编排组件，将业务逻辑拆分为验参 → 准备 → 处理 → 组装四个固定阶段，通过类型安全的 Fluent DSL 声明式地定义和执行流程。
 核心特性 ✅ 四阶段标准流程 — verify → prepare → process → assemble，职责清晰 ✅ 类型安全 DSL — 链式 Builder，编译期保证阶段顺序正确 ✅ 两种 Stage 定义方式 — Spring Bean 类 / Lambda 内联函数 ✅ 控制流 — IControlStage 支持条件性提前结束流程 ✅ Finally 阶段 — IFinallyStage 保证清理逻辑必然执行 ✅ 类型化异常路由 — ExceptionHandlerBus 按异常类型分发，支持 overflow / bottom 降级 ✅ Spring 事务集成 — startTx / endTx 包裹任意阶段，使用 PlatformTransactionManager ✅ 零私有依赖 — 纯 Spring 原生，不依赖任何云厂商 SDK 快速开始 1. 添加依赖 &lt;dependency&gt; &lt;groupId&gt;io.github.loadup-cloud&lt;/groupId&gt; &lt;artifactId&gt;loadup-components-pipeline&lt;/artifactId&gt; &lt;/dependency&gt; 2. 定义 Stage // 参数校验 @Component public class CreateOrderVerifyStage implements IParamVerifyStage&lt;CreateOrderCmd&gt; { @Override public void verify(CreateOrderCmd cmd) { Assert.hasText(cmd.getUserId(), &#34;userId 不能为空&#34;); Assert.notEmpty(cmd.getItems(), &#34;订单商品不能为空&#34;); } } // 数据准备 @Component public class CreateOrderPrepareStage implements IDataPrepareStage&lt;OrderDO&gt; { private final OrderGateway gateway; @Override public OrderDO prepare(PipelineContext ctx) { CreateOrderCmd cmd = ctx.getRequest(CreateOrderCmd.class); return OrderDO.create(cmd.getUserId(), cmd.getItems()); } } // 业务处理 @Component public class CreateOrderProcessStage implements IBizProcessStage { private final OrderGateway gateway; @Override public void process(PipelineContext ctx) { OrderDO order = ctx.getModel(OrderDO.class); gateway.save(order); } } // 结果组装 @Component public class CreateOrderAssembleStage implements IResultAssembleStage&lt;OrderDTO&gt; { @Override public OrderDTO assemble(PipelineContext ctx) { OrderDO order = ctx.getModel(OrderDO.class); return OrderConverter.toDTO(order); } } 3. 定义 Pipeline @Service public class CreateOrderPipelineDefinition implements IPipelineDefinition { @Override public PipelineSpec definePipeline() { return PipelineBuilder.builder() .verify(CreateOrderVerifyStage.class) .prepare(CreateOrderPrepareStage.class) .process(CreateOrderProcessStage.class) .assemble(CreateOrderAssembleStage.class) .build(); } @Override public ExceptionHandlerBus exceptions() { return ExceptionHandlerBus.builder() .register(BizException.class, OrderBizExceptionHandler.class) .bottom(OrderSystemExceptionHandler.class); } } 4. 执行流程 @Service @RequiredArgsConstructor public class OrderService { private final PipelineExecutor pipelineExecutor; private final CreateOrderPipelineDefinition createOrderPipeline; public OrderDTO createOrder(CreateOrderCmd cmd) { return pipelineExecutor.execute(createOrderPipeline, cmd); } } Lambda 内联写法 无需创建 Stage Bean，直接内联 Lambda：">
-<link href="/loadup-parent/css/compiled/main.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/variables.css" rel="stylesheet" />
-    <link href="/loadup-parent/css/custom.css" rel="stylesheet" />
+
+    <link rel="preload" href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" as="style" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
+    <link href="/loadup-parent/css/compiled/main.min.3d3c520a7dcb6be69fbb56df91a9312cd0cb0b6114b793a12029533e3928a537.css" rel="stylesheet" integrity="sha256-PTxSCn3La&#43;afu1bfkakxLNDLC2EUt5OhIClTPjkopTc=" />
 
   
-<script src="/loadup-parent/js/main-head.js" integrity=""></script>
+
+
+
+
+
+
+<script src="/loadup-parent/js/main-head.min.94da6f95b126542222dab3a6e07ffefe1aaf63ec3ca555e827b58b80e7d3f0b7.js" integrity="sha256-lNpvlbEmVCIi2rOm4H/&#43;/hqvY&#43;w8pVXoJ7WLgOfT8Lc="></script>
 
   
   
@@ -1953,7 +1959,7 @@ Lambda 内联写法
   </a></div></div>
     </div></footer>
     
-    <script defer src="/loadup-parent/js/main.js" integrity=""></script>
-<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.js" integrity=""></script>
+    <script defer src="/loadup-parent/js/main.min.9a1b5d15c36c03e9817853e264daacde0ea2e36a2eaaf18eadbc46be0834f075.js" integrity="sha256-mhtdFcNsA&#43;mBeFPiZNqs3g6i42ouqvGOrbxGvgg08HU="></script>
+<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.min.cc565e7b92ec00037d832d8f5782eb9cc5cb2a661da19649eb1738eb47868d53.js" integrity="sha256-zFZee5LsAAN9gy2PV4LrnMXLKmYdoZZJ6xc460eGjVM="></script>
   </body>
 </html>
