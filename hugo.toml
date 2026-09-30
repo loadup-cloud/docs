@@ -1,34 +1,49 @@
 baseURL = 'https://loadup-cloud.github.io/loadup-parent/'
-languageCode = 'en-us'
+locale = 'zh-cn'
+defaultContentLanguage = 'zh-cn'
 title = 'LoadUp Framework'
-theme = 'lotusdocs'
 
 [module]
   [[module.imports]]
-    path = "github.com/colinwilson/lotusdocs"
-    disable = false
-  [[module.imports]]
-    path = "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
-    disable = false
+    path = 'github.com/imfing/hextra'
+
+[[menu.main]]
+  name = '文档'
+  pageRef = '/docs'
+  weight = 1
+
+[[menu.main]]
+  name = '搜索'
+  weight = 2
+  [menu.main.params]
+    type = 'search'
+
+[[menu.main]]
+  name = 'GitHub'
+  url = 'https://github.com/loadup-cloud/loadup-framework'
+  weight = 3
+  [menu.main.params]
+    icon = 'github'
 
 [params]
-  description = "LoadUp Framework — enterprise-grade backend platform SDK"
-  author = "LoadUp Cloud"
-  # Lotus Docs specific settings
-  docsVersion = "0.0.2"
-  logo = "img/logo.svg"
-  favicon = "img/favicon.ico"
-  # Navbar menu
-  [[params.menu]]
-    name = "Docs"
-    url = "/docs/"
-    weight = 100
+  description = 'LoadUp Framework：按需集成的 Spring Boot 框架与 SDK'
 
-[markup]
-  [markup.highlight]
-    style = "github-dark"
-  [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 4
+  [params.navbar]
+    displayTitle = true
+    displayLogo = false
 
-# Auto-generated content from module README sync lives under content/docs/
+  [params.page]
+    width = 'wide'
+
+  [params.search]
+    enable = true
+    type = 'flexsearch'
+
+  [params.search.flexsearch]
+    js = 'js/vendor/flexsearch.bundle.min.js'
+
+  [params.mermaid]
+    js = 'js/vendor/mermaid.min.js'
+
+[markup.goldmark.renderer]
+  unsafe = true

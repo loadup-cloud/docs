@@ -1,1148 +1,932 @@
 <!DOCTYPE html>
+<html lang="zh-cn" dir="ltr"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=51736&amp;path=loadup-parent/livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="noindex, nofollow" />
+  <link rel="icon shortcut" href="/loadup-parent/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/loadup-parent/favicon.svg" type="image/svg+xml" id="favicon-svg" />
+<link rel="icon" href="/loadup-parent/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="icon" href="/loadup-parent/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/loadup-parent/apple-touch-icon.png" sizes="180x180" />
+<link fetchpriority="low" href="/loadup-parent/site.webmanifest" rel="manifest" />
+<title>文档 – LoadUp Framework</title>
+  <meta name="description" content=" LoadUp 是供 Spring Boot 应用按需引入的框架/SDK。使用 loadup-dependencies BOM 管理版本， 再选择需要的技术组件或通用业务模块。loadup-application 用于本地集成验证。
+按任务查找 任务 页面 引入 BOM、管理版本 依赖管理 选择缓存、数据库、认证等能力 技术组件 接入用户权限管理 业务模块 使用基础 DTO、日志与链路追踪 通用基础 编写集成测试 Testify 运行本地验证应用 Application 每个能力的页面先介绍用途、接入与配置，再说明内部设计。技术子模块可从所属能力页继续查看。" /><link rel="canonical" href="http://localhost:51736/loadup-parent/docs/" itemprop="url" />
 
-
-
-
-
+<meta property="og:title" content="文档">
+<meta
+  property="og:description"
+  content="
     
-
+      LoadUp Framework：按需集成的 Spring Boot 框架与 SDK
     
-
-    
-
-    
-
-    
-
-<html lang="en-us"><head><script src="/loadup-parent/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=loadup-parent/livereload" data-no-instant defer></script>
-    <meta charset="utf-8" />
-    <title> | LoadUp Framework</title>
-    <meta name="robots" content="noindex">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="LoadUp Framework — enterprise-grade backend platform SDK">
-    <meta name="keywords" content="Documentation, Hugo, Hugo Theme, Bootstrap" />
-    <meta name="author" content="Colin Wilson - Lotus Labs" />
-    <meta name="email" content="support@aigis.uk" />
-    <meta name="website" content="https://lotusdocs.dev" />
-    <meta name="Version" content="v0.1.0" />
-    
-    <link rel="icon" href="http://localhost:1313/loadup-parent/favicon.ico" sizes="any">
-<link rel="icon" type="image/svg+xml" href="http://localhost:1313/loadup-parent/favicon.svg">
-<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/loadup-parent/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/loadup-parent/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/loadup-parent/favicon-16x16.png">
-<link rel="manifest" crossorigin="use-credentials" href="http://localhost:1313/loadup-parent/site.webmanifest">
-<meta property="og:title" content="" />
-<meta property="og:description" content="LoadUp Framework link
-
-🚀 项目简介 linkLoadUp Framework 是一个基于 Spring Boot 的企业级微服务开发框架，采用 Monorepo（单仓库）多模块架构
-设计，提供了一系列可复用的基础组件和最佳实践，帮助团队快速构建高质量、高性能的企业应用。
-核心特性 link
-✅ 模块化设计 - 清晰的模块边界，单一职责原则，严格的依赖管理
-✅ 开箱即用 - 自动配置，最小化配置原则，快速启动
-✅ 高性能 - 基于 JDK 21 虚拟线程，优化的数据库访问和缓存策略
-✅ 可扩展 - 插件化架构，支持业务定制扩展
-✅ 企业级 - 完善的安全机制、链路追踪、监控告警
-✅ 测试友好 - 内置测试框架 Testify，支持单元测试和集成测试
+  ">
+<meta
+  property="og:type"
+  content="
+    website
+  ">
+<meta property="og:url" content="http://localhost:51736/loadup-parent/docs/">
 
 
-📚 技术栈 link
-	
-			
-					技术领域
-					技术选型
-					版本
-			
-	
-	
-			
-					编程语言
-					Java
-					21
-			
-			
-					应用框架
-					Spring Boot
-					4.1.0
-			
-			
-					持久层框架
-					MyBatis-Flex
-					1.11.7
-			
-			
-					数据库
-					MySQL
-					8.0&#43;
-			
-			
-					缓存
-					Redis (Redisson)
-					3.x
-			
-			
-					API 网关
-					Custom Gateway
-					-
-			
-			
-					认证授权
-					JWT &#43; RBAC
-					-
-			
-			
-					API 文档
-					knife4j &#43; OpenAPI v3
-					4.5.0
-			
-			
-					链路追踪
-					OpenTelemetry
-					1.43.0
-			
-			
-					任务调度
-					Quartz/XXL-Job
-					-
-			
-			
-					API 文档
-					OpenAPI (Swagger)
-					v3
-			
-			
-					测试框架
-					JUnit 5, Mockito, Testcontainers
-					-
-			
-			
-					构建工具
-					Maven
-					3.6&#43;
-			
-	
+	<meta itemprop="name" content="文档">
+	<meta itemprop="description" content="LoadUp 是供 Spring Boot 应用按需引入的框架/SDK。使用 loadup-dependencies BOM 管理版本， 再选择需要的技术组件或通用业务模块。loadup-application 用于本地集成验证。
+按任务查找 任务 页面 引入 BOM、管理版本 依赖管理 选择缓存、数据库、认证等能力 技术组件 接入用户权限管理 业务模块 使用基础 DTO、日志与链路追踪 通用基础 编写集成测试 Testify 运行本地验证应用 Application 每个能力的页面先介绍用途、接入与配置，再说明内部设计。技术子模块可从所属能力页继续查看。">
+	<meta itemprop="wordCount" content="28">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="文档">
+	<meta name="twitter:description" content="LoadUp 是供 Spring Boot 应用按需引入的框架/SDK。使用 loadup-dependencies BOM 管理版本， 再选择需要的技术组件或通用业务模块。loadup-application 用于本地集成验证。
+按任务查找 任务 页面 引入 BOM、管理版本 依赖管理 选择缓存、数据库、认证等能力 技术组件 接入用户权限管理 业务模块 使用基础 DTO、日志与链路追踪 通用基础 编写集成测试 Testify 运行本地验证应用 Application 每个能力的页面先介绍用途、接入与配置，再说明内部设计。技术子模块可从所属能力页继续查看。">
+<link href="/loadup-parent/css/compiled/main.css" rel="stylesheet" />
+    <link href="/loadup-parent/css/variables.css" rel="stylesheet" />
+    <link href="/loadup-parent/css/custom.css" rel="stylesheet" />
 
+  
+<script src="/loadup-parent/js/main-head.js" integrity=""></script>
 
-🏗️ 架构概览 linkLoadUp Framework 采用分层架构设计，各模块职责清晰，依赖关系单向：" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://localhost:1313/loadup-parent/docs/" /><meta property="og:image" content="http://localhost:1313/loadup-parent/opengraph/card-base-2_hu_ffd0205e2460bd09.png"/><meta property="article:section" content="" />
-
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="http://localhost:1313/loadup-parent/opengraph/card-base-2_hu_ffd0205e2460bd09.png"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="LoadUp Framework link
-
-🚀 项目简介 linkLoadUp Framework 是一个基于 Spring Boot 的企业级微服务开发框架，采用 Monorepo（单仓库）多模块架构
-设计，提供了一系列可复用的基础组件和最佳实践，帮助团队快速构建高质量、高性能的企业应用。
-核心特性 link
-✅ 模块化设计 - 清晰的模块边界，单一职责原则，严格的依赖管理
-✅ 开箱即用 - 自动配置，最小化配置原则，快速启动
-✅ 高性能 - 基于 JDK 21 虚拟线程，优化的数据库访问和缓存策略
-✅ 可扩展 - 插件化架构，支持业务定制扩展
-✅ 企业级 - 完善的安全机制、链路追踪、监控告警
-✅ 测试友好 - 内置测试框架 Testify，支持单元测试和集成测试
-
-
-📚 技术栈 link
-	
-			
-					技术领域
-					技术选型
-					版本
-			
-	
-	
-			
-					编程语言
-					Java
-					21
-			
-			
-					应用框架
-					Spring Boot
-					4.1.0
-			
-			
-					持久层框架
-					MyBatis-Flex
-					1.11.7
-			
-			
-					数据库
-					MySQL
-					8.0&#43;
-			
-			
-					缓存
-					Redis (Redisson)
-					3.x
-			
-			
-					API 网关
-					Custom Gateway
-					-
-			
-			
-					认证授权
-					JWT &#43; RBAC
-					-
-			
-			
-					API 文档
-					knife4j &#43; OpenAPI v3
-					4.5.0
-			
-			
-					链路追踪
-					OpenTelemetry
-					1.43.0
-			
-			
-					任务调度
-					Quartz/XXL-Job
-					-
-			
-			
-					API 文档
-					OpenAPI (Swagger)
-					v3
-			
-			
-					测试框架
-					JUnit 5, Mockito, Testcontainers
-					-
-			
-			
-					构建工具
-					Maven
-					3.6&#43;
-			
-	
-
-
-🏗️ 架构概览 linkLoadUp Framework 采用分层架构设计，各模块职责清晰，依赖关系单向："/>
-
-    
-        <link rel="alternate" type="application/atom+xml" title="Atom feed for LoadUp Framework" href="/index.xml" />
-    
-    
-    
-            
-                <script type="text/javascript" src="http://localhost:1313/loadup-parent/docs/js/flexsearch.bundle.js"></script>
-            
-        
-    
-    
-
-    <link rel="stylesheet" href="/loadup-parent/docs/scss/style.css" crossorigin="anonymous">
-    
-    
-    </head>
+  
+  
+  </head>
 <body>
-        <div class="content">
-            <div class="page-wrapper toggled">
-<nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-brand">
-        <a href='/loadup-parent/' aria-label="HomePage" alt="HomePage">
-            
-                <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="m143,39.5c-18,0-18,18-18,18,0,0,0-18-18-18H22c-2.76,0-5,2.24-5,5v143c0,2.76,2.24,5,5,5h76c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h76c2.76,0,5-2.24,5-5V44.5c0-2.76-2.24-5-5-5h-85Zm63,123.5c0,1.38-1.12,2.5-2.5,2.5h-60.5c-18,0-18,18-18,18,0,0,0-18-18-18h-60.5c-1.38,0-2.5-1.12-2.5-2.5v-94c0-1.38,1.12-2.5,2.5-2.5h51.5c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h51.5c1.38,0,2.5,1.12,2.5,2.5v94Z" style="fill:#06f;"/></svg>
-            
-        </a>
-    </div>
-    <div class="sidebar-content" style="height: calc(100% - 131px);">
-        <ul class="sidebar-menu">
-            
-        </ul>
-        
-    </div>
-    
-        <ul class="sidebar-footer list-unstyled mb-0">
-            
-        </ul>
-    
-</nav>
+    <a href="#content" class="hx:sr-only hx:focus-visible:not-sr-only hx:focus-visible:fixed hx:focus-visible:z-50 hx:focus-visible:top-2 hx:focus-visible:left-2 hx:focus-visible:bg-primary-500 hx:focus-visible:text-white hx:focus-visible:px-4 hx:focus-visible:py-2 hx:focus-visible:rounded-md hx:focus-visible:text-sm hx:focus-visible:font-medium">跳至内容</a><div class="hextra-nav-container hx:sticky hx:top-0 hx:z-20 hx:w-full hx:bg-transparent hx:print:hidden">
+  <div
+    class="hextra-nav-container-blur hx:pointer-events-none hx:absolute hx:z-[-1] hx:h-full hx:w-full hx:bg-white hx:dark:bg-dark hx:shadow-[0_2px_4px_rgba(0,0,0,.02),0_1px_0_rgba(0,0,0,.06)] hx:contrast-more:shadow-[0_0_0_1px_#000] hx:dark:shadow-[0_-1px_0_rgba(255,255,255,.1)_inset] hx:contrast-more:dark:shadow-[0_0_0_1px_#fff]"
+  ></div>
 
-                    <main class="page-content bg-transparent">
-                        
-<div id="top-header" class="top-header d-print-none">
-    <div class="header-bar d-flex justify-content-between">
-        <div class="d-flex align-items-center">
-            <a href='/loadup-parent/' class="logo-icon me-3" aria-label="HomePage" alt="HomePage">
-                <div class="small">
-                    
-                            <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="m143,39.5c-18,0-18,18-18,18,0,0,0-18-18-18H22c-2.76,0-5,2.24-5,5v143c0,2.76,2.24,5,5,5h76c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h76c2.76,0,5-2.24,5-5V44.5c0-2.76-2.24-5-5-5h-85Zm63,123.5c0,1.38-1.12,2.5-2.5,2.5h-60.5c-18,0-18,18-18,18,0,0,0-18-18-18h-60.5c-1.38,0-2.5-1.12-2.5-2.5v-94c0-1.38,1.12-2.5,2.5-2.5h51.5c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h51.5c1.38,0,2.5,1.12,2.5,2.5v94Z" style="fill:#06f;"/></svg>
-                    
-                </div>
-                <div class="big">
-                    
-                            <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="m143,39.5c-18,0-18,18-18,18,0,0,0-18-18-18H22c-2.76,0-5,2.24-5,5v143c0,2.76,2.24,5,5,5h76c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h76c2.76,0,5-2.24,5-5V44.5c0-2.76-2.24-5-5-5h-85Zm63,123.5c0,1.38-1.12,2.5-2.5,2.5h-60.5c-18,0-18,18-18,18,0,0,0-18-18-18h-60.5c-1.38,0-2.5-1.12-2.5-2.5v-94c0-1.38,1.12-2.5,2.5-2.5h51.5c7.2,0,8.64,11.52,8.93,16.13.07,1.05.95,1.87,2,1.87h32.14c1.06,0,1.94-.82,2-1.87.29-4.61,1.73-16.13,8.93-16.13h51.5c1.38,0,2.5,1.12,2.5,2.5v94Z" style="fill:#06f;"/></svg>
-                    
-                </div>
-            </a>
-            <button id="close-sidebar" class="btn btn-icon btn-soft">
-                <span class="material-icons size-20 menu-icon align-middle">menu</span>
-            </button>
-            
-            
-                    
-                    <button id="flexsearch-button" class="ms-3 btn btn-soft" data-bs-toggle="collapse" data-bs-target="#FlexSearchCollapse" aria-expanded="false" aria-controls="FlexSearchCollapse">
-                        <span class="material-icons size-20 menu-icon align-middle">search</span>
-                        <span class="flexsearch-button-placeholder ms-1 me-2 d-none d-sm-block">Search</span>
-                        <div class="d-none d-sm-block">
-                            <span class="flexsearch-button-keys">
-                                <kbd class="flexsearch-button-cmd-key">
-                                    <svg width="44" height="15"><path d="M2.118,11.5A1.519,1.519,0,0,1,1,11.042,1.583,1.583,0,0,1,1,8.815a1.519,1.519,0,0,1,1.113-.458h.715V6.643H2.118A1.519,1.519,0,0,1,1,6.185,1.519,1.519,0,0,1,.547,5.071,1.519,1.519,0,0,1,1,3.958,1.519,1.519,0,0,1,2.118,3.5a1.519,1.519,0,0,1,1.114.458A1.519,1.519,0,0,1,3.69,5.071v.715H5.4V5.071A1.564,1.564,0,0,1,6.976,3.5,1.564,1.564,0,0,1,8.547,5.071,1.564,1.564,0,0,1,6.976,6.643H6.261V8.357h.715a1.575,1.575,0,0,1,1.113,2.685,1.583,1.583,0,0,1-2.227,0A1.519,1.519,0,0,1,5.4,9.929V9.214H3.69v.715a1.519,1.519,0,0,1-.458,1.113A1.519,1.519,0,0,1,2.118,11.5Zm0-.857a.714.714,0,0,0,.715-.714V9.214H2.118a.715.715,0,1,0,0,1.429Zm4.858,0a.715.715,0,1,0,0-1.429H6.261v.715a.714.714,0,0,0,.715.714ZM3.69,8.357H5.4V6.643H3.69ZM2.118,5.786h.715V5.071a.714.714,0,0,0-.715-.714.715.715,0,0,0-.5,1.22A.686.686,0,0,0,2.118,5.786Zm4.143,0h.715a.715.715,0,0,0,.5-1.22.715.715,0,0,0-1.22.5Z" fill="currentColor"></path><path d="M12.4,11.475H11.344l3.879-7.95h1.056Z" fill="currentColor"></path><path d="M25.073,5.384l-.864.576a2.121,2.121,0,0,0-1.786-.923,2.207,2.207,0,0,0-2.266,2.326,2.206,2.206,0,0,0,2.266,2.325,2.1,2.1,0,0,0,1.782-.918l.84.617a3.108,3.108,0,0,1-2.622,1.293,3.217,3.217,0,0,1-3.349-3.317,3.217,3.217,0,0,1,3.349-3.317A3.046,3.046,0,0,1,25.073,5.384Z" fill="currentColor"></path><path d="M30.993,5.142h-2.07v5.419H27.891V5.142h-2.07V4.164h5.172Z" fill="currentColor"></path><path d="M34.67,4.164c1.471,0,2.266.658,2.266,1.851,0,1.087-.832,1.809-2.134,1.855l2.107,2.691h-1.28L33.591,7.87H33.07v2.691H32.038v-6.4Zm-1.6.969v1.8h1.572c.832,0,1.22-.3,1.22-.918s-.411-.882-1.22-.882Z" fill="currentColor"></path><path d="M42.883,10.561H38.31v-6.4h1.033V9.583h3.54Z" fill="currentColor"></path></svg>
-                                </kbd>
-                                <kbd class="flexsearch-button-key">
-                                    <svg width="15" height="15"><path d="M5.926,12.279H4.41L9.073,2.721H10.59Z" fill="currentColor"/></svg>
-                                </kbd>
-                            </span>
-                        </div>
-                    </button>
-                
-            </div>
+  <nav class="hextra-max-navbar-width hx:mx-auto hx:flex hx:items-center hx:justify-end hx:gap-2 hx:h-16 hx:px-6">
+    <a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="/loadup-parent/">
+    <span class="hx:mr-2 hx:font-extrabold hx:inline hx:select-none">LoadUp Framework</span>
+</a>
+<a
+  title=""
+  href="/loadup-parent/docs"
+  
+  class="hx:text-sm hx:contrast-more:text-gray-700 hx:contrast-more:dark:text-gray-100 hx:relative hx:-ml-2 hx:hidden hx:whitespace-nowrap hx:p-2 hx:md:inline-flex hx:items-center hx:gap-1 hx:font-medium"
+><span class="hx:text-center">文档</span>
+</a><div class="hextra-search-wrapper hx:relative hx:md:w-64">
+  <div class="hx:relative hx:flex hx:items-center hx:text-gray-900 hx:contrast-more:text-gray-800 hx:dark:text-gray-300 hx:contrast-more:dark:text-gray-300">
+    <input
+      placeholder="搜索文档..."
+      aria-label="搜索文档..."
+      class="hextra-search-input hx:hextra-focus-visible hx:block hx:w-full hx:appearance-none hx:rounded-lg hx:px-3 hx:py-2 hx:transition-colors hx:text-base hx:leading-tight hx:md:text-sm hx:bg-black/[.05] hx:dark:bg-gray-50/10 hx:focus-visible:bg-white hx:dark:focus-visible:bg-dark hx:placeholder:text-gray-500 hx:dark:placeholder:text-gray-400 hx:contrast-more:border hx:contrast-more:border-current"
+      type="search"
+      autocomplete="off"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="hx:absolute hx:my-1.5 hx:select-none hx:ltr:right-1.5 hx:rtl:left-1.5 hx:h-5 hx:rounded-sm hx:bg-white hx:px-1.5 hx:font-mono hx:text-[10px] hx:font-medium hx:text-gray-500 hx:border hx:border-gray-200 hx:dark:border-gray-100/20 hx:dark:bg-dark/50 hx:contrast-more:border-current hx:contrast-more:text-current hx:contrast-more:dark:border-current hx:items-center hx:gap-1 hx:transition-opacity hx:pointer-events-none hx:hidden hx:sm:flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
 
-        <div class="d-flex align-items-center">
-            <ul class="list-unstyled mb-0">
-                
-            </ul>
-            
-        </div>
-    </div>
-    
-    
-            <div class="collapse" id="FlexSearchCollapse">
-                <div class="flexsearch-container">
-                    <div class="flexsearch-keymap">
-                        <li>
-                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8M10.5 8.5l-3 3-3-3"></path></g></svg></kbd>
-                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8M10.5 6.5l-3-3-3 3"></path></g></svg></kbd>
-                            <span class="flexsearch-key-label">to navigate</span>
-                        </li>
-                        <li>
-                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4M7 11.53088l-3-3 3-3"></path></g></svg></kbd>
-                            <span class="flexsearch-key-label">to select</span>
-                        </li>
-                        <li>
-                            <kbd class="flexsearch-button-cmd-key"><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956"></path></g></svg></kbd>
-                            <span class="flexsearch-key-label">to close</span>
-                        </li>
-                    </div>
-                    <form class="flexsearch position-relative flex-grow-1 ms-2 me-2">
-                        <div class="d-flex flex-row">
-                            <input id="flexsearch" class="form-control" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
-                            <button id="hideFlexsearch" type="button" class="ms-2 btn btn-soft">
-                                cancel
-                            </button>
-                        </div>
-                        <div id="suggestions" class="shadow rounded-1 d-none"></div>
-                    </form>
-                </div>
-            </div>
-        
-    
-    
+  <div>
+    <ul
+      class="hextra-search-results hextra-scrollbar hx:hidden hx:border hx:border-gray-200 hx:bg-white hx:text-gray-100 hx:dark:border-neutral-800 hx:dark:bg-neutral-900 hx:absolute hx:top-full hx:z-20 hx:mt-2 hx:overflow-auto hx:overscroll-contain hx:rounded-xl hx:py-2.5 hx:shadow-xl hx:max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] hx:md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx:inset-x-0 hx:ltr:md:left-auto hx:rtl:md:right-auto hx:contrast-more:border hx:contrast-more:border-gray-900 hx:contrast-more:dark:border-gray-50 hx:w-screen hx:min-h-[100px] hx:max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      aria-label="搜索结果"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+    <div class="hextra-search-status hx:sr-only" aria-live="polite" role="status"></div>
+  </div>
 </div>
 
+          <a class="hx:p-2 hx:text-current" target="_blank" rel="noreferrer" href="https://github.com/loadup-cloud/loadup-framework" title="GitHub"><svg height=24 fill="currentColor" viewBox="3 3 18 18">
+  <path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path>
+</svg>
+<span class="hx:sr-only">GitHub</span>
+          </a><button type="button" aria-label="菜单" aria-expanded="false" class="hextra-hamburger-menu hx:cursor-pointer hx:-mr-2 hx:rounded-sm hx:p-2 hx:active:bg-gray-400/20 hx:md:hidden hx:hextra-focus-visible-inset"><svg height=24 fill="none" viewBox="0 0 24 24" stroke="currentColor"><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8H20"></path></g><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16H20"></path></g></svg></button>
+  </nav>
+</div>
 
-                            <div class="container-fluid">
-                                <div class="layout-spacing">
-                                    
-                                        <div class="d-md-flex justify-content-between align-items-center"><nav aria-label="breadcrumb" class="d-inline-block pb-2 mt-1 mt-sm-0">
-    <ul id="breadcrumbs" class="breadcrumb bg-transparent mb-0" itemscope itemtype="https://schema.org/BreadcrumbList">
-        
-        
-            <li class="breadcrumb-item text-capitalize active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <span itemprop="name"></span>
-                <meta itemprop="position" content='1' />
+  <div class='hx:mx-auto hx:flex hextra-max-page-width'>
+    <aside class="hextra-sidebar-container hx:flex hx:flex-col hx:print:hidden hx:md:top-16 hx:md:shrink-0 hx:md:w-64 hx:md:self-start hx:max-md:[transform:translate3d(0,-100%,0)] hx:md:sticky">
+    <div class="hx:px-4 hx:pt-4 hx:md:hidden">
+      <div class="hextra-search-wrapper hx:relative hx:md:w-64">
+  <div class="hx:relative hx:flex hx:items-center hx:text-gray-900 hx:contrast-more:text-gray-800 hx:dark:text-gray-300 hx:contrast-more:dark:text-gray-300">
+    <input
+      placeholder="搜索文档..."
+      aria-label="搜索文档..."
+      class="hextra-search-input hx:hextra-focus-visible hx:block hx:w-full hx:appearance-none hx:rounded-lg hx:px-3 hx:py-2 hx:transition-colors hx:text-base hx:leading-tight hx:md:text-sm hx:bg-black/[.05] hx:dark:bg-gray-50/10 hx:focus-visible:bg-white hx:dark:focus-visible:bg-dark hx:placeholder:text-gray-500 hx:dark:placeholder:text-gray-400 hx:contrast-more:border hx:contrast-more:border-current"
+      type="search"
+      autocomplete="off"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="hx:absolute hx:my-1.5 hx:select-none hx:ltr:right-1.5 hx:rtl:left-1.5 hx:h-5 hx:rounded-sm hx:bg-white hx:px-1.5 hx:font-mono hx:text-[10px] hx:font-medium hx:text-gray-500 hx:border hx:border-gray-200 hx:dark:border-gray-100/20 hx:dark:bg-dark/50 hx:contrast-more:border-current hx:contrast-more:text-current hx:contrast-more:dark:border-current hx:items-center hx:gap-1 hx:transition-opacity hx:pointer-events-none hx:hidden hx:sm:flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
+
+  <div>
+    <ul
+      class="hextra-search-results hextra-scrollbar hx:hidden hx:border hx:border-gray-200 hx:bg-white hx:text-gray-100 hx:dark:border-neutral-800 hx:dark:bg-neutral-900 hx:absolute hx:top-full hx:z-20 hx:mt-2 hx:overflow-auto hx:overscroll-contain hx:rounded-xl hx:py-2.5 hx:shadow-xl hx:max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] hx:md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx:inset-x-0 hx:ltr:md:left-auto hx:rtl:md:right-auto hx:contrast-more:border hx:contrast-more:border-gray-900 hx:contrast-more:dark:border-gray-50 hx:w-screen hx:min-h-[100px] hx:max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      aria-label="搜索结果"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+    <div class="hextra-search-status hx:sr-only" aria-live="polite" role="status"></div>
+  </div>
+</div>
+
+    </div><div class="hextra-scrollbar hx:overflow-y-auto hx:overflow-x-hidden hx:p-4 hx:grow hx:md:h-[calc(100vh-var(--navbar-height)-var(--menu-height))]">
+    <ul class="hx:flex hx:flex-col hx:gap-1 hx:md:hidden">
+      
+      
+              <li class="open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      href="/loadup-parent/docs/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">文档</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div>
+  
+    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
+              <a
+                href="#%e6%8c%89%e4%bb%bb%e5%8a%a1%e6%9f%a5%e6%89%be"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >按任务查找</a>
             </li>
-        
+          </ul>
+  <div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/dependencies/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp BOM</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Commons</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div>
+              <div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-dto/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Common DTO</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-log/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Log</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-tracer/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Tracer</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-util/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Common Utils</span>
+    </a>
+  </div>
+              
+            </li></ul>
+      </div>
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/modules/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Modules</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div>
+              <div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/modules/upms/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">UPMS</span>
+    </a>
+  </div>
+              
+            </li></ul>
+      </div>
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/testing/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Testify</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/application/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">本地集成启动器</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">技术组件</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div>
+              <div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/authorization/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Authorization</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/authserver/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">AuthServer</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/cache/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Cache Component</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/database/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Database</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/extension/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Components Extension</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/globalunique/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Global Unique</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/pipeline/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Pipeline</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/signature/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Signature</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/springdoc/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components SpringDoc</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/testcontainers/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components TestContainers</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/dfs/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp DFS</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/gotone/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Gotone</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/resilience4j/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resilience4j</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/resource-server/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resource Server</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/retrytask/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp RetryTask</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/scheduler/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Scheduler</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/captcha/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">loadup-components-captcha</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/configcenter/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">loadup-components-configcenter</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/webmvc/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Web MVC</span>
+    </a>
+  </div>
+              
+            </li></ul>
+      </div>
+            </li></ul>
+      </div></li>
     </ul>
-</nav></div>
-                                    
-                                    <div class="row flex-xl-nowrap">
-                                        
-                                        <div class="docs-toc col-xl-3    d-xl-block"><toc>
-    <div class="fw-bold text-uppercase mb-2">On this page</div>
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#-项目简介">🚀 项目简介</a>
-      <ul>
-        <li><a href="#核心特性">核心特性</a></li>
-      </ul>
-    </li>
-    <li><a href="#-技术栈">📚 技术栈</a></li>
-    <li><a href="#-架构概览">🏗️ 架构概览</a>
-      <ul>
-        <li><a href="#核心模块说明">核心模块说明</a></li>
-        <li><a href="#依赖关系规则">依赖关系规则</a></li>
-      </ul>
-    </li>
-    <li><a href="#-快速开始">🎯 快速开始</a>
-      <ul>
-        <li><a href="#前置要求">前置要求</a></li>
-        <li><a href="#第一步引入-bom-依赖管理">第一步：引入 BOM 依赖管理</a></li>
-        <li><a href="#第二步添加所需组件">第二步：添加所需组件</a></li>
-        <li><a href="#第三步启动应用">第三步：启动应用</a></li>
-      </ul>
-    </li>
-    <li><a href="#-核心组件">📦 核心组件</a>
-      <ul>
-        <li><a href="#commons-通用基础层">Commons 通用基础层</a></li>
-        <li><a href="#components-技术组件层">Components 技术组件层</a></li>
-        <li><a href="#modules-业务模块层">Modules 业务模块层</a></li>
-        <li><a href="#gateway-网关模块">Gateway 网关模块</a></li>
-        <li><a href="#testify-测试框架">Testify 测试框架</a></li>
-      </ul>
-    </li>
-    <li><a href="#-开发指南">🛠️ 开发指南</a>
-      <ul>
-        <li><a href="#ai-辅助开发">AI 辅助开发</a></li>
-        <li><a href="#代码规范">代码规范</a></li>
-        <li><a href="#最佳实践">最佳实践</a></li>
-      </ul>
-    </li>
-    <li><a href="#-故障排查">🔧 故障排查</a></li>
-    <li><a href="#-完整文档导航">📖 完整文档导航</a>
-      <ul>
-        <li><a href="#入门指南">入门指南</a></li>
-      </ul>
-    </li>
-    <li><a href="#-文档导航">📚 文档导航</a>
-      <ul>
-        <li><a href="#核心文档">核心文档</a></li>
-        <li><a href="#开发者资源">开发者资源</a></li>
-      </ul>
-    </li>
-    <li><a href="#-参与贡献">🤝 参与贡献</a></li>
-    <li><a href="#-许可证">📄 许可证</a></li>
-    <li><a href="#-联系我们">📞 联系我们</a></li>
-  </ul>
-</nav>
-    </toc></div>
-                                        
-                                        
-                                        <div class="docs-toc-mobile    d-print-none d-xl-none">
-                                            <button id="toc-dropdown-btn" class="btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="false">
-                                                Table of Contents
-                                            </button>
-<nav id="toc-mobile">
-  <ul class="dropdown-menu">
-    <li><a href="#-项目简介">🚀 项目简介</a>
-      <ul>
-        <li><a href="#核心特性">核心特性</a></li>
-      </ul>
-    </li>
-    <li><a href="#-技术栈">📚 技术栈</a></li>
-    <li><a href="#-架构概览">🏗️ 架构概览</a>
-      <ul>
-        <li><a href="#核心模块说明">核心模块说明</a></li>
-        <li><a href="#依赖关系规则">依赖关系规则</a></li>
-      </ul>
-    </li>
-    <li><a href="#-快速开始">🎯 快速开始</a>
-      <ul>
-        <li><a href="#前置要求">前置要求</a></li>
-        <li><a href="#第一步引入-bom-依赖管理">第一步：引入 BOM 依赖管理</a></li>
-        <li><a href="#第二步添加所需组件">第二步：添加所需组件</a></li>
-        <li><a href="#第三步启动应用">第三步：启动应用</a></li>
-      </ul>
-    </li>
-    <li><a href="#-核心组件">📦 核心组件</a>
-      <ul>
-        <li><a href="#commons-通用基础层">Commons 通用基础层</a></li>
-        <li><a href="#components-技术组件层">Components 技术组件层</a></li>
-        <li><a href="#modules-业务模块层">Modules 业务模块层</a></li>
-        <li><a href="#gateway-网关模块">Gateway 网关模块</a></li>
-        <li><a href="#testify-测试框架">Testify 测试框架</a></li>
-      </ul>
-    </li>
-    <li><a href="#-开发指南">🛠️ 开发指南</a>
-      <ul>
-        <li><a href="#ai-辅助开发">AI 辅助开发</a></li>
-        <li><a href="#代码规范">代码规范</a></li>
-        <li><a href="#最佳实践">最佳实践</a></li>
-      </ul>
-    </li>
-    <li><a href="#-故障排查">🔧 故障排查</a></li>
-    <li><a href="#-完整文档导航">📖 完整文档导航</a>
-      <ul>
-        <li><a href="#入门指南">入门指南</a></li>
-      </ul>
-    </li>
-    <li><a href="#-文档导航">📚 文档导航</a>
-      <ul>
-        <li><a href="#核心文档">核心文档</a></li>
-        <li><a href="#开发者资源">开发者资源</a></li>
-      </ul>
-    </li>
-    <li><a href="#-参与贡献">🤝 参与贡献</a></li>
-    <li><a href="#-许可证">📄 许可证</a></li>
-    <li><a href="#-联系我们">📞 联系我们</a></li>
-  </ul>
-</nav></div>
-                                        <div class="docs-content col-12 col-xl-9 mt-0">
-                                            <div class="mb-0 d-flex">
-                                                
-                                                <h1 class="content-title mb-0">
-                                                    
-                                                    
-                                                </h1>
-                                            </div>
-                                            
-                                            <div id="content" class="main-content" >
-                                                
-    
-    <div data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-error="">
-        <h1 id="loadup-framework">LoadUp Framework <a href="#loadup-framework" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h1><!-- raw HTML omitted -->
-<hr>
-<h2 id="-项目简介">🚀 项目简介 <a href="#-%e9%a1%b9%e7%9b%ae%e7%ae%80%e4%bb%8b" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>LoadUp Framework 是一个基于 Spring Boot 的企业级微服务开发框架，采用 <strong>Monorepo（单仓库）多模块架构</strong>
-设计，提供了一系列可复用的基础组件和最佳实践，帮助团队快速构建高质量、高性能的企业应用。</p>
-<h3 id="核心特性">核心特性 <a href="#%e6%a0%b8%e5%bf%83%e7%89%b9%e6%80%a7" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li>✅ <strong>模块化设计</strong> - 清晰的模块边界，单一职责原则，严格的依赖管理</li>
-<li>✅ <strong>开箱即用</strong> - 自动配置，最小化配置原则，快速启动</li>
-<li>✅ <strong>高性能</strong> - 基于 JDK 21 虚拟线程，优化的数据库访问和缓存策略</li>
-<li>✅ <strong>可扩展</strong> - 插件化架构，支持业务定制扩展</li>
-<li>✅ <strong>企业级</strong> - 完善的安全机制、链路追踪、监控告警</li>
-<li>✅ <strong>测试友好</strong> - 内置测试框架 Testify，支持单元测试和集成测试</li>
-</ul>
-<hr>
-<h2 id="-技术栈">📚 技术栈 <a href="#-%e6%8a%80%e6%9c%af%e6%a0%88" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><table>
-	<thead>
-			<tr>
-					<th>技术领域</th>
-					<th>技术选型</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>编程语言</td>
-					<td>Java</td>
-					<td>21</td>
-			</tr>
-			<tr>
-					<td>应用框架</td>
-					<td>Spring Boot</td>
-					<td>4.1.0</td>
-			</tr>
-			<tr>
-					<td>持久层框架</td>
-					<td>MyBatis-Flex</td>
-					<td>1.11.7</td>
-			</tr>
-			<tr>
-					<td>数据库</td>
-					<td>MySQL</td>
-					<td>8.0+</td>
-			</tr>
-			<tr>
-					<td>缓存</td>
-					<td>Redis (Redisson)</td>
-					<td>3.x</td>
-			</tr>
-			<tr>
-					<td>API 网关</td>
-					<td>Custom Gateway</td>
-					<td>-</td>
-			</tr>
-			<tr>
-					<td>认证授权</td>
-					<td>JWT + RBAC</td>
-					<td>-</td>
-			</tr>
-			<tr>
-					<td>API 文档</td>
-					<td>knife4j + OpenAPI v3</td>
-					<td>4.5.0</td>
-			</tr>
-			<tr>
-					<td>链路追踪</td>
-					<td>OpenTelemetry</td>
-					<td>1.43.0</td>
-			</tr>
-			<tr>
-					<td>任务调度</td>
-					<td>Quartz/XXL-Job</td>
-					<td>-</td>
-			</tr>
-			<tr>
-					<td>API 文档</td>
-					<td>OpenAPI (Swagger)</td>
-					<td>v3</td>
-			</tr>
-			<tr>
-					<td>测试框架</td>
-					<td>JUnit 5, Mockito, Testcontainers</td>
-					<td>-</td>
-			</tr>
-			<tr>
-					<td>构建工具</td>
-					<td>Maven</td>
-					<td>3.6+</td>
-			</tr>
-	</tbody>
-</table>
-<hr>
-<h2 id="-架构概览">🏗️ 架构概览 <a href="#-%e6%9e%b6%e6%9e%84%e6%a6%82%e8%a7%88" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>LoadUp Framework 采用分层架构设计，各模块职责清晰，依赖关系单向：</p>
-<pre class="mermaid">graph TD
-    A[Application 启动层] --&gt; B[Modules 业务模块层]
-    G[Gateway 网关] --&gt; C[Components 组件层]
-    B --&gt; C
-    C --&gt; D[Commons 通用层]
-    D --&gt; E[Dependencies 依赖管理]
-    F[Testify 测试框架] -.独立.-&gt; C
-    
-    style A fill:#e1f5ff
-    style G fill:#fff4e1
-    style B fill:#f0f7ff
-    style C fill:#e8f5e9
-    style D fill:#fff9e1
-    style E fill:#f3e5f5
-    style F fill:#fce4ec
-</pre>
-<h3 id="核心模块说明">核心模块说明 <a href="#%e6%a0%b8%e5%bf%83%e6%a8%a1%e5%9d%97%e8%af%b4%e6%98%8e" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><table>
-	<thead>
-			<tr>
-					<th>模块</th>
-					<th>说明</th>
-					<th>主要功能</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td><strong>loadup-dependencies</strong></td>
-					<td>依赖管理 BOM</td>
-					<td>统一管理所有依赖版本，避免版本冲突</td>
-			</tr>
-			<tr>
-					<td><strong>loadup-commons</strong></td>
-					<td>通用基础层</td>
-					<td>提供 API 定义、DTO、工具类等基础能力</td>
-			</tr>
-			<tr>
-					<td><strong>loadup-components</strong></td>
-					<td>技术组件层</td>
-					<td>封装缓存、数据库、调度、追踪等技术组件</td>
-			</tr>
-			<tr>
-					<td><strong>loadup-modules</strong></td>
-					<td>业务模块层</td>
-					<td>业务功能模块（如 UPMS 用户权限管理）</td>
-			</tr>
-			<tr>
-					<td><strong>loadup-gateway</strong></td>
-					<td>API 网关</td>
-					<td>统一路由、认证、鉴权、限流、监控</td>
-			</tr>
-			<tr>
-					<td><strong>loadup-application</strong></td>
-					<td>应用启动层</td>
-					<td>Spring Boot 启动器，整合所有模块</td>
-			</tr>
-			<tr>
-					<td><strong>loadup-testify</strong></td>
-					<td>测试框架</td>
-					<td>提供完整的测试解决方案（独立模块）</td>
-			</tr>
-	</tbody>
-</table>
-<h3 id="依赖关系规则">依赖关系规则 <a href="#%e4%be%9d%e8%b5%96%e5%85%b3%e7%b3%bb%e8%a7%84%e5%88%99" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>遵循<strong>严格单向依赖</strong>原则，避免循环依赖：</p>
 
-
-    
-    <pre tabindex="0"><code>dependencies (基础)
-    ↑
-commons (通用层)
-    ↑
-components (组件层)
-    ↑
-modules (业务模块层)
-    ↑
-application (应用层)
-
-gateway (独立) ← → commons, components
-testify (独立测试框架)</code></pre>
-<p>详细架构设计请查看：📖 <a href="">架构设计文档</a></p>
-<hr>
-<h2 id="-快速开始">🎯 快速开始 <a href="#-%e5%bf%ab%e9%80%9f%e5%bc%80%e5%a7%8b" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="前置要求">前置要求 <a href="#%e5%89%8d%e7%bd%ae%e8%a6%81%e6%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li>JDK 21+</li>
-<li>Maven 3.6+</li>
-<li>MySQL 8.0+</li>
-<li>Redis 5.0+</li>
-</ul>
-<h3 id="第一步引入-bom-依赖管理">第一步：引入 BOM 依赖管理 <a href="#%e7%ac%ac%e4%b8%80%e6%ad%a5%e5%bc%95%e5%85%a5-bom-%e4%be%9d%e8%b5%96%e7%ae%a1%e7%90%86" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>在项目 <code>pom.xml</code> 中添加：</p>
-
-
-    
-    <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#7ee787">&lt;dependencyManagement&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;dependencies&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;groupId&gt;</span>io.github.loadup<span style="color:#7ee787">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;artifactId&gt;</span>loadup-dependencies<span style="color:#7ee787">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;version&gt;</span>1.0.0-SNAPSHOT<span style="color:#7ee787">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;type&gt;</span>pom<span style="color:#7ee787">&lt;/type&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#7ee787">&lt;scope&gt;</span>import<span style="color:#7ee787">&lt;/scope&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;/dependencies&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#7ee787">&lt;/dependencyManagement&gt;</span></span></span></code></pre></div>
-<h3 id="第二步添加所需组件">第二步：添加所需组件 <a href="#%e7%ac%ac%e4%ba%8c%e6%ad%a5%e6%b7%bb%e5%8a%a0%e6%89%80%e9%9c%80%e7%bb%84%e4%bb%b6" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3>
-
-    
-    <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#7ee787">&lt;dependencies&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">&lt;!-- 数据库组件 --&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;groupId&gt;</span>io.github.loadup<span style="color:#7ee787">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;artifactId&gt;</span>loadup-components-database<span style="color:#7ee787">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">&lt;!-- 缓存组件 --&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;groupId&gt;</span>io.github.loadup<span style="color:#7ee787">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7ee787">&lt;artifactId&gt;</span>loadup-components-cache<span style="color:#7ee787">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7ee787">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">&lt;!-- 更多组件... --&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#7ee787">&lt;/dependencies&gt;</span></span></span></code></pre></div>
-<h3 id="第三步启动应用">第三步：启动应用 <a href="#%e7%ac%ac%e4%b8%89%e6%ad%a5%e5%90%af%e5%8a%a8%e5%ba%94%e7%94%a8" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3>
-
-    
-    <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@SpringBootApplication</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#6e7681"> </span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Application</span><span style="color:#6e7681"> </span>{<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#ff7b72">public</span><span style="color:#6e7681"> </span><span style="color:#ff7b72">static</span><span style="color:#6e7681"> </span><span style="color:#ff7b72">void</span><span style="color:#6e7681"> </span><span style="color:#d2a8ff;font-weight:bold">main</span>(String<span style="color:#ff7b72;font-weight:bold">[]</span><span style="color:#6e7681"> </span>args)<span style="color:#6e7681"> </span>{<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>SpringApplication.run(Application.class,<span style="color:#6e7681"> </span>args);<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>}<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>完整的快速开始指南：📖 <a href="">快速开始文档</a></p>
-<hr>
-<h2 id="-核心组件">📦 核心组件 <a href="#-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="commons-通用基础层">Commons 通用基础层 <a href="#commons-%e9%80%9a%e7%94%a8%e5%9f%ba%e7%a1%80%e5%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>提供项目的基础能力和通用工具：</p>
-<ul>
-<li><strong><a href="">loadup-commons-api</a></strong> - API 定义、异常体系、常量定义</li>
-<li><strong><a href="">loadup-commons-dto</a></strong> - 通用 DTO、分页对象、响应封装</li>
-<li><strong><a href="">loadup-commons-util</a></strong> - 工具类库（日期、字符串、JSON 等）</li>
-</ul>
-<h3 id="components-技术组件层">Components 技术组件层 <a href="#components-%e6%8a%80%e6%9c%af%e7%bb%84%e4%bb%b6%e5%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>可复用的技术组件，开箱即用：</p>
-<table>
-	<thead>
-			<tr>
-					<th>组件</th>
-					<th>说明</th>
-					<th>文档</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td><strong>Database</strong></td>
-					<td>数据库访问（MyBatis-Flex + 审计）</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Cache</strong></td>
-					<td>缓存管理（Redis + Caffeine）</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Authorization</strong></td>
-					<td>认证授权（JWT + RBAC）</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Tracer</strong></td>
-					<td>链路追踪（OpenTelemetry）</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Scheduler</strong></td>
-					<td>任务调度（Quartz/XXL-Job）</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Captcha</strong></td>
-					<td>验证码生成</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>DFS</strong></td>
-					<td>分布式文件存储</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Liquibase</strong></td>
-					<td>数据库版本管理</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Extension</strong></td>
-					<td>扩展点机制</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-			<tr>
-					<td><strong>Testcontainers</strong></td>
-					<td>测试容器集成</td>
-					<td><a href="">查看文档</a></td>
-			</tr>
-	</tbody>
-</table>
-<p>更多组件说明：📖 <a href="">Components 概览</a></p>
-<h3 id="modules-业务模块层">Modules 业务模块层 <a href="#modules-%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9d%97%e5%b1%82" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>封装业务功能的可复用模块：</p>
-<ul>
-<li><strong><a href="modules/upms.md">UPMS (User Permission Management System)</a></strong> - 用户权限管理系统
-<ul>
-<li>用户管理</li>
-<li>角色管理</li>
-<li>权限管理</li>
-<li>组织架构管理</li>
-</ul>
-</li>
-</ul>
-<p>更多模块：📖 <a href="/loadup-parent/docs/modules/">Modules 概览</a></p>
-<h3 id="gateway-网关模块">Gateway 网关模块 <a href="#gateway-%e7%bd%91%e5%85%b3%e6%a8%a1%e5%9d%97" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>统一的 API 网关，提供：</p>
-<ul>
-<li>✅ 动态路由配置</li>
-<li>✅ JWT 认证与鉴权</li>
-<li>✅ 签名验签机制</li>
-<li>✅ 限流与熔断</li>
-<li>✅ 请求转发（HTTP/RPC/SpringBean）</li>
-<li>✅ 监控与日志</li>
-</ul>
-<p>详细文档：📖 <a href="">Gateway 网关文档</a></p>
-<h3 id="testify-测试框架">Testify 测试框架 <a href="#testify-%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>独立的测试解决方案：</p>
-<ul>
-<li>单元测试支持</li>
-<li>集成测试支持</li>
-<li>Mock 数据生成</li>
-<li>断言增强</li>
-<li>Testcontainers 集成</li>
-</ul>
-<p>详细文档：📖 <a href="">Testify 测试框架</a></p>
-<hr>
-<h2 id="-开发指南">🛠️ 开发指南 <a href="#-%e5%bc%80%e5%8f%91%e6%8c%87%e5%8d%97" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="ai-辅助开发">AI 辅助开发 <a href="#ai-%e8%be%85%e5%8a%a9%e5%bc%80%e5%8f%91" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><p>我们提供了完善的 AI 编码指令，帮助你使用 GitHub Copilot 或 Cursor 快速生成符合项目规范的代码：</p>
-<ul>
-<li>📖 <a href="copilot-instructions.md">GitHub Copilot 指令</a></li>
-<li>📖 <a href="">AI 项目上下文</a></li>
-</ul>
-<h3 id="代码规范">代码规范 <a href="#%e4%bb%a3%e7%a0%81%e8%a7%84%e8%8c%83" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li>遵循阿里巴巴 Java 开发手册</li>
-<li>使用 Spotless 自动格式化代码</li>
-<li>代码审查通过 CI/CD 自动检查</li>
-</ul>
-<h3 id="最佳实践">最佳实践 <a href="#%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li><strong>安全</strong>：所有密码字段必须 <code>@JsonIgnore</code>，敏感信息脱敏</li>
-<li><strong>性能</strong>：合理使用缓存，避免 N+1 查询问题</li>
-<li><strong>测试</strong>：单元测试覆盖率 ≥ 70%</li>
-<li><strong>日志</strong>：统一使用 <code>@Slf4j</code>，分级记录</li>
-<li><strong>异常</strong>：统一异常处理，使用 <code>BusinessException</code></li>
-</ul>
-<hr>
-<h2 id="-故障排查">🔧 故障排查 <a href="#-%e6%95%85%e9%9a%9c%e6%8e%92%e6%9f%a5" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>遇到问题？查看我们的故障排查指南：</p>
-<ul>
-<li>🔍 <a href="troubleshooting/">常见问题 FAQ</a></li>
-<li>🐛 <a href="">401 认证错误修复</a></li>
-<li>💡 <a href="">快速修复指南</a></li>
-</ul>
-<hr>
-<h2 id="-完整文档导航">📖 完整文档导航 <a href="#-%e5%ae%8c%e6%95%b4%e6%96%87%e6%a1%a3%e5%af%bc%e8%88%aa" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="入门指南">入门指南 <a href="#%e5%85%a5%e9%97%a8%e6%8c%87%e5%8d%97" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li><a href="">项目概览</a> - 深入了解项目背景和设计理念</li>
-<li><a href="">架构设计</a> - 详细的架构设计和模块划分</li>
-<li><a href="">快速开始</a> - 从零开始构建第一个应用</li>
-</ul>
-<h2 id="-文档导航">📚 文档导航 <a href="#-%e6%96%87%e6%a1%a3%e5%af%bc%e8%88%aa" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><h3 id="核心文档">核心文档 <a href="#%e6%a0%b8%e5%bf%83%e6%96%87%e6%a1%a3" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li><a href="">项目规划与路线图</a> - 项目发展规划、技术演进、业务模块规划</li>
-<li><a href="">Dependencies 依赖管理</a></li>
-<li><a href="">Commons 通用层</a></li>
-<li><a href="">Components 组件层</a></li>
-<li><a href="/loadup-parent/docs/modules/">Modules 业务模块</a></li>
-<li><a href="">Gateway 网关</a></li>
-<li><a href="">Application 应用层</a></li>
-<li><a href="">Testify 测试框架</a></li>
-</ul>
-<h3 id="开发者资源">开发者资源 <a href="#%e5%bc%80%e5%8f%91%e8%80%85%e8%b5%84%e6%ba%90" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h3><ul>
-<li><a href="">AI 编码指南</a></li>
-<li><a href="copilot-instructions.md">GitHub Copilot 指令</a></li>
-<li><a href="troubleshooting/">故障排查</a></li>
-</ul>
-<hr>
-<h2 id="-参与贡献">🤝 参与贡献 <a href="#-%e5%8f%82%e4%b8%8e%e8%b4%a1%e7%8c%ae" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>我们欢迎任何形式的贡献！</p>
-<ul>
-<li>🐛 提交 Bug 报告</li>
-<li>💡 提出新功能建议</li>
-<li>📖 改进文档</li>
-<li>🔧 提交代码 Pull Request</li>
-</ul>
-<p>详细贡献指南请查看项目的 CONTRIBUTING.md 文件。</p>
-<hr>
-<h2 id="-许可证">📄 许可证 <a href="#-%e8%ae%b8%e5%8f%af%e8%af%81" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><p>LoadUp Framework 采用 <a href="/loadup-parent/docs/LICENSE">Apache License 2.0</a> 开源协议。</p>
-<hr>
-<h2 id="-联系我们">📞 联系我们 <a href="#-%e8%81%94%e7%b3%bb%e6%88%91%e4%bb%ac" class="anchor" aria-hidden="true"><i class="material-icons align-middle">link</i></a></h2><ul>
-<li><strong>GitHub</strong>: <a href="https://github.com/loadup-cloud/loadup-framework" rel="external" target="_blank">https://github.com/loadup-cloud/loadup-framework<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M14 5c-.552 0-1-.448-1-1s.448-1 1-1h6c.552 0 1 .448 1 1v6c0 .552-.448 1-1 1s-1-.448-1-1v-3.586l-7.293 7.293c-.391.39-1.024.39-1.414 0-.391-.391-.391-1.024 0-1.414l7.293-7.293h-3.586zm-9 2c-.552 0-1 .448-1 1v11c0 .552.448 1 1 1h11c.552 0 1-.448 1-1v-4.563c0-.552.448-1 1-1s1 .448 1 1v4.563c0 1.657-1.343 3-3 3h-11c-1.657 0-3-1.343-3-3v-11c0-1.657 1.343-3 3-3h4.563c.552 0 1 .448 1 1s-.448 1-1 1h-4.563z"/></svg></a></li>
-<li><strong>文档站</strong>: <a href="https://loadup-cloud.laysan.site" rel="external" target="_blank">https://loadup-cloud.laysan.site<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M14 5c-.552 0-1-.448-1-1s.448-1 1-1h6c.552 0 1 .448 1 1v6c0 .552-.448 1-1 1s-1-.448-1-1v-3.586l-7.293 7.293c-.391.39-1.024.39-1.414 0-.391-.391-.391-1.024 0-1.414l7.293-7.293h-3.586zm-9 2c-.552 0-1 .448-1 1v11c0 .552.448 1 1 1h11c.552 0 1-.448 1-1v-4.563c0-.552.448-1 1-1s1 .448 1 1v4.563c0 1.657-1.343 3-3 3h-11c-1.657 0-3-1.343-3-3v-11c0-1.657 1.343-3 3-3h4.563c.552 0 1 .448 1 1s-.448 1-1 1h-4.563z"/></svg></a></li>
-</ul>
-<hr>
-<!-- raw HTML omitted -->
-
+    <ul class="hx:flex hx:flex-col hx:gap-1 hx:max-md:hidden">
+        
+            <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/dependencies/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp BOM</span>
+    </a>
+  </div></li>
+            <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Commons</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div><div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-dto/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Common DTO</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-log/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Log</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-tracer/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Common Tracer</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/commons/loadup-commons-util/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Common Utils</span>
+    </a>
+  </div>
+              
+            </li></ul>
+      </div></li>
+            <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/modules/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Modules</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div><div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/modules/upms/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">UPMS</span>
+    </a>
+  </div>
+              
+            </li></ul>
+      </div></li>
+            <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/testing/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Testify</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div></li>
+            <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/application/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">本地集成启动器</span>
+    </a>
+  </div></li>
+            <li class=""><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:ltr:pr-8 hx:rtl:pl-8 hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">技术组件</span>
+    </a>
+      <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="切换章节" aria-expanded="false"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
+  </div><div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/authorization/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Authorization</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/authserver/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">AuthServer</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/cache/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Cache Component</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/database/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Database</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/extension/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Loadup Components Extension</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/globalunique/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Global Unique</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/pipeline/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Pipeline</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/signature/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components Signature</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/springdoc/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components SpringDoc</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/testcontainers/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Components TestContainers</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/dfs/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp DFS</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/gotone/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Gotone</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/resilience4j/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resilience4j</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/resource-server/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Resource Server</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/retrytask/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp RetryTask</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/scheduler/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">LoadUp Scheduler</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/captcha/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">loadup-components-captcha</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/configcenter/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">loadup-components-configcenter</span>
+    </a>
+  </div>
+              
+            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+    <a
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      href="/loadup-parent/docs/components/webmvc/"
+      
+    >
+      <span class="hx:min-w-0 [word-break:break-word]">Web MVC</span>
+    </a>
+  </div>
+              
+            </li></ul>
+      </div></li>
+        
+      </ul>
     </div>
-
+  
+  
+    <div class="  hx:sticky hx:bottom-0 hx:max-h-(--menu-height) hx:bg-white hx:dark:bg-dark hx:mx-4 hx:py-4 hx:shadow-[0_-12px_16px_#fff] hx:flex hx:items-center hx:gap-2 hx:border-gray-200 hx:dark:border-neutral-800 hx:dark:shadow-[0_-12px_16px_#111] hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:shadow-none hx:border-t" data-toggle-animation="show"><div class="hx:flex hx:grow hx:flex-col"><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
+  <button
+    title="切换主题"
+    data-state="closed"
+    data-location="bottom"
+    class="hextra-theme-toggle hx:cursor-pointer hx:rounded-md hx:text-left hx:font-medium hx:h-7 hx:px-2 hx:text-xs hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:font-medium hx:text-gray-600 hx:transition-colors hx:dark:text-gray-400 hx:grow"
+    type="button"
+    aria-label="切换主题"
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
+    <div class="hx:flex hx:items-center hx:gap-2 hx:capitalize"><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden">浅色</span><svg height=12 class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden">深色</span><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor">
+  <path d="M 11.996094,2 C 6.4986225,2.0192368 2.03125,6.5024993 2.03125,12 c 0,5.497501 4.4673725,9.980763 9.964844,10 H 12 12.0039 c 5.497471,-0.01924 9.964844,-4.502499 9.964844,-10 0,-5.4975007 -4.467373,-9.9807632 -9.964844,-10 H 12 Z M 12,4 c 4.417218,0.017598 7.96875,3.5822356 7.96875,8 0,4.417764 -3.551532,7.982402 -7.96875,8 z" />
+</svg>
+<span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden">跟随系统</span></div>
+  </button>
+  <ul
+    class="hextra-theme-toggle-options hx:hidden hx:z-20 hx:max-h-64 hx:overflow-auto hx:rounded-lg hx:border hx:border-gray-200 hx:bg-white hx:p-1 hx:text-sm hx:shadow-lg hx:dark:border-neutral-700 hx:dark:bg-neutral-900"
+    style="position: fixed; inset: auto auto 0px 0px; margin: 0px; min-width: 100px;"
+    data-theme="light"
+    role="menu"
+  >
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="true"
+        tabindex="-1"
+        data-item="light"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        浅色
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="false"
+        tabindex="-1"
+        data-item="dark"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        深色
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="false"
+        tabindex="-1"
+        data-item="system"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        跟随系统
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+  </ul>
+</div>
+</div></div></aside>
     
-    
-    
-    <script src="/loadup-parent/docs/js/mermaid.min.js" ></script>
-    <script>
-        const config = {
-            startOnLoad:true,
-            logLevel: "error",
-            align: "center",
-            theme:"null"
-        };
-        mermaid.initialize(config);
-    </script>
-    
-
-    
-                                            </div>
-                                            <div><hr class="doc-hr">
-<div id="doc-nav" class="d-print-none">
-
-	<div class="row flex-xl-nowrap flex-row-reverse">
-	</div>
-</div></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-<footer class="shadow py-3 d-print-none">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="text-sm-start text-center mx-md-2">
-                    <p class="mb-0">
-                        
-                        
-                    </p>
-                </div>
-            </div>
-        </div>
+<nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="目录">
+    <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">此页上</p><ul>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#%e6%8c%89%e4%bb%bb%e5%8a%a1%e6%9f%a5%e6%89%be">按任务查找
+        </a>
+      </li></ul>
+      <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
+        <button id="backToTop" tabindex="-1" class="hx:cursor-pointer hx:transition-all hx:duration-75 hx:opacity-0 hx:text-xs hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-100 hx:contrast-more:text-gray-800 hx:contrast-more:dark:text-gray-50">
+          <span>返回顶部</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:inline hx:ltr:ml-1 hx:rtl:mr-1 hx:h-3.5 hx:w-3.5 hx:rounded-full hx:border hx:border-gray-500 hx:hover:border-gray-900 hx:dark:border-gray-400 hx:dark:hover:border-gray-100 hx:contrast-more:border-gray-800 hx:contrast-more:dark:border-gray-50">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+          </svg>
+        </button>
+      </div>
     </div>
-</footer>
-</main>
-            </div>
+  </nav>
+
+
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
+        <div class="hx:mt-1.5 hx:flex hx:items-center hx:gap-1 hx:overflow-hidden hx:text-sm hx:text-gray-500 hx:dark:text-gray-400 hx:contrast-more:text-current"><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">文档</div>
+  </div>
+
+        <div class="content">
+          
+          <div class="hx:flex hx:flex-col hx:sm:flex-row hx:items-start hx:sm:items-center hx:sm:justify-between hx:gap-4 hx:mb-4">
+            <h1 class="hx:mb-0">文档</h1>
+            
+          </div>
+          
+          <!-- Generated by doc-sync-agent.py; source: Maven module documentation -->
+<p>LoadUp 是供 Spring Boot 应用按需引入的框架/SDK。使用 <code>loadup-dependencies</code> BOM 管理版本，
+再选择需要的技术组件或通用业务模块。<code>loadup-application</code> 用于本地集成验证。</p>
+<h2>按任务查找<span class="hx:absolute hx:-mt-20" id="按任务查找"></span>
+    <a href="#%e6%8c%89%e4%bb%bb%e5%8a%a1%e6%9f%a5%e6%89%be" class="subheading-anchor" aria-label="此章节的永久链接"></a></h2><table>
+	<thead>
+			<tr>
+					<th>任务</th>
+					<th>页面</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>引入 BOM、管理版本</td>
+					<td><a href="dependencies/">依赖管理</a></td>
+			</tr>
+			<tr>
+					<td>选择缓存、数据库、认证等能力</td>
+					<td><a href="components/">技术组件</a></td>
+			</tr>
+			<tr>
+					<td>接入用户权限管理</td>
+					<td><a href="modules/">业务模块</a></td>
+			</tr>
+			<tr>
+					<td>使用基础 DTO、日志与链路追踪</td>
+					<td><a href="commons/">通用基础</a></td>
+			</tr>
+			<tr>
+					<td>编写集成测试</td>
+					<td><a href="testing/">Testify</a></td>
+			</tr>
+			<tr>
+					<td>运行本地验证应用</td>
+					<td><a href="application/">Application</a></td>
+			</tr>
+	</tbody>
+</table>
+<p>每个能力的页面先介绍用途、接入与配置，再说明内部设计。技术子模块可从所属能力页继续查看。</p>
+
         </div>
+        <div class="hx:mt-16"></div>
+      </main>
+    </article>
+  </div>
 
-        
-        
-        <button onclick="topFunction()" id="back-to-top" aria-label="Back to Top Button" class="back-to-top fs-5"><svg width="24" height="24"><path d="M12,10.224l-6.3,6.3L4.32,15.152,12,7.472l7.68,7.68L18.3,16.528Z" style="fill:#fff"/></svg></button>
-        
-        
-
-        
-        
-
-
-
-
+      <footer class="hextra-footer hx:bg-gray-100 hx:pb-[env(safe-area-inset-bottom)] hx:dark:bg-neutral-900 hx:print:bg-transparent"><div class="hextra-custom-footer hextra-max-footer-width hx:mx-auto hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-right),1.5rem)] hx:text-gray-600 hx:dark:text-gray-400"></div><div
+      class="hextra-max-footer-width hx:mx-auto hx:flex hx:justify-center hx:py-12 hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-right),1.5rem)] hx:text-gray-600 hx:dark:text-gray-400 hx:md:justify-start"
+    >
+      <div class="hx:flex hx:w-full hx:flex-col hx:items-center hx:sm:items-start"><div class="hx:font-semibold"><a class="hx:flex hx:text-sm hx:items-center hx:gap-1 hx:text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
+    <span>由 Hextra 驱动<svg height=1em class="hx:inline-block hx:ltr:ml-1 hx:rtl:mr-1 hx:align-[-2.5px]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="m 105.50024,22.224647 c -9.59169,-5.537563 -21.40871,-5.537563 -31.000093,0 L 39.054693,42.689119 C 29.463353,48.226675 23.55484,58.460531 23.55484,69.535642 v 40.928918 c 0,11.07542 5.908513,21.3092 15.499853,26.84652 l 35.445453,20.46446 c 9.591313,5.53732 21.408404,5.53732 31.000094,0 l 35.44507,-20.46446 c 9.59131,-5.53732 15.49985,-15.7711 15.49985,-26.84652 V 69.535642 c 0,-11.075111 -5.90854,-21.308967 -15.49985,-26.846523 z M 34.112797,85.737639 c -1.384445,2.397827 -1.384445,5.352099 0,7.749927 l 24.781554,42.922974 c 1.38437,2.39783 3.942853,3.87496 6.711592,3.87496 h 49.563107 c 2.76905,0 5.3273,-1.47713 6.71144,-3.87496 l 24.78194,-42.922974 c 1.38414,-2.397828 1.38414,-5.3521 0,-7.749927 L 121.88049,42.814746 c -1.38414,-2.397828 -3.94239,-3.874964 -6.71144,-3.874964 H 65.605944 c -2.768739,0 -5.327223,1.477059 -6.711592,3.874964 z" style="stroke-width:0.774993" /></svg></span>
+  </a></div></div>
+    </div></footer>
     
-    
-    
-
-
-
-
-
-
-    <script src="/loadup-parent/docs/js/bootstrap.js" defer></script>
-
-
-    <script type="text/javascript" src="http://localhost:1313/loadup-parent/docs/js/bundle.js" defer></script>
-
-        
-
-        
-        <script type="module">
-    var suggestions = document.getElementById('suggestions');
-    var search = document.getElementById('flexsearch');
-
-    const flexsearchContainer = document.getElementById('FlexSearchCollapse');
-
-    const hideFlexsearchBtn = document.getElementById('hideFlexsearch');
-
-    const configObject = { toggle: false }
-    const flexsearchContainerCollapse = new Collapse(flexsearchContainer, configObject) 
-
-    if (search !== null) {
-        document.addEventListener('keydown', inputFocus);
-        flexsearchContainer.addEventListener('shown.bs.collapse', function () {
-            search.focus();
-        });
-        
-        var topHeader = document.getElementById("top-header");
-        document.addEventListener('click', function(elem) {
-            if (!flexsearchContainer.contains(elem.target) && !topHeader.contains(elem.target))
-                flexsearchContainerCollapse.hide();
-        });
-    }
-
-    hideFlexsearchBtn.addEventListener('click', () =>{
-        flexsearchContainerCollapse.hide()
-    })
-
-    function inputFocus(e) {
-        if (e.ctrlKey && e.key === '/') {
-            e.preventDefault();
-            flexsearchContainerCollapse.toggle();
-        }
-        if (e.key === 'Escape' ) {
-            search.blur();
-            
-            flexsearchContainerCollapse.hide();
-        }
-    };
-
-    document.addEventListener('click', function(event) {
-
-    var isClickInsideElement = suggestions.contains(event.target);
-
-    if (!isClickInsideElement) {
-        suggestions.classList.add('d-none');
-    }
-
-    });
-
-    
-
-
-    document.addEventListener('keydown',suggestionFocus);
-
-    function suggestionFocus(e) {
-    const suggestionsHidden = suggestions.classList.contains('d-none');
-    if (suggestionsHidden) return;
-
-    const focusableSuggestions= [...suggestions.querySelectorAll('a')];
-    if (focusableSuggestions.length === 0) return;
-
-    const index = focusableSuggestions.indexOf(document.activeElement);
-
-    if (e.key === "ArrowUp") {
-        e.preventDefault();
-        const nextIndex = index > 0 ? index - 1 : 0;
-        focusableSuggestions[nextIndex].focus();
-    }
-    else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        const nextIndex= index + 1 < focusableSuggestions.length ? index + 1 : index;
-        focusableSuggestions[nextIndex].focus();
-    }
-
-    }
-
-    
-
-
-    (function(){
-
-    var index = new FlexSearch.Document({
-        
-        tokenize: "forward",
-        minlength:  0 ,
-        cache:  100 ,
-        optimize:  true ,
-        document: {
-        id: 'id',
-        store: [
-            "href", "title", "description"
-        ],
-        index: ["title", "description", "content"]
-        }
-    });
-
-
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-
-    
-
-    index.add(
-            {
-                id:  0 ,
-                href: "\/loadup-parent\/docs\/modules\/",
-                title: "Modules Overview",
-                description: "loadup-modules link该目录包含业务模块的概览与链接，例如 upms（系统管理）。每个业务模块的 README/ARCHITECTURE 已迁移到 docs/modules/ 以便于文档站展示。\n",
-                content: "loadup-modules link该目录包含业务模块的概览与链接，例如 upms（系统管理）。每个业务模块的 README/ARCHITECTURE 已迁移到 docs/modules/ 以便于文档站展示。\n"
-            }
-        );
-    search.addEventListener('input', show_results, true);
-
-    function show_results(){
-        const maxResult =  5 ;
-        const minlength =  0 ;
-        var searchQuery = sanitizeHTML(this.value);
-        var results = index.search(searchQuery, {limit: maxResult, enrich: true});
-
-        
-        const flatResults = new Map(); 
-        for (const result of results.flatMap(r => r.result)) {
-        if (flatResults.has(result.doc.href)) continue;
-        flatResults.set(result.doc.href, result.doc);
-        }
-
-        suggestions.innerHTML = "";
-        suggestions.classList.remove('d-none');
-
-        
-        if (searchQuery.length < minlength) {
-            const minCharMessage = document.createElement('div')
-            minCharMessage.innerHTML = `Please type at least <strong>${minlength}</strong> characters`
-            minCharMessage.classList.add("suggestion__no-results");
-            suggestions.appendChild(minCharMessage);
-            return;
-        } else {
-            
-            if (flatResults.size === 0 && searchQuery) {
-                const noResultsMessage = document.createElement('div')
-                noResultsMessage.innerHTML = "No results for" + ` "<strong>${searchQuery}</strong>"`
-                noResultsMessage.classList.add("suggestion__no-results");
-                suggestions.appendChild(noResultsMessage);
-                return;
-            }
-        }
-
-        
-        for(const [href, doc] of flatResults) {
-            const entry = document.createElement('div');
-            suggestions.appendChild(entry);
-
-            const a = document.createElement('a');
-            a.href = href;
-            entry.appendChild(a);
-
-            const title = document.createElement('span');
-            title.textContent = doc.title;
-            title.classList.add("suggestion__title");
-            a.appendChild(title);
-
-            const description = document.createElement('span');
-            description.textContent = doc.description;
-            description.classList.add("suggestion__description");
-            a.appendChild(description);
-
-            suggestions.appendChild(entry);
-
-            if(suggestions.childElementCount == maxResult) break;
-        }
-    }
-    }());
-</script>
-        
-    </body>
+    <script defer src="/loadup-parent/js/main.js" integrity=""></script>
+<script defer src="/loadup-parent/js/vendor/flexsearch.bundle.min.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script><script defer src="/loadup-parent/zh-cn.search.js" integrity=""></script>
+  </body>
 </html>
