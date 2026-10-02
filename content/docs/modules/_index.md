@@ -9,6 +9,12 @@ title: "Loadup Modules"
 ## 子模块
 
 - [`loadup-modules-upms`](upms/)
+- [`loadup-modules-audit`](audit/)：操作审计存储与查询服务。
+- [`loadup-modules-audit-web`](audit-web/)：可选 MVC 采集和管理员查询接口。
+- [`loadup-modules-dictionary`](dictionary/)：业务字典类型与条目。
+- [`loadup-modules-dictionary-web`](dictionary-web/)：可选字典管理与选项接口。
+- [`loadup-modules-file`](file/)：文件元数据、业务引用与清理生命周期。
+- [`loadup-modules-file-web`](file-web/)：可选上传、下载与文件管理接口。
 
 此 POM 用于 Maven 聚合；在消费工程中选择需要的具体 jar 坐标。
 
@@ -21,13 +27,19 @@ title: "Loadup Modules"
 此目录是 Maven 聚合模块，不作为业务运行依赖。按用途选择子模块：
 
 - [`loadup-modules-upms`](upms/)：运行实现。
+- [`loadup-modules-audit`](audit/)：程序化审计记录。
+- [`loadup-modules-audit-web`](audit-web/)：HTTP 适配。
+- [`loadup-modules-dictionary`](dictionary/)：程序化字典查询与管理。
+- [`loadup-modules-dictionary-web`](dictionary-web/)：HTTP 适配。
+- [`loadup-modules-file`](file/)：程序化文件资源管理。
+- [`loadup-modules-file-web`](file-web/)：HTTP 适配。
 
 ---
 
 <a id="architecture"></a>
 ## 设计与实现
 
-业务模块位于 `commons → components → modules → 消费工程` 的第三层；业务模块之间避免横向依赖。当前发布的业务能力是 [UPMS](upms/)。
+业务模块位于 `commons → components → modules → 消费工程` 的第三层；业务模块之间避免横向依赖。当前业务能力包括 [UPMS](upms/)、[审计中心](audit/)、[数据字典](dictionary/) 和 [文件资源](file/)。
 
 UPMS 按 COLA 分层：`client` 暴露 DTO/Command/Query，`domain` 保存纯领域模型与网关接口，`infrastructure` 实现持久化，`app` 编排用例，`web` 提供可选 Controller，`authserver` 提供可选 SAS 适配。领域层不得引入 Spring MVC 或 ORM 注解；持久化对象继承 `BaseDO`，映射由 MapStruct Spring 组件完成。
 
@@ -37,7 +49,10 @@ UPMS 按 COLA 分层：`client` 暴露 DTO/Command/Query，`domain` 保存纯领
 
 ```text
 loadup-modules
-  └─ loadup-modules-upms
+  ├─ loadup-modules-upms
+  ├─ loadup-modules-audit + loadup-modules-audit-web
+  ├─ loadup-modules-dictionary + loadup-modules-dictionary-web
+  └─ loadup-modules-file + loadup-modules-file-web → DFS
 ```
 
 聚合 POM 组织模块与版本，运行时依赖由子模块决定。
