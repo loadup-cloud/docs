@@ -8,6 +8,8 @@ sidebar:
 
 UPMS 应用服务与业务编排。
 
+`AccountSecurityService` 提供本人安全概览、按用户 ID 查询登录历史以及使用旧密码修改密码的应用入口。HTTP 适配见 `loadup-modules-upms-web`。登录失败跟踪和临时锁定由 `loadup.upms.security.login` 控制；管理员手动锁定不会因超时自动解除。
+
 ## 引入
 
 ```xml

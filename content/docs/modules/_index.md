@@ -15,6 +15,10 @@ title: "Loadup Modules"
 - [`loadup-modules-dictionary-web`](dictionary-web/)：可选字典管理与选项接口。
 - [`loadup-modules-file`](file/)：文件元数据、业务引用与清理生命周期。
 - [`loadup-modules-file-web`](file-web/)：可选上传、下载与文件管理接口。
+- [`loadup-modules-notification`](notification/)：持久化站内收件箱与 Gotone `IN_APP` 渠道。
+- [`loadup-modules-notification-web`](notification-web/)：可选消息发布及个人收件箱接口。
+- [`loadup-modules-transfer`](transfer/)：导入导出任务编排、状态与进度。
+- [`loadup-modules-transfer-web`](transfer-web/)：可选任务提交、查询与结果接口。
 
 此 POM 用于 Maven 聚合；在消费工程中选择需要的具体 jar 坐标。
 
@@ -33,13 +37,17 @@ title: "Loadup Modules"
 - [`loadup-modules-dictionary-web`](dictionary-web/)：HTTP 适配。
 - [`loadup-modules-file`](file/)：程序化文件资源管理。
 - [`loadup-modules-file-web`](file-web/)：HTTP 适配。
+- [`loadup-modules-notification`](notification/)：程序化站内通知投递。
+- [`loadup-modules-notification-web`](notification-web/)：HTTP 适配。
+- [`loadup-modules-transfer`](transfer/)：程序化导入导出任务。
+- [`loadup-modules-transfer-web`](transfer-web/)：HTTP 适配。
 
 ---
 
 <a id="architecture"></a>
 ## 设计与实现
 
-业务模块位于 `commons → components → modules → 消费工程` 的第三层；业务模块之间避免横向依赖。当前业务能力包括 [UPMS](upms/)、[审计中心](audit/)、[数据字典](dictionary/) 和 [文件资源](file/)。
+业务模块位于 `commons → components → modules → 消费工程` 的第三层；业务模块之间避免横向依赖。当前业务能力包括 [UPMS](upms/)、[审计中心](audit/)、[数据字典](dictionary/)、[文件资源](file/)、[站内通知](notification/) 和 [导入导出任务](transfer/)。导入导出任务以文件资源作为明确的下层业务能力，复用其访问控制与 DFS 生命周期。
 
 UPMS 按 COLA 分层：`client` 暴露 DTO/Command/Query，`domain` 保存纯领域模型与网关接口，`infrastructure` 实现持久化，`app` 编排用例，`web` 提供可选 Controller，`authserver` 提供可选 SAS 适配。领域层不得引入 Spring MVC 或 ORM 注解；持久化对象继承 `BaseDO`，映射由 MapStruct Spring 组件完成。
 
@@ -52,7 +60,9 @@ loadup-modules
   ├─ loadup-modules-upms
   ├─ loadup-modules-audit + loadup-modules-audit-web
   ├─ loadup-modules-dictionary + loadup-modules-dictionary-web
-  └─ loadup-modules-file + loadup-modules-file-web → DFS
+  ├─ loadup-modules-file + loadup-modules-file-web → DFS
+  ├─ loadup-modules-notification + loadup-modules-notification-web → Gotone
+  └─ loadup-modules-transfer + loadup-modules-transfer-web → RetryTask + 文件资源
 ```
 
 聚合 POM 组织模块与版本，运行时依赖由子模块决定。
