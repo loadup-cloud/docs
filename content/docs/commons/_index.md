@@ -11,7 +11,6 @@ title: "Loadup Commons"
 - [`loadup-commons-dto`](loadup-commons-dto/)
 - [`loadup-commons-util`](loadup-commons-util/)
 - [`loadup-commons-log`](loadup-commons-log/)
-- [`loadup-commons-tracer`](loadup-commons-tracer/)
 
 此 POM 用于 Maven 聚合；在消费工程中选择需要的具体 jar 坐标。
 
@@ -25,7 +24,6 @@ title: "Loadup Commons"
 
 - [`loadup-commons-dto`](loadup-commons-dto/)：运行实现。
 - [`loadup-commons-log`](loadup-commons-log/)：运行实现。
-- [`loadup-commons-tracer`](loadup-commons-tracer/)：运行实现。
 - [`loadup-commons-util`](loadup-commons-util/)：运行实现。
 
 ---
@@ -38,7 +36,6 @@ Commons 位于依赖链底部，供技术组件和业务模块复用，不依赖
 - [DTO](loadup-commons-dto/)：统一响应、分页、`BaseDO` 与 MapStruct 配置。
 - [Util](loadup-commons-util/)：JSON、日期、字符串等无业务归属的工具。
 - [Log](loadup-commons-log/)：日志格式及 MDC 键约定。
-- [Tracer](loadup-commons-tracer/)：OpenTelemetry span、Servlet 请求追踪与上下文传播，复用 Log 的 MDC 约定。
 
 数据库审计字段在 Java/JSON 中统一为 `createdAt`、`updatedAt`，列名为 `created_at`、`updated_at`。通用类型不承载业务授权、HTTP 路由或具体存储决策。
 
@@ -48,7 +45,6 @@ Commons 位于依赖链底部，供技术组件和业务模块复用，不依赖
 loadup-commons
   └─ loadup-commons-dto
   └─ loadup-commons-log
-  └─ loadup-commons-tracer
   └─ loadup-commons-util
 ```
 

@@ -21,7 +21,7 @@ sidebar:
 
 ## HTTP 接口
 
-管理接口主要使用 POST，请求体为 JSON；账号安全只读接口使用 GET。路径如下：
+Controller 接口使用 POST + JSON body。路径如下：
 
 | 能力 | 路径与操作 |
 |---|---|
@@ -30,7 +30,7 @@ sidebar:
 | 角色 | `/api/upms/role/{create,update,delete,detail,list,tree,assign-to-user,remove-from-user,assign-permissions}` |
 | 权限 | `/api/upms/permission/{create,update,delete,detail,tree,user-menu}` |
 | 部门 | `/api/upms/department/{create,update,delete,detail,tree,move}` |
-| 本人账号安全 | `GET /api/account/security/{overview,logins}`；`POST /api/account/security/password` |
+| 本人账号安全 | `/api/account/security/{overview,logins,password}` |
 
 账号安全接口从认证主体取得用户 ID；改密请求只需 `oldPassword`、`newPassword`、`confirmPassword`。已签发 JWT 不会因改密立即失效。
 

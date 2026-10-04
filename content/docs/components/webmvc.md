@@ -17,7 +17,7 @@ title: "Web MVC"
 
 UPMS Web 适配模块已经传递引入此组件。其他 Controller 应用可直接引入；文件下载等非 JSON 响应不做包装。无返回值的接口应显式返回 `SuccessResponse.success()`。`/api` 以外的错误维持原 HTTP 状态并返回 JSON 错误信息，文档和 Actuator 响应不套业务报文。
 
-组件传递引入 `loadup-commons-tracer`。默认追踪所有 Servlet 请求，并在响应头返回 `traceId`（32 位十六进制）和 W3C `traceparent`，两者使用相同的 trace ID；认证失败和错误响应也会返回。可用 `loadup.tracer.exclude-patterns` 显式排除不需要追踪的路径，被排除的请求不返回追踪头。关闭 `loadup.tracer.enabled` 或 `loadup.tracer.enable-web-tracing` 也会关闭响应追踪头。
+组件传递引入 `loadup-components-observability`。Spring Boot 的 HTTP Observation 生成指标与 Span，响应头返回当前 Span 的 `traceId`，包括认证失败与错误响应。应用通过 `management.tracing.*` 配置采样和导出。JSON API 结果另以 `loadup.api.responses` 的 `outcome` 标签统计成功与失败，避免统一 HTTP 200 掩盖业务错误。
 
 ## JSON 约定
 
@@ -47,7 +47,7 @@ UPMS Web 适配模块已经传递引入此组件。其他 Controller 应用可�
 
 - `loadup-commons-dto`
 - `loadup-commons-util`
-- `loadup-commons-tracer`
+- `loadup-components-observability`
 
 直接依赖的外部坐标（不含测试与 provided scope）：
 
@@ -65,6 +65,7 @@ UPMS Web 适配模块已经传递引入此组件。其他 Controller 应用可�
 ```text
 Servlet 请求 → Spring MVC Controller → ApiResponseAdvice → result/data JSON
              ↘ /error 转发       → ApiErrorController → result/data JSON
+Boot HTTP Observation → traceId 响应头；ApiResponseAdvice → 业务结果计数
 Boot ObjectMapper ← JsonMapperBuilderCustomizer ← JsonUtil 日期规则
 DTO / JsonUtil   ← SmartInitializingSingleton   ← Boot ObjectMapper
 ```

@@ -12,6 +12,8 @@ title: "本地集成启动器"
 
 启动后访问 `/scalar` 浏览 UPMS 等 Spring MVC 接口，或访问 `/v3/api-docs` 获取 OpenAPI JSON。接口请求示例见 `src/main/resources/Router.http`。
 
+观测能力由 `loadup-components-observability` 和 Spring Boot Actuator 提供。`/actuator/metrics` 查看指标，`/actuator/prometheus` 供 Prometheus 抓取；API 响应头包含 `traceId`。本地默认关闭 OTLP Trace/Metrics 导出；连接 Collector 时设置 `OTLP_TRACING_ENABLED=true`、`OTLP_METRICS_ENABLED=true` 和 `OTLP_TRACING_ENDPOINT`。
+
 本地启动器引入审计中心 Web 适配，按 `application.yml` 中的 `loadup.audit.web.include-paths` 记录 UPMS 管理操作与登录/注册事件；管理员可调用 `POST /api/audit/events/query` 查询。
 
 数据字典通过 `/api/dictionaries/**` 提供类型和条目管理、启用选项查询；修改直接写入 MySQL，无需重新部署。本地示例还将字典管理操作纳入审计采集范围。
@@ -45,7 +47,7 @@ title: "本地集成启动器"
 - `loadup-components-authserver-binder-sas`
 - `loadup-modules-upms-authserver`
 - `loadup-commons-log`
-- `loadup-commons-tracer`
+- `loadup-components-observability`
 - `loadup-components-retrytask-binder-jobrunr`
 - `loadup-components-scheduler-binder-jobrunr`
 

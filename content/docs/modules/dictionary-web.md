@@ -19,11 +19,11 @@ title: "Data Dictionary Web Adapter"
 
 | 方法 | 路径 | 用途 |
 |---|---|---|
-| POST / PUT / DELETE | `/types`、`/types/{id}` | 创建、更新/启停、删除类型 |
-| GET | `/types?page=1&size=20` | 分页查询类型 |
-| POST / GET | `/types/{typeCode}/items` | 创建、分页查询条目 |
-| PUT / DELETE | `/items/{id}` | 更新/启停、删除条目 |
-| GET | `/{typeCode}/options` | 查询启用选项，仅返回 value 和 label |
+| POST | `/types/{create,update,delete,list}` | 创建、更新/启停、删除、分页查询类型 |
+| POST | `/items/{create,update,delete,list}` | 创建、更新/启停、删除、分页查询条目 |
+| POST | `/options` | 查询启用选项，仅返回 value 和 label |
+
+接口统一使用 JSON body。分页请求传 `{ "page": 1, "size": 20 }`；条目列表额外传 `typeCode`。更新请求传 `{ "id": "...", "command": { ... } }`；创建条目传 `{ "typeCode": "...", "command": { ... } }`；删除传 `{ "id": "..." }`。
 
 管理接口要求 `ROLE_SUPER_ADMIN`；选项接口由接入方的 `/api/**` 资源服务器规则保护。请求中的租户 ID 由当前 `TenantUtil` 上下文决定。设置 `loadup.dictionary.web.enabled: false` 可关闭 Web 适配。
 

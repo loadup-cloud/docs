@@ -8,12 +8,12 @@ title: "In-App Notifications Web"
 
 | 方法 | 路径 | 作用 | 权限 |
 | --- | --- | --- | --- |
-| POST | `/api/notifications` | 向指定用户发布通知 | `ROLE_SUPER_ADMIN` |
-| GET | `/api/notifications` | 分页查询本人消息，可传 `unreadOnly` | 登录用户 |
-| GET | `/api/notifications/unread-count` | 本人未读数 | 登录用户 |
-| PUT | `/api/notifications/{id}/read` | 标记本人消息已读 | 登录用户 |
-| PUT | `/api/notifications/read-all` | 全部标记已读 | 登录用户 |
-| DELETE | `/api/notifications/{id}` | 归档本人消息 | 登录用户 |
+| POST | `/api/notifications/publish` | 向指定用户发布通知 | `ROLE_SUPER_ADMIN` |
+| POST | `/api/notifications/list` | JSON 分页查询本人消息，可传 `unreadOnly` | 登录用户 |
+| POST | `/api/notifications/unread-count` | JSON `{}` 查询本人未读数 | 登录用户 |
+| POST | `/api/notifications/read` | JSON `{ "id": "..." }` 标记本人消息已读 | 登录用户 |
+| POST | `/api/notifications/read-all` | JSON `{}` 全部标记已读 | 登录用户 |
+| POST | `/api/notifications/archive` | JSON `{ "id": "..." }` 归档本人消息 | 登录用户 |
 
 JSON 响应复用 WebMVC 的 `{result, data}` 契约。收件人从认证主体获取，不接受客户端指定读取用户 ID。发布请求包含 `recipients`、`category`、`title`、`body`，可选 `actionUrl` 与 `requestKey`。
 

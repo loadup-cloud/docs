@@ -12,6 +12,7 @@ LoadUp 组件提供可独立引入的技术能力。应用通过 `loadup-depende
 | OAuth2 授权服务器 | [authserver](authserver/) |
 | JWT 资源服务器 | [resource-server](resource-server/) |
 | MVC 响应约定 | [webmvc](webmvc/) |
+| 指标与追踪 | [observability](observability/) |
 | 缓存 | [cache](cache/) |
 | 验证码 | [captcha](captcha/) |
 | 配置中心 | [configcenter](configcenter/) |
@@ -64,6 +65,7 @@ loadup-components
   └─ loadup-components-dfs
   └─ loadup-components-extension
   └─ loadup-components-globalunique
+  └─ loadup-components-observability
   └─ loadup-components-gotone
   └─ loadup-components-pipeline
   └─ loadup-components-resilience4j
