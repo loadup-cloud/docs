@@ -20,6 +20,8 @@ LoadUp 组件提供可独立引入的技术能力。应用通过 `loadup-depende
 | 文件存储 | [dfs](dfs/) |
 | 扩展机制 | [extension](extension/) |
 | 幂等控制 | [globalunique](globalunique/) |
+| 可靠事务事件 | [outbox](outbox/) |
+| 出站 HTTP | [http](http/) |
 | 通知 | [gotone](gotone/) |
 | 流水线 | [pipeline](pipeline/) |
 | 容错 | [resilience4j](resilience4j/) |
