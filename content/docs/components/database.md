@@ -42,7 +42,7 @@ loadup:
       request: {header-name: X-Tenant-Id, parameter-name: tenantId}
 ```
 
-Use `TenantContextHolder.setTenantId(...)` for non-HTTP jobs. `runWithTenant` scopes nested work and restores the previous context.
+Use `TenantUtil.runWithTenant(...)` or `callWithTenant(...)` for non-HTTP jobs. Tenant bindings are read-only within a JDK 25 ScopedValue scope; there is no set/clear API. The request filter saves immutable metadata under `ExecutionContext.class.getName()` and binds it around REQUEST/ASYNC/ERROR dispatch. Header/parameter/subdomain extraction remains a configurable convenience; authenticated tenant authorization must be enforced by the integrating application.
 
 ## Capability matrix
 
@@ -102,11 +102,11 @@ When enabled, the configured column and integer values are applied to Flex globa
 
 ### Multi-tenancy
 
-The Flex tenant factory receives the current table name, so ignored tables return no tenant predicate. All other tables resolve the tenant from `TenantContextHolder`, then the optional default tenant. With `required=true`, missing context fails closed rather than issuing an unscoped query.
+The Flex tenant factory receives the current table name, so ignored tables return no tenant predicate. All other tables resolve the tenant from `TenantUtil`, then the optional default tenant. With `required=true`, missing context fails closed rather than issuing an unscoped query.
 
 The servlet filter only propagates request context. Header lookup is enabled by default; query-parameter lookup is enabled by configuring a name, and subdomain lookup is opt-in. Authentication and authorization layers remain responsible for validating that the caller may act as the supplied tenant.
 
-`TenantContextHolder` uses an ordinary `ThreadLocal`. Executor integrations must explicitly propagate tenant context; inheritable thread locals are deliberately avoided because pooled threads can retain stale tenant data.
+`TenantUtil` reads immutable ScopedValue bindings. Executor integrations use LoadUpContextTaskDecorator or ContextHolder.wrap; runWithTenant/callWithTenant establish callback scopes and automatically restore previous bindings.
 
 ### Code generation
 
@@ -115,3 +115,7 @@ The repository root `mybatis-flex.config` is the single source for annotation pr
 ### Schema contract
 
 Every business table uses the five standard fields shown in `schema.sql`. Tenant-enabled query patterns should normally add a composite index beginning with `tenant_id` and `deleted`; business-selective columns can follow them.
+
+### 租户绑定生命周期
+
+TenantUtil 基于 commons-context 的不可变 ExecutionContext 与 JDK 25 ScopedValue。TenantFilter 显式派生租户上下文、写入同名请求属性并包裹 FilterChain；REQUEST/ASYNC/ERROR 分派受支持，异常/结束由 JDK 恢复此前绑定，不再 set/clear。客户端租户提取配置不替代认证授权，集成方必须验证可访问租户。

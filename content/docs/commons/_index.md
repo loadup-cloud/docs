@@ -30,6 +30,10 @@ title: "Loadup Commons"
 
 - [`loadup-commons-masking`](loadup-commons-masking/)：纯 Java 展示规则与 `@Masked` 输出元数据，可供 WebMVC、显式日志与导出使用。
 
+## 执行链上下文
+
+[`loadup-commons-context`](loadup-commons-context/) 提供 JDK 25 ScopedValue 类型化只读 `ContextHolder`、不可变 ExecutionContext 与可选 ServiceTemplate。租户数据复用该存储，登录身份和 Trace 仍采用各自标准上下文。
+
 ---
 
 <a id="architecture"></a>
@@ -57,3 +61,7 @@ loadup-commons
 ### 脱敏边界
 
 `loadup-commons-masking` 无 Spring/Jackson 运行依赖；只表达展示规则。响应适配由 WebMVC 承担，业务权限与明文查询由业务模块控制。
+
+### 业务上下文
+
+`loadup-commons-context` 无运行时三方依赖，提供业务执行链共享数据；`commons-util` 的 TenantUtil 复用 TENANT_ID。核心基于 JDK 25 ScopedValue 绑定不可变 ExecutionContext，可选 ServiceTemplate 提供 init/clean。WebMVC 负责请求回调边界，Observability 通过 TaskDecorator 组合业务与标准 Micrometer 传播，核心不依赖它们。

@@ -52,6 +52,12 @@ HTTP JSON 输出中的 `13812345678` 变为 `138****5678`。注解支持字段�
 
 装配通过顺序 100 的 `ServerHttpMessageConvertersCustomizer` 安装服务端 JSON 转换器。若集成方在更高顺序重新替换该转换器或使用其他响应方式，须保留脱敏适配并验证其行为。
 
+## 请求共享上下文
+
+传递引入 [commons-context](../../commons/loadup-commons-context/)，使用 JDK 25 ScopedValue。`ExecutionContextFilter` 以最高优先级通过 ServiceTemplate 在每次分派的 FilterChain 执行期间绑定不可变上下文，返回/异常后自动恢复。REQUEST/ASYNC/ERROR 从请求属性 `ExecutionContext.class.getName()` 获取显式元数据，默认空 context；下游临时覆盖不会写回父请求。
+
+应用的可信租户适配器应在此后确定元数据、写入同名请求属性，并通过 ContextHolder.callWith/runWith 包裹自己的 FilterChain。本组件不从外部请求自动绑定租户/用户。异步任务使用 Observability 的业务 TaskDecorator 或显式 wrap；只有标准 Micrometer snapshot 不会传播 ScopedValue。
+
 ---
 
 <a id="architecture"></a>
@@ -125,3 +131,7 @@ Controller → ApiResponseAdvice(result/data) → @Masked property serializer �
 MVC 输入使用同一转换器，但模块只修改 serializer，反序列化不变。String converter 的报文包装使用响应专用 Mapper。二进制、手工拼接 JSON 和 Map 内无注解的值不在自动处理范围。没有 KMS RPC、权限 ThreadLocal 或原对象突变。
 
 错误注解直接使序列化失败；不得捕获后返回原 DTO 明文。`ApiMaskingJsonTest`、`ApiMaskingMvcTest` 覆盖隔离、嵌套与已包装响应、输入原值、JsonView 和错误声明。
+
+### 业务执行上下文生命周期
+
+`ExecutionContextFilter` 在 Boot HTTP Observation 和 Security 之前通过 ServiceTemplate 绑定不可变 ExecutionContext，作用域由 JDK 25 ScopedValue 自动结束；Servlet 重新分派通过 `ExecutionContext.class.getName()` 请求属性恢复显式绑定。可信租户适配器使用相同属性并包裹自己的 FilterChain；临时覆盖不回写父请求。嵌套 error 分派沿用当前作用域。业务数据不会写到 MDC、响应或指标中；Filter 不承担认证、授权或租户解析。

@@ -68,6 +68,21 @@ EnvironmentPostProcessor 通过标准 `management.metrics.tags.application` 提�
 
 HTTP 非 2xx 与传输失败均计为 failure；标准 HTTP 客户端观测仍保留协议状态分类。组件从容器注入共享 `MeterRegistry` / `ObservationRegistry`，未启用观测的独立消费工程可不提供可选 Registry。禁止使用全局静态 Metrics、另建生产 Registry、用户/租户/订单/traceId/完整 URI 等高基数标签；新的业务耗时与 Trace 优先使用标准 Observation。
 
+## 业务上下文传播
+
+传递引入 [commons-context](../../commons/loadup-commons-context/)，要求 JDK 25+。自动提供 `LoadUpContextTaskDecorator` Bean，在包装时捕获不可变业务上下文，并通过 ScopedValue 包裹整个任务。Boot 4.1 的执行器会组合多个 TaskDecorator，已有自定义装饰器不会使该装饰器被跳过；显式提供同类型 Bean 可替换默认实现。
+
+开启 `spring.task.execution.propagate-context=true` 后，Boot 的标准 Micrometer 装饰器负责 Observation/Trace，LoadUp 装饰器负责业务元数据。只开启虚拟线程不会自动传播。自定义执行器显式组合：
+
+```java
+executor.setTaskDecorator(new CompositeTaskDecorator(List.of(
+    new LoadUpContextTaskDecorator(),
+    new ContextPropagatingTaskDecorator()
+)));
+```
+
+多个自定义装饰器应合并配置，不要连续 setTaskDecorator 覆盖前一个。业务数据不进入 Micrometer ThreadLocalAccessor：ScopedValue 需要动态作用域，不能采用 set/reset 适配。任意 Micrometer snapshot 或第三方线程池不会自动捕获业务上下文，须安装本装饰器或显式 ContextHolder.wrap。空 context 也绑定，退出后恢复调用前状态；值对象保持轻量不可变，身份继续使用 Spring Security 标准传播。
+
 ---
 
 <a id="architecture"></a>
@@ -108,3 +123,9 @@ Servlet 请求
 HTTP、KMS、Outbox 和 Resilience4j 使用容器中的共享 Micrometer 实例，导出由 Boot 统一负责。HTTP/KMS 的命名操作计时、Outbox 的投递计时与状态量只采用有界配置/结果维度；自定义 outcome 统一 success/failure，官方原生指标保留标准名称和标签。不创建静态全局 Registry 或新的导出 API。
 
 配置优先级用例位于 `ObservabilityDefaultsTest`；源码测试不能替代消费工程中的导出、Trace/MDC 和异步传播验收。
+
+### ScopedValue 上下文组合
+
+业务上下文由 commons-context 的私有 ScopedValue 管理，`LoadUpContextTaskDecorator` 捕获不可变 ExecutionContext 并包裹任务动态执行。自动配置提供同类型缺失时的默认 Bean，Boot 4.1 原生收集并组合多个 TaskDecorator；不会因用户已有其他装饰器跳过业务传播。标准 `spring.task.execution.propagate-context` 控制 Boot Micrometer 装饰器，独立负责 Observation/Trace/MDC，框架不重复捕获它们。
+
+移除旧 ThreadLocalAccessor/ServiceLoader 注册：set/reset 协议不能安全安装 ScopedValue 动态作用域。自定义执行器要显式配置组合；第三方直接调用 Micrometer snapshot 不会传播 LoadUp 业务数据。身份和 Trace 权威来源不变。测试覆盖异常恢复、空绑定、虚拟线程和 Boot 原生装饰器组合，未执行运行验证。
