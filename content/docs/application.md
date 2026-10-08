@@ -28,6 +28,16 @@ title: "本地集成启动器"
 
 依赖组合和源码入口见 [ARCHITECTURE.md](./#architecture)。
 
+## 脱敏示例
+
+`demo-csv-export` 的 mobile 示例列通过 `Masking.mask` 输出，演示非 JSON 导出的显式脱敏。UPMS 普通响应脱敏和受控明文读取见 [UPMS 接入文档](../modules/upms/)。
+
+## 日志与观测
+
+默认文本日志格式来自 `loadup-commons-log`，启动器不再维护独立 Logback XML。启用 `json` profile 使用 Spring Boot ECS 结构化编码器，console/file 都可携带 MDC。文件输出需按 Boot 约定另行配置路径。
+
+Micrometer 指标、Tracing 和导出由 Boot 与 Observability 统一装配；application 公共标签默认取 `spring.application.name`。业务日志统一使用显式来源类 `LogUtil`。
+
 ---
 
 <a id="architecture"></a>
@@ -71,3 +81,7 @@ Application → 自动配置 → Web/API、UPMS 与可选技术组件
 ```
 
 集成方式与配置示例见 [README.md](./)。
+
+### 观测配置归属
+
+启动器通过标准 `management.*` 配置导出与采样；公共 application 指标标签默认值归 Observability，console/file 文本格式归 commons-log。`application-json.yml` 仅选择 Boot ECS 编码器，不定义新的日志后端或追踪实例。

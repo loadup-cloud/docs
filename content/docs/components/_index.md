@@ -22,6 +22,7 @@ LoadUp 组件提供可独立引入的技术能力。应用通过 `loadup-depende
 | 幂等控制 | [globalunique](globalunique/) |
 | 可靠事务事件 | [outbox](outbox/) |
 | 出站 HTTP | [http](http/) |
+| OpenBao 密钥管理 | [kms](kms/) |
 | 通知 | [gotone](gotone/) |
 | 流水线 | [pipeline](pipeline/) |
 | 容错 | [resilience4j](resilience4j/) |
@@ -67,6 +68,9 @@ loadup-components
   └─ loadup-components-dfs
   └─ loadup-components-extension
   └─ loadup-components-globalunique
+  └─ loadup-components-http
+  └─ loadup-components-kms
+  └─ loadup-components-outbox
   └─ loadup-components-observability
   └─ loadup-components-gotone
   └─ loadup-components-pipeline

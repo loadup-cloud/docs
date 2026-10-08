@@ -51,6 +51,23 @@ management:
 
 内部边界见 [ARCHITECTURE.md](./#architecture)。
 
+## 统一观测契约
+
+组件传递引入 `loadup-commons-log`。追踪关联统一为 Micrometer 的 `traceId` / `spanId`，日志输出使用 `LogUtil`；不创建第二套追踪或指标注册表。
+
+EnvironmentPostProcessor 通过标准 `management.metrics.tags.application` 提供 `${spring.application.name:application}` 默认值，适用于 Boot 管理的全部指标。消费工程的显式 `management.metrics.tags.application` 具有更高优先级；优先设置稳定的 `spring.application.name`。
+
+| 观测 | 名称与维度 |
+|---|---|
+| HTTP/JVM 基础指标 | Boot/Micrometer 原生名称，保留标准维度 |
+| JSON API 结果 | `loadup.api.responses`，`outcome=success/failure` |
+| 命名出站调用（含 KMS） | `loadup.http.calls`，配置中的 client、operation 与 `outcome=success/failure` |
+| Outbox 投递与状态 | `loadup.outbox.delivery` 的 success/failure；pending、failed、oldest.age 状态量 |
+| Outbox handler Trace | `loadup.outbox.handle` Observation |
+| Resilience4j | 官方 Micrometer binder 的标准名称和配置实例维度 |
+
+HTTP 非 2xx 与传输失败均计为 failure；标准 HTTP 客户端观测仍保留协议状态分类。组件从容器注入共享 `MeterRegistry` / `ObservationRegistry`，未启用观测的独立消费工程可不提供可选 Registry。禁止使用全局静态 Metrics、另建生产 Registry、用户/租户/订单/traceId/完整 URI 等高基数标签；新的业务耗时与 Trace 优先使用标准 Observation。
+
 ---
 
 <a id="architecture"></a>
@@ -83,3 +100,11 @@ Servlet 请求
 - `spring-web` 与 Servlet API 仅供可选 Servlet 适配编译；应用按需添加 Prometheus 或 OTLP 指标 Registry。
 - 采样、导出端点、资源属性和指标标签统一使用 Spring Boot 的 `management.*` 配置，不另设 `loadup.tracer.*` 或 `loadup.metrics.*`。
 - 异步上下文传播使用 Boot 的 `spring.task.execution.propagate-context`；自定义执行器由应用设置 `ContextPropagatingTaskDecorator`，不修改其他模块的线程池 Bean。
+
+### 默认配置与组件集成
+
+`ObservabilityEnvironmentPostProcessor` 以最低优先级属性源补充 `management.metrics.tags.application`，不替换消费工程的显式设置；由 Boot 自己将该标签装配到 Registry。输出日志默认值由传递引入的 commons-log 管理。
+
+HTTP、KMS、Outbox 和 Resilience4j 使用容器中的共享 Micrometer 实例，导出由 Boot 统一负责。HTTP/KMS 的命名操作计时、Outbox 的投递计时与状态量只采用有界配置/结果维度；自定义 outcome 统一 success/failure，官方原生指标保留标准名称和标签。不创建静态全局 Registry 或新的导出 API。
+
+配置优先级用例位于 `ObservabilityDefaultsTest`；源码测试不能替代消费工程中的导出、Trace/MDC 和异步传播验收。

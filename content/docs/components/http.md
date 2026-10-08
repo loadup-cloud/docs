@@ -121,6 +121,10 @@ mvn clean test -pl loadup-components/loadup-components-http \
 
 本次实现未执行构建或测试。设计见 [ARCHITECTURE.md](./#architecture)。
 
+## 统一指标
+
+使用消费工程提供的 Micrometer `MeterRegistry`，`loadup.http.calls` 的 outcome 统一为 success/failure；非 2xx 与传输失败均计为 failure。client/operation 仅取已配置的有限名称，目标参数和原始 URI 不进入标签。引入 Observability 后公共 application 标签由标准 management 配置统一提供。
+
 ---
 
 <a id="architecture"></a>

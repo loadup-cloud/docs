@@ -32,6 +32,12 @@ title: "Import / Export Tasks"
 
 HTTP 用法见 [Web 适配](../transfer-web/)，一致性设计见 [ARCHITECTURE.md](./#architecture)。
 
+## 导出字段脱敏
+
+MVC 注解不会处理 CSV、Excel 或文件下载。业务 handler 生成文件时逐字段调用 `Masking.mask(value, MaskType)`，消费工程引入 `loadup-commons-masking`。开发启动器的 `demo-csv-export` 演示导出已脱敏 mobile 列。
+
+首版没有通用明文导出开关。若业务确需明文，必须在提交和后台执行时校验租户、授权范围及有效用户状态，并可靠审计；不要把请求中的管理员标记或 ThreadLocal 传播到任务来绕过校验。
+
 ---
 
 <a id="architecture"></a>

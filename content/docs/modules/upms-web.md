@@ -52,6 +52,14 @@ Controller 接口使用 POST + JSON body。路径如下：
 
 设计边界与装配路径见 [ARCHITECTURE.md](./#architecture)。
 
+## 明文查看
+
+`POST /api/upms/user/sensitive`：JSON `{ "id": "target-user-id", "purpose": "CUSTOMER_SUPPORT" }`，返回原始姓名、邮箱和手机号。必须有 `upms:user:sensitive:read` authority 及角色数据范围授权；静态管理员角色本身不足以放行。请求不得缺少用途。
+
+消费工程按需引入 `loadup-modules-audit`，默认装配可靠审计桥接；也可自行提供 `SensitiveReadAudit`。审计缺失或失败拒绝返回原值。默认桥接以独立事务提交，记录元数据而非原文。HTTP body、网关/代理日志和浏览器缓存需要由集成方避免采集敏感原文；响应附带 `Cache-Control: no-store`。
+
+普通用户输出仍固定脱敏。编辑时省略敏感属性保持原值，不得回写掩码。完整约定见 [UPMS README](../upms/)。
+
 ---
 
 <a id="architecture"></a>
@@ -105,3 +113,7 @@ HTTP /api/** → Controller → App Service → Client DTO 响应
 保持组件职责独立：业务调用依赖公开契约，自动配置处理框架装配，基础设施细节留在实现层。
 
 集成方式与配置示例见 [README.md](./)。
+
+### 可选审计桥接
+
+`UserSensitiveController` 使用方法权限和认证主体调用 app；`SensitiveReadAuditConfiguration` 在可选 AuditService 存在时装配默认 recorder。自动配置顺序在 UPMS app 和审计模块之后。默认 recorder 的独立事务先提交审计元数据，异常不吞掉；无 audit 依赖时不装配默认 recorder，app 对明文访问默认拒绝。

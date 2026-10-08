@@ -32,6 +32,10 @@ UPMS 对外 DTO、Command 与 Query 契约。
 - [`AuthenticationService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)
 - [`UserQueryService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)
 
+## 展示与明文 DTO
+
+`UserDetailDTO` 的 realName/email/mobile 带 `@Masked`，只影响 WebMVC 响应；内部服务返回的对象仍有原值。`UserSensitiveQuery` 使用目标 ID 和枚举 `SensitiveReadPurpose`；独立 `UserSensitiveDTO` 仅由经过授权和可靠审计的 app 服务返回。明文 DTO 的 toString 不包含个人字段。
+
 ---
 
 <a id="architecture"></a>
@@ -79,3 +83,7 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 `AuthenticationService` 作为稳定入口；技术选择在运行应用完成，避免 API 层反向依赖具体后端。
 
 集成方式与配置示例见 [README.md](./)。
+
+### 敏感输出契约
+
+仅展示 DTO 依赖纯 Java `commons-masking` 注解，client 不依赖 WebMVC/Jackson 脱敏实现。查询入参、Command 与原值 DTO 不使用展示注解，避免入参或签名内容被修改。普通与明文输出类型分离，禁止通过权限动态切换同一 DTO 的 serializer。
