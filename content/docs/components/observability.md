@@ -62,6 +62,7 @@ EnvironmentPostProcessor 通过标准 `management.metrics.tags.application` 提�
 | HTTP/JVM 基础指标 | Boot/Micrometer 原生名称，保留标准维度 |
 | JSON API 结果 | `loadup.api.responses`，`outcome=success/failure` |
 | 命名出站调用（含 KMS） | `loadup.http.calls`，配置中的 client、operation 与 `outcome=success/failure` |
+| 分布式锁 | `loadup.lock.acquire`、`loadup.lock.hold`；有限 outcome/reason；释放失败计数 |
 | Outbox 投递与状态 | `loadup.outbox.delivery` 的 success/failure；pending、failed、oldest.age 状态量 |
 | Outbox handler Trace | `loadup.outbox.handle` Observation |
 | Resilience4j | 官方 Micrometer binder 的标准名称和配置实例维度 |
