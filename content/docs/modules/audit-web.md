@@ -31,6 +31,8 @@ loadup:
 
 管理员使用 `POST /api/audit/events/query` 查询，要求 `ROLE_SUPER_ADMIN`，支持 `actorId`、`action`、`outcome`、`from`、`to`、`page`、`size`。查询自动使用当前 `TenantUtil` 租户 ID，不接受客户端指定租户。`loadup.audit.web.enabled: false` 关闭 Web 适配。
 
+`actorId` 取自 `Authentication.getName()`。框架的 `LoadUpUser` 返回 `userId`（JWT 的 `sub`），不会保存角色、权限或用户对象的字符串表示。接入自定义认证时，应让 principal 实现 `Principal` 或 Spring Security 的身份接口，并返回稳定的操作者标识；匿名请求的操作者为空。
+
 实现边界见 [ARCHITECTURE.md](./#architecture)。
 
 ---
