@@ -8,6 +8,8 @@ title: "Loadup Modules"
 
 ## 子模块
 
+- [`loadup-modules-contract`](contract/)：产品/组合/方案/商户合约；阶段一提供纯领域核心，管理 API 与页面待实现。
+
 - [`loadup-modules-upms`](upms/)
 - [`loadup-modules-audit`](audit/)：操作审计存储与查询服务。
 - [`loadup-modules-audit-web`](audit-web/)：可选 MVC 采集和管理员查询接口。
@@ -53,10 +55,13 @@ UPMS 按 COLA 分层：`client` 暴露 DTO/Command/Query，`domain` 保存纯领
 
 应用通过 Controller 暴露 HTTP 接口。UPMS 提供用户与权限数据，不负责独立令牌签发；SAS、Resource Server 和方法授权分别由独立组件承担。跨模块待办见根目录 `ROADMAP.md`。
 
+合约模块采用相同 COLA 目标分层，当前仅交付纯 Java domain 与测试；产品到合约的固定版本、参数覆盖和条件模型见 [合约详细设计](contract/#architecture)。持久化、编排和可选 Web 适配在后续阶段提供。
+
 ### 分层与调用路径
 
 ```text
 loadup-modules
+  ├─ loadup-modules-contract → 纯领域核心（阶段一）
   ├─ loadup-modules-upms
   ├─ loadup-modules-audit + loadup-modules-audit-web
   ├─ loadup-modules-dictionary + loadup-modules-dictionary-web
