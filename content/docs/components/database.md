@@ -19,7 +19,50 @@ This module brings the JDBC stack (`spring-boot-starter-jdbc`, so `DataSourceAut
 default Hikari pool); the application still supplies the JDBC driver and the `spring.datasource.*`
 properties. This module does not select a database vendor.
 
-Define each data object as `@Table(...) class XxxDO extends BaseDO` and its mapper as `@Mapper interface XxxDOMapper extends BaseMapper<XxxDO>`. `BaseDO` supplies `id`, `createdAt`, `updatedAt`, `tenantId`, and integer `deleted` (`0` normal, `1` deleted). Module-local `Tables` and TableDef sources are generated from the root `mybatis-flex.config`; declare empty Mapper interfaces explicitly. Generated files remain under `target/`.
+Define each data object as `@Table(...) class XxxDO extends BaseDO`. `BaseDO` supplies `id`, `createdAt`, `updatedAt`, `tenantId`, and integer `deleted` (`0` normal, `1` deleted). The database processor generates `XxxDOMapper extends BaseMapper<XxxDO>` with MyBatis `@Mapper`, module-local `Tables` and TableDef sources. Do not declare these Mapper interfaces manually. Generated files remain under `target/`.
+
+## Compile-time generation
+
+Infrastructure modules enable the database-owned processor separately from the runtime dependency. The BOM manages its version. A provided dependency establishes Maven reactor ordering and keeps the processor out of deployment dependencies:
+
+```xml
+<dependency>
+    <groupId>io.github.loadup-cloud</groupId>
+    <artifactId>loadup-components-database-processor</artifactId>
+    <scope>provided</scope>
+    <optional>true</optional>
+</dependency>
+```
+
+Configure `maven-compiler-plugin` annotation processing (external consumers must also include MapStruct/Boot paths if used):
+
+```xml
+<configuration>
+    <annotationProcessorPaths combine.children="append">
+        <path>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-processor</artifactId>
+            <version>${mybatis.flex.version}</version>
+        </path>
+        <path>
+            <groupId>io.github.loadup-cloud</groupId>
+            <artifactId>loadup-components-database-processor</artifactId>
+            <version>${loadup.framework.version}</version>
+        </path>
+    </annotationProcessorPaths>
+    <annotationProcessors>
+        <annotationProcessor>org.mapstruct.ap.MappingProcessor</annotationProcessor>
+        <annotationProcessor>org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor</annotationProcessor>
+        <annotationProcessor>io.github.loadup.components.database.processor.LoadUpMyBatisFlexProcessor</annotationProcessor>
+    </annotationProcessors>
+</configuration>
+```
+
+External projects must define the example version properties to match the selected BOM; importing a BOM does not import its Maven properties or plugin configuration.
+
+The explicit processor list avoids running upstream Flex a second time through service discovery. Both Flex paths are explicit so compilation works before the processor artifact is installed into the local repository. Build using `mvn clean ...` to avoid generating the same sources twice from stale output. Import `infrastructure.mapper.XxxDOMapper` and inject it into repositories; scan the generated mapper package with `@MapperScan`. MapStruct remains an independent processor for Spring-managed converters.
+
+Fixed options live in `DatabaseAptConfiguration` Java code. No project `mybatis-flex.config` or application property is needed; ancestor config files cannot change these options. The generated config in compiler output is an upstream implementation bridge, not an application configuration file.
 
 ## Configuration
 
@@ -42,7 +85,7 @@ Use `TenantUtil.runWithTenant(...)` or `callWithTenant(...)` for non-HTTP jobs t
 
 | Capability | MyBatis-Flex |
 |---|---|
-| CRUD, QueryWrapper, generated Tables and TableDef | ✓ |
+| CRUD, QueryWrapper, generated MyBatis Mapper, Tables and TableDef | ✓ |
 | Audit timestamps and ID generation | ✓ |
 | Integer logical deletion | ✓ |
 | Tenant SQL isolation and request propagation | ✓ |
@@ -107,7 +150,11 @@ The servlet filter always propagates request context. With multi-tenancy disable
 
 ### Code generation
 
-The repository root `mybatis-flex.config` is the single source for annotation processing. It generates uppercase TableDef properties, one module-local `Tables` class, while Mapper interfaces are explicitly declared. Generated sources stay under `target/generated-sources/annotations` and must not be committed.
+Generation belongs to the database component's `loadup-components-database-processor` build-time jar. `DatabaseAptConfiguration` fixes the options in Java; `LoadUpMyBatisFlexProcessor` delegates source generation to the upstream MyBatis-Flex processor. It generates uppercase TableDef properties, module-local `Tables`, and `XxxDOMapper extends BaseMapper<XxxDO>` annotated with MyBatis `@Mapper`. DOs in `.dataobject` produce interfaces in the sibling `.mapper` package. Generated sources stay under `target/generated-sources/annotations` and must not be committed.
+
+Upstream 1.11.8 reads generation configuration only from files. Before initializing the delegate, the wrapper writes its fixed options into `CLASS_OUTPUT/mybatis-flex.config` and enables `stopBubbling`; parent configuration is ignored. This bridge avoids reflection, copied upstream generator code and runtime Spring configuration for a compile-time concern. The compile test verifies that disabling generation or changing packages in a parent config cannot override the defaults.
+
+The processor jar is an independent reactor module beneath database; the runtime database artifact remains a jar. Infrastructure modules declare it as optional/provided and explicitly select the wrapper alongside MapStruct and Boot processors. The upstream processor path supplies the delegate but is not selected independently, preventing duplicate generation. The wrapper is not a dependency of the runtime database artifact. Empty hand-written persistence Mapper interfaces are removed; MapStruct converter contracts remain unchanged.
 
 ### Schema contract
 

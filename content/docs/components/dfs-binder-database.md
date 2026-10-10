@@ -30,7 +30,7 @@ Select it with `loadup.dfs.binder-type=database`. Flyway creates the `dfs_file` 
 
 ## 对外契约
 
-- [`FileStorageMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-database/src/main/java/io/github/loadup/components/dfs/database/mapper/FileStorageMapper.java)
+- [`FileStorageMapper`](src/main/java/io/github/loadup/components/dfs/database/mapper/FileStorageMapper.java)
 
 ## 自动装配
 
@@ -97,7 +97,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 扩展契约
 
-- [`FileStorageMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-database/src/main/java/io/github/loadup/components/dfs/database/mapper/FileStorageMapper.java)：由实现方或调用方按接口定义对接。
+- [`FileStorageMapper`](src/main/java/io/github/loadup/components/dfs/database/mapper/FileStorageMapper.java)：由实现方或调用方按接口定义对接。
 
 ### 设计取舍
 

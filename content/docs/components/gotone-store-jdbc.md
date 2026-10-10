@@ -33,9 +33,9 @@ sidebar:
 
 ## 对外契约
 
-- [`ServiceChannelDOMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/mapper/ServiceChannelDOMapper.java)
-- [`NotificationServiceDOMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationServiceDOMapper.java)
-- [`NotificationRecordDOMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationRecordDOMapper.java)
+- [`ServiceChannelDOMapper`](src/main/java/io/github/loadup/components/gotone/store/mapper/ServiceChannelDOMapper.java)
+- [`NotificationServiceDOMapper`](src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationServiceDOMapper.java)
+- [`NotificationRecordDOMapper`](src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationRecordDOMapper.java)
 
 ## 自动装配
 
@@ -88,9 +88,9 @@ sidebar:
 
 ### 扩展契约
 
-- [`ServiceChannelDOMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/mapper/ServiceChannelDOMapper.java)：由实现方或调用方按接口定义对接。
-- [`NotificationServiceDOMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationServiceDOMapper.java)：由实现方或调用方按接口定义对接。
-- [`NotificationRecordDOMapper`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationRecordDOMapper.java)：由实现方或调用方按接口定义对接。
+- [`ServiceChannelDOMapper`](src/main/java/io/github/loadup/components/gotone/store/mapper/ServiceChannelDOMapper.java)：由实现方或调用方按接口定义对接。
+- [`NotificationServiceDOMapper`](src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationServiceDOMapper.java)：由实现方或调用方按接口定义对接。
+- [`NotificationRecordDOMapper`](src/main/java/io/github/loadup/components/gotone/store/mapper/NotificationRecordDOMapper.java)：由实现方或调用方按接口定义对接。
 
 ### 设计取舍
 
