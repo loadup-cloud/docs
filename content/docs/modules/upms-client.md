@@ -28,9 +28,9 @@ UPMS 对外 DTO、Command 与 Query 契约。
 
 ## 对外契约
 
-- [`AccessCheckService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AccessCheckService.java)
-- [`AuthenticationService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)
-- [`UserQueryService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)
+- [`AccessCheckService`](src/main/java/io/github/loadup/modules/upms/client/service/AccessCheckService.java)
+- [`AuthenticationService`](src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)
+- [`UserQueryService`](src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)
 
 ## 展示与明文 DTO
 
@@ -59,9 +59,9 @@ UPMS 对外 DTO、Command 与 Query 契约。
 
 主要入口文件：
 
-- [`AccessCheckService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AccessCheckService.java)
-- [`AuthenticationService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)
-- [`UserQueryService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)
+- [`AccessCheckService`](src/main/java/io/github/loadup/modules/upms/client/service/AccessCheckService.java)
+- [`AuthenticationService`](src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)
+- [`UserQueryService`](src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)
 
 ### 分层与调用路径
 
@@ -74,9 +74,9 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 
 ### 扩展契约
 
-- [`AccessCheckService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AccessCheckService.java)：由实现方或调用方按接口定义对接。
-- [`AuthenticationService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)：由实现方或调用方按接口定义对接。
-- [`UserQueryService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)：由实现方或调用方按接口定义对接。
+- [`AccessCheckService`](src/main/java/io/github/loadup/modules/upms/client/service/AccessCheckService.java)：由实现方或调用方按接口定义对接。
+- [`AuthenticationService`](src/main/java/io/github/loadup/modules/upms/client/service/AuthenticationService.java)：由实现方或调用方按接口定义对接。
+- [`UserQueryService`](src/main/java/io/github/loadup/modules/upms/client/service/UserQueryService.java)：由实现方或调用方按接口定义对接。
 
 ### 设计取舍
 

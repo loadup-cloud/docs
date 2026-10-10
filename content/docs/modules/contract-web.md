@@ -27,7 +27,7 @@ sidebar:
 | 生命周期 | 有效草稿、固定发布版本、初次签约和暂停/恢复/终止 |
 | 验证状态 | 源码已提供，未编译或执行测试 |
 
-Controller 路径 `/contract`，由 `loadup-components-webmvc` 统一添加 `/api` 前缀，外部路径为 `/api/contract/*`。全部 JSON 操作为 POST，@Valid + @PreAuthorize + SpringDoc，响应由全局 WebMVC result/data 包装。`loadup.contract.web.enabled` 可关闭装配。
+Controller 路径 `/contract`，由 `loadup-components-webmvc` 统一添加 `/api` 前缀，外部路径为 `/api/contract/*`。全部 JSON 操作为 POST，@Valid + @PreAuthorize + SpringDoc，响应由全局 WebMVC result/data 包装。`Maven *-web dependency` 可关闭装配。
 
 ## 接入约束
 
@@ -48,7 +48,7 @@ Web 只做 HTTP 参数、当前 Authentication 操作者、权限与服务调用
 
 ### 关键契约
 
-Controller 路径 /contract，由 `loadup-components-webmvc` 统一添加 /api。全部 JSON 操作为 POST，@Valid + @PreAuthorize + SpringDoc，响应由全局 WebMVC result/data 包装。loadup.contract.web.enabled 可关闭装配。
+Controller 路径 /contract，由 `loadup-components-webmvc` 统一添加 /api。全部 JSON 操作为 POST，@Valid + @PreAuthorize + SpringDoc，响应由全局 WebMVC result/data 包装。Maven *-web dependency 可关闭装配。
 
 ### 依赖和扩展
 

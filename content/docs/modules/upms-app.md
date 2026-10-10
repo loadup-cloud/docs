@@ -8,7 +8,7 @@ sidebar:
 
 UPMS 应用服务与业务编排。
 
-`AccountSecurityService` 提供本人安全概览、按用户 ID 查询登录历史以及使用旧密码修改密码的应用入口。HTTP 适配见 `loadup-modules-upms-web`。登录失败跟踪和临时锁定由 `loadup.upms.security.login` 控制；管理员手动锁定不会因超时自动解除。
+`AccountSecurityService` 提供本人安全概览、按用户 ID 查询登录历史以及使用旧密码修改密码的应用入口。HTTP 适配见 `loadup-modules-upms-web`。登录失败跟踪和临时锁定由 `loadup.modules.upms.security.login` 控制；管理员手动锁定不会因超时自动解除。
 
 ## 引入
 
@@ -37,7 +37,7 @@ UPMS 应用服务与业务编排。
 
 | 前缀 | 配置类 |
 |---|---|
-| `loadup.upms.security` | [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java) |
+| `loadup.modules.upms.security` | [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java) |
 
 ## 对外契约
 
@@ -107,7 +107,7 @@ Client Service → 应用服务编排 → 领域服务/Gateway → 基础设施�
 
 ### 配置归属
 
-- [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java) 绑定 `loadup.upms.security`。
+- [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java) 绑定 `loadup.modules.upms.security`。
 
 ### 设计取舍
 

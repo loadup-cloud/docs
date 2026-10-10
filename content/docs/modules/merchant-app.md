@@ -24,7 +24,7 @@ sidebar:
 | 能力 | 契约 |
 |---|---|
 | 职责 | 资料管理编排 |
-| 当前实现 | MerchantService 事务编排创建/更新/查询/启停；MerchantLookupService 提供可信基本 Profile。共享 Clock、事务管理器与 DataSource；显式 Import 装配，不与 REGISTER_BEAN 条件混用扫描。 |
+| 当前实现 | MerchantService 事务编排创建/更新/查询/启停；MerchantQueryService 提供可信基本 Profile。共享 Clock、事务管理器与 DataSource；显式 Import 装配，不与 REGISTER_BEAN 条件混用扫描。 |
 | 验证状态 | 源码提供，尚未编译/运行 |
 
 ## 接入约束
@@ -42,7 +42,7 @@ sidebar:
 
 ### 设计与依赖
 
-MerchantService 事务编排创建/更新/查询/启停；MerchantLookupService 提供可信基本 Profile。共享 Clock、事务管理器与 DataSource；显式 Import 装配，不与 REGISTER_BEAN 条件混用扫描。
+MerchantService 事务编排创建/更新/查询/启停；MerchantQueryService 提供可信基本 Profile。共享 Clock、事务管理器与 DataSource；显式 Import 装配，不与 REGISTER_BEAN 条件混用扫描。
 
 详细职责边界见 [模块架构](../merchant/#architecture)。client/domain 是公开类型与纯业务模型；infrastructure/app/web 承担持久化、编排与 HTTP。contract 适配只依赖公开查询接口，不建立两个核心模块之间的实现依赖。
 

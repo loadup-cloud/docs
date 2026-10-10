@@ -40,7 +40,7 @@ Controller 接口使用 POST + JSON body。路径如下：
 
 ## 配置
 
-本模块没有专属配置键。UPMS 登录策略使用 `loadup.upms.security.login`；公开路径使用 `loadup.security.resource-server.permit-all`。
+本模块没有专属配置键。UPMS 登录策略使用 `loadup.modules.upms.security.login`；公开路径使用 `loadup.security.resource-server.permit-all`。
 
 ## 接入步骤
 

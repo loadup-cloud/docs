@@ -37,14 +37,15 @@ title: "LoadUp Merchant"
 </dependency>
 ```
 
-商户 Java API 为 MerchantService；跨模块只需依赖 merchant-client 的 MerchantLookup。contract 适配仅依赖两个 client jar，使用 MerchantLookup，不依赖商户内部仓储，也不强制引入合约 app。单独部署商户服务时不引入适配 jar。
+商户 Java API 为 MerchantService；跨模块只需依赖 merchant-client 的 MerchantQueryFacade。contract 适配仅依赖两个 client jar，使用 MerchantQueryFacade，不依赖商户内部仓储，也不强制引入合约 app。单独部署商户服务时不引入适配 jar。
 
 ```yaml
 loadup:
-  merchant:
-    enabled: true
-    web:
+  modules:
+    merchant:
       enabled: true
+      web:
+        enabled: true
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -109,6 +110,16 @@ HTTP 使用200 + result/data，`result.status == "S"` 为成功。MERCHANT_NOT_F
 
 MerchantBasicInfoTest、MerchantFactsTest 和 MerchantContractIT 源码覆盖私有字段更新语义、事实白名单/未知值、身份错配、自定义 Provider 退让、MySQL 编码唯一/版本冲突/租户隔离、真实商户签约与停用门禁。集成测试使用 Testify + MySQL Testcontainers，不用 MockBean 代替数据库；未执行构建或测试。设计见 [ARCHITECTURE.md](./#architecture)。
 
+## 业务配置命名空间
+
+模块专属配置统一使用 `loadup.modules.merchant.*`，配置中心与消费工程需同步迁移旧前缀；应用开关为 `loadup.modules.merchant.enabled`，HTTP 开关为 `Maven *-web dependency`，默认开启。
+
+## 统一接入契约
+
+Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-app` 装配业务能力，引入 `*-web` 才提供 Controller，Web 适配不再提供独立 enabled 开关。模块整体启停仍使用 `loadup.modules.merchant.enabled`。
+
+JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契约；异常由全局 WebMVC 处理。下载仍为流式响应。请求与 DTO 字段声明 OpenAPI，凭证只写。持久化经 database 组件使用 MyBatis-Flex、Tables 常量和 Spring MapStruct Converter；数据库连接与可信租户来源由消费工程配置。新 schema 迁移与本轮 clean 编译、运行验证仍需本地执行。
+
 ---
 
 <a id="architecture"></a>
@@ -133,9 +144,9 @@ flowchart LR
   ContractApp[contract-app] --> ContractClient
 ```
 
-client 为 Command/Query/DTO 和 MerchantLookup；domain 为不可变 Merchant/MerchantBasicInfo、枚举与 Gateway，零 Spring/ORM/JSON；infrastructure 为 BaseDO、Mapper、GatewayImpl 和 MapStruct；app 负责事务、身份、时钟、版本及公开查询；web 负责 POST/JSON、权限和 SpringDoc。
+client 为 Command/Query/DTO 和 MerchantQueryFacade；domain 为不可变 Merchant/MerchantBasicInfo、枚举与 Gateway，零 Spring/ORM/JSON；infrastructure 为 BaseDO、Mapper、GatewayImpl 和 MapStruct；app 负责事务、身份、时钟、版本及公开查询；web 负责 POST/JSON、权限和 SpringDoc。
 
-可选 merchant-contract 只通过 MerchantLookup 与 MerchantFactsProvider 桥接，不在商户核心引入合约依赖，也不在合约核心引入商户仓储。Bean 缺失时不装配，已有自定义 Provider 优先。
+可选 merchant-contract 只通过 MerchantQueryFacade 与 MerchantFactsProvider 桥接，不在商户核心引入合约依赖，也不在合约核心引入商户仓储。Bean 缺失时不装配，已有自定义 Provider 优先。
 
 自动配置采用 DataSource 候选条件与显式 Import，转换器为 MapStruct 生成的 Spring Bean。没有组件扫描与 REGISTER_BEAN 条件混用，不手工创建转换器。
 
@@ -157,7 +168,7 @@ Gateway 用 QueryWrapper 明确约束 tenant 与 deleted=0；空租户和空查�
 
 ### 合约事实信任边界
 
-MerchantLookup 读取显式租户/id，并要求请求作用域租户一致；事实适配器再次比较返回身份，仅输出基本事实白名单。未维护的地区不输出，未知事实不能靠空串伪装成存在。联系人、登记号和详细地址不进入事实 map。
+MerchantQueryFacade 读取显式租户/id，并要求请求作用域租户一致；事实适配器再次比较返回身份，仅输出基本事实白名单。未维护的地区不输出，未知事实不能靠空串伪装成存在。联系人、登记号和详细地址不进入事实 map。
 
 后台管理员维护的行业可用于普通产品销售限制；不能把人工登记字段当作证件核验或监管资质。需要强资质判断时消费方扩展独立可信 Provider 与审批，仍不能信任浏览器上传的 fact map。
 
@@ -172,3 +183,11 @@ DTO 用 Masked 描述 JSON 输出规则，由 WebMVC 独立输出 mapper 脱敏�
 ### 验证与扩展
 
 已编写领域、事实适配与真实 MySQL 合约组合测试，未运行。后续执行 Boot 装配、MapStruct/Jackson3、实际权限、脱敏、前端类型/交互及并发停用边界验收。可靠审计、Outbox、资质审核、历史资料与渠道开户扩展不得覆盖现有合约条款。
+
+### 公共边界与映射约束
+
+Facade 是 client 的业务契约，应用服务直接实现；Controller 和跨模块消费者依赖 Facade。domain 保留业务状态、规则与 Gateway，表示层字段转换交给 Spring 管理的 MapStruct。共享配置固定 Spring 模式、构造器注入和目标字段严格校验。
+
+仓储依赖 database 的固定 UUID、审计时间、逻辑删除规则，显式声明空 BaseMapper，并通过模块生成的 Tables 表达查询。字典删除与文件引用解绑明确使用物理删除；文件状态、通知归档和任务生命周期是业务状态，独立于 BaseDO 的 deleted。
+
+所有数据对象的诊断文本使用 commons-json；诊断序列化与真实 API JSON 分离，避免因 HTTP 脱敏设置改变日志中的凭证披露规则。

@@ -38,10 +38,11 @@ API 类型由 `loadup-modules-contract-client` 提供；纯 Java 解析可单独
 
 ```yaml
 loadup:
-  contract:
-    enabled: true
-    web:
+  modules:
+    contract:
       enabled: true
+      web:
+        enabled: true
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -129,9 +130,19 @@ await publishCatalog<'PRODUCT'>(data.id, data.rowVersion)
 
 ## 使用 Merchant 资料模块
 
-可引入 `loadup-modules-merchant-app/web` 与 `loadup-modules-merchant-contract` 提供默认 MerchantFactsProvider，资料通过 MerchantLookup 读取，合约核心没有新增仓储依赖。事实包含 merchant.code/type/industry/country/province/city，缺失地区不输出；不会声明资质审核已通过。消费方已有自定义 Provider 时自动退让。
+可引入 `loadup-modules-merchant-app/web` 与 `loadup-modules-merchant-contract` 提供默认 MerchantFactsProvider，资料通过 MerchantQueryFacade 读取，合约核心没有新增仓储依赖。事实包含 merchant.code/type/industry/country/province/city，缺失地区不输出；不会声明资质审核已通过。消费方已有自定义 Provider 时自动退让。
 
 管理 API `/api/merchants/**` 创建商户后，签约 merchantId 使用响应 id，不能填业务编码。签约页面已有启用商户选择。停用阻止后续新资格判断，已签约幂等重放仍返回原结果，历史条款不变。资料、隐私、权限与部署见 [Merchant README](../merchant/)。
+
+## 业务配置命名空间
+
+模块专属配置统一使用 `loadup.modules.contract.*`，配置中心与消费工程需同步迁移旧前缀；应用开关为 `loadup.modules.contract.enabled`，HTTP 开关为 `Maven *-web dependency`，默认开启。
+
+## 统一接入契约
+
+Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-app` 装配业务能力，引入 `*-web` 才提供 Controller，Web 适配不再提供独立 enabled 开关。模块整体启停仍使用 `loadup.modules.contract.enabled`。
+
+JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契约；异常由全局 WebMVC 处理。下载仍为流式响应。请求与 DTO 字段声明 OpenAPI，凭证只写。持久化经 database 组件使用 MyBatis-Flex、Tables 常量和 Spring MapStruct Converter；数据库连接与可信租户来源由消费工程配置。新 schema 迁移与本轮 clean 编译、运行验证仍需本地执行。
 
 ---
 
@@ -331,3 +342,11 @@ Vue3 Composition API + Element Plus。产品页编辑参数/默认值/权限/条
 ContractAutoConfiguration 保留 `@ConditionalOnSingleCandidate(DataSource.class)` 与启用开关，使用 `@Import` 显式注册服务、仓储、支持类及 MapStruct 生成的 Spring 转换器。Mapper 接口继续由 `@MapperScan` 注册，不在自动配置上使用 `@ComponentScan`。Spring 7 禁止把解析阶段的组件扫描与 REGISTER_BEAN 阶段的 OnBeanCondition 混用；内嵌扫描配置也会继承该限制。
 
 转换器仍由 MapStruct 按共享配置生成并由 Spring 构造器注入，不手工实例化。ContractAutoConfigurationTest 覆盖单 DataSource 启用、缺失 DataSource、显式禁用和多 DataSource 无主候选场景；测试源码已提供，未运行。
+
+### 公共边界与映射约束
+
+Facade 是 client 的业务契约，应用服务直接实现；Controller 和跨模块消费者依赖 Facade。domain 保留业务状态、规则与 Gateway，表示层字段转换交给 Spring 管理的 MapStruct。共享配置固定 Spring 模式、构造器注入和目标字段严格校验。
+
+仓储依赖 database 的固定 UUID、审计时间、逻辑删除规则，显式声明空 BaseMapper，并通过模块生成的 Tables 表达查询。字典删除与文件引用解绑明确使用物理删除；文件状态、通知归档和任务生命周期是业务状态，独立于 BaseDO 的 deleted。
+
+所有数据对象的诊断文本使用 commons-json；诊断序列化与真实 API JSON 分离，避免因 HTTP 脱敏设置改变日志中的凭证披露规则。

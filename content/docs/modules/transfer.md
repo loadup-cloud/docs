@@ -9,12 +9,12 @@ title: "Import / Export Tasks"
 ## 引入
 
 ```xml
-<dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-modules-transfer</artifactId></dependency>
+<dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-modules-transfer-app</artifactId></dependency>
 <dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-components-retrytask-binder-jobrunr</artifactId></dependency>
 <dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-components-dfs-binder-local</artifactId></dependency>
 ```
 
-模块依赖 `loadup-modules-file`、RetryTask facade 和 MySQL `DataSource`；Flyway 执行 `V20261003000002__create_transfer_task.sql`。导入源文件应先由文件资源模块上传。`loadup.transfer.enabled: false` 可关闭自动装配；HTTP 端点由 `loadup-modules-transfer-web` 单独提供。多节点部署须配置共享 DFS binder 和持久 JobRunr storage。
+模块依赖 `loadup-modules-file-app`、RetryTask facade 和 MySQL `DataSource`；Flyway 执行 `V20261003000002__create_transfer_task.sql`。导入源文件应先由文件资源模块上传。`loadup.modules.transfer.enabled: false` 可关闭自动装配；HTTP 端点由 `loadup-modules-transfer-web` 单独提供。多节点部署须配置共享 DFS binder 和持久 JobRunr storage。
 
 ## 处理器
 
@@ -26,7 +26,7 @@ title: "Import / Export Tasks"
 
 `TransferTaskService.submit(tenantId, ownerId, kind, handlerKey, sourceFileId, options)` 创建任务并排队。`get` 与 `list` 按租户和所有者查询；`retry` 可重发 `QUEUED` 或重试 `FAILED` 任务。结果的 `resultFileId` 可交给文件资源模块下载。导入源文件在处理期间被任务引用，完成或失败后释放。未知处理器、无权访问的源文件及超限文件会被拒绝。
 
-默认输入限制 20 MiB、输出限制 100 MiB；分别配置 `loadup.transfer.max-input-bytes`、`loadup.transfer.max-output-bytes`。输出先写入工作节点的临时文件，随后上传 DFS；临时目录需有足够空间。结果文件的留存由业务应用管理。
+默认输入限制 20 MiB、输出限制 100 MiB；分别配置 `loadup.modules.transfer.max-input-bytes`、`loadup.modules.transfer.max-output-bytes`。输出先写入工作节点的临时文件，随后上传 DFS；临时目录需有足够空间。结果文件的留存由业务应用管理。
 
 本地启动器的 `demo-csv-import` 只校验简单 `value,label` CSV 并生成报告，不写业务表；`demo-csv-export` 生成示例 CSV。接入业务表时替换为自己的处理器。
 
@@ -37,6 +37,40 @@ HTTP 用法见 [Web 适配](../transfer-web/)，一致性设计见 [ARCHITECTURE
 MVC 注解不会处理 CSV、Excel 或文件下载。业务 handler 生成文件时逐字段调用 `Masking.mask(value, MaskType)`，消费工程引入 `loadup-commons-masking`。开发启动器的 `demo-csv-export` 演示导出已脱敏 mobile 列。
 
 首版没有通用明文导出开关。若业务确需明文，必须在提交和后台执行时校验租户、授权范围及有效用户状态，并可靠审计；不要把请求中的管理员标记或 ThreadLocal 传播到任务来绕过校验。
+
+## COLA 模块选择
+
+本目录的 Maven 坐标 `loadup-modules-transfer` 为聚合 POM。业务接入选择具体 jar，版本由根 BOM 管理：
+
+| 子模块 | 用途 |
+| --- | --- |
+| [`client`](../transfer-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现 |
+| [`domain`](../transfer-domain/) | 纯 Java 领域模型、分页值与 Gateway 接口 |
+| [`infrastructure`](../transfer-infrastructure/) | 默认 JDBC Gateway、Flyway 迁移与持久化装配 |
+| [`app`](../transfer-app/) | 用例服务、DTO 映射与应用装配；程序化接入入口 |
+| [`web`](../transfer-web/) | 可选 Spring MVC 适配；自动引入 app |
+| [`test`](../transfer-test/) | 自动装配回归源码，不作为生产依赖 |
+
+`TransferTaskService` 现在位于 `io.github.loadup.modules.transfer.app.service`；公开结果位于 `io.github.loadup.modules.transfer.client.dto`。领域 Gateway 不引用客户端 DTO，也不引用数据库或 Spring API。HTTP 适配使用客户端契约，接口路径及 JSON 字段保持一致。
+
+配置统一归入 `loadup.modules.transfer`：
+
+```yaml
+loadup:
+  modules:
+    transfer:
+      enabled: true
+      web:
+        enabled: true
+```
+
+仅引入 app 时不注册 Controller；关闭 web 开关保留程序化服务，关闭模块 enabled 开关同时停止默认应用与持久化 Bean 装配。配置开关不控制 Flyway 对已在 classpath 上的脚本执行。不要在已有数据库重复复制迁移脚本。
+
+## 统一接入契约
+
+Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-app` 装配业务能力，引入 `*-web` 才提供 Controller，Web 适配不再提供独立 enabled 开关。模块整体启停仍使用 `loadup.modules.transfer.enabled`。
+
+JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契约；异常由全局 WebMVC 处理。下载仍为流式响应。请求与 DTO 字段声明 OpenAPI，凭证只写。持久化经 database 组件使用 MyBatis-Flex、Tables 常量和 Spring MapStruct Converter；数据库连接与可信租户来源由消费工程配置。新 schema 迁移与本轮 clean 编译、运行验证仍需本地执行。
 
 ---
 
@@ -67,3 +101,30 @@ Web 端从认证主体取所有者，从可信租户上下文取租户；普通�
 任务参数有数量与长度限制，处理器输出受字节上限限制；临时输出位于工作节点本地，适用于一次任务在一个节点上完成。首版不提供任务中途取消、分片处理或自动结果清理。
 
 接入见 [README.md](./)。
+
+### COLA 职责与装配
+
+```text
+web → app → domain
+       ↓       ↑
+     client  infrastructure → MySQL / Flyway
+```
+
+- client 定义不可变请求和 DTO，domain 保留领域模型与 `TransferGateway` 端口；应用边界由 `TransferDTOConverter` 以 MapStruct Spring 模式映射。
+- `TransferPersistenceAutoConfiguration` 归 infrastructure，按 DataSource 和 `loadup.modules.transfer.enabled` 提供默认 Gateway，消费者可覆盖接口 Bean。
+- app 在持久化装配之后按 Gateway 及所需组件条件创建 `TransferTaskService`。生成的 converter 通过显式 `@Import` 注册，避免 REGISTER_BEAN 阶段条件与组件扫描冲突。
+- web 只负责路由、可信身份/租户、方法授权和 HTTP 投影；请求契约归 client。全局响应、Jackson 与 `/api` 前缀由 WebMVC 组件处理。
+- 保留现有 JDBC 事务、参数绑定与 SQL 语义；此次组织调整没有改写存储方案或数据库历史脚本。Flyway 脚本集中在 infrastructure，名称与内容保持原样。
+- 所有子模块 parent 指向根 `loadup-parent`，所有内部依赖坐标由 BOM 管理。
+
+配置契约迁移到 `loadup.modules.transfer.*`，不保留旧前缀别名。自动装配、覆盖默认 Gateway 和关闭功能的回归源码见 `TransferAutoConfigurationTest`，本次未执行；真实数据库与 HTTP 验收仍需由消费工程完成。
+
+TransferKind/TransferStatus 是 domain 中的纯 Java 公共枚举，client 复用它们表达处理器与结果契约；domain 不依赖 client。导入导出 app 显式依赖 file-app，复用文件访问控制、引用和清理。
+
+### 公共边界与映射约束
+
+Facade 是 client 的业务契约，应用服务直接实现；Controller 和跨模块消费者依赖 Facade。domain 保留业务状态、规则与 Gateway，表示层字段转换交给 Spring 管理的 MapStruct。共享配置固定 Spring 模式、构造器注入和目标字段严格校验。
+
+仓储依赖 database 的固定 UUID、审计时间、逻辑删除规则，显式声明空 BaseMapper，并通过模块生成的 Tables 表达查询。字典删除与文件引用解绑明确使用物理删除；文件状态、通知归档和任务生命周期是业务状态，独立于 BaseDO 的 deleted。
+
+所有数据对象的诊断文本使用 commons-json；诊断序列化与真实 API JSON 分离，避免因 HTTP 脱敏设置改变日志中的凭证披露规则。
