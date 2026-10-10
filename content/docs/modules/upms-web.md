@@ -17,7 +17,7 @@ sidebar:
 </dependency>
 ```
 
-模块自动引入 UPMS app、方法授权组件和 `loadup-components-webmvc`。Controller 声明 `/auth/register`、`/upms/**` 和 `/account/security/**`，Web 适配器统一添加 `/api` 前缀。`loadup-components-webmvc` 对所有 `/api/**` Controller 统一处理 `result`、`data` 和错误报文；认证拒绝由 Resource Server 处理。用户名密码登录由 `loadup-modules-upms-authserver` 提供 `/api/auth/login`；在 `loadup.security.resource-server.permit-all` 中放行登录与注册。
+模块自动引入 UPMS app、方法授权组件和 `loadup-components-webmvc`。Controller 声明 `/auth/register`、`/upms/**` 和 `/account/security/**`，由 `loadup-components-webmvc` 统一添加 `/api` 前缀并处理 `result`、`data` 和错误报文；认证拒绝由 Resource Server 处理。用户名密码登录由 `loadup-modules-upms-authserver` 提供 `/api/auth/login`；在 `loadup.security.resource-server.permit-all` 中放行登录与注册。
 
 ## HTTP 接口
 

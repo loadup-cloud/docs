@@ -38,11 +38,14 @@ loadup:
     multi-tenant:
       enabled: true
       required: true
+      default-tenant-id: __default__ # used when enabled=false
       ignore-tables: [sys_tenant, sys_config]
       request: {header-name: X-Tenant-Id, parameter-name: tenantId}
 ```
 
-Use `TenantUtil.runWithTenant(...)` or `callWithTenant(...)` for non-HTTP jobs. Tenant bindings are read-only within a JDK 25 ScopedValue scope; there is no set/clear API. The request filter saves immutable metadata under `ExecutionContext.class.getName()` and binds it around REQUEST/ASYNC/ERROR dispatch. Header/parameter/subdomain extraction remains a configurable convenience; authenticated tenant authorization must be enforced by the integrating application.
+When `enabled=false` (the default), the request filter binds `default-tenant-id` for every HTTP request and the database insert listener writes the same ID into `BaseDO.tenantId`, ignoring request-supplied tenant values. The default ID is `__default__` and can be overridden. When `enabled=true`, the filter uses the configured request source; missing tenant context is rejected when `required=true` rather than falling back to the single-tenant ID.
+
+Use `TenantUtil.runWithTenant(...)` or `callWithTenant(...)` for non-HTTP jobs that need a tenant context. Tenant bindings are read-only within a JDK 25 ScopedValue scope; there is no set/clear API. The request filter saves immutable metadata under `ExecutionContext.class.getName()` and binds it around REQUEST/ASYNC/ERROR dispatch. Header/parameter/subdomain extraction remains a configurable convenience; authenticated tenant authorization must be enforced by the integrating application.
 
 ## Capability matrix
 
@@ -102,9 +105,9 @@ When enabled, the configured column and integer values are applied to Flex globa
 
 ### Multi-tenancy
 
-The Flex tenant factory receives the current table name, so ignored tables return no tenant predicate. All other tables resolve the tenant from `TenantUtil`, then the optional default tenant. With `required=true`, missing context fails closed rather than issuing an unscoped query.
+The Flex tenant factory receives the current table name, so ignored tables return no tenant predicate. When multi-tenancy is enabled, all other tables resolve the tenant from `TenantUtil`. With `required=true`, missing context fails closed rather than issuing an unscoped query. The single-tenant default is not used as a fallback in this mode.
 
-The servlet filter only propagates request context. Header lookup is enabled by default; query-parameter lookup is enabled by configuring a name, and subdomain lookup is opt-in. Authentication and authorization layers remain responsible for validating that the caller may act as the supplied tenant.
+The servlet filter always propagates request context. With multi-tenancy disabled, it binds the configured `default-tenant-id` and ignores headers, parameters and subdomains. The insert listener also assigns this ID to every `BaseDO`. With multi-tenancy enabled, header lookup is enabled by default; query-parameter lookup is enabled by configuring a name, and subdomain lookup is opt-in. Authentication and authorization layers remain responsible for validating that the caller may act as the supplied tenant.
 
 `TenantUtil` reads immutable ScopedValue bindings. Executor integrations use LoadUpContextTaskDecorator or ContextHolder.wrap; runWithTenant/callWithTenant establish callback scopes and automatically restore previous bindings.
 
@@ -118,4 +121,4 @@ Every business table uses the five standard fields shown in `schema.sql`. Tenant
 
 ### 租户绑定生命周期
 
-TenantUtil 基于 commons-context 的不可变 ExecutionContext 与 JDK 25 ScopedValue。TenantFilter 显式派生租户上下文、写入同名请求属性并包裹 FilterChain；REQUEST/ASYNC/ERROR 分派受支持，异常/结束由 JDK 恢复此前绑定，不再 set/clear。客户端租户提取配置不替代认证授权，集成方必须验证可访问租户。
+TenantUtil 基于 commons-context 的不可变 ExecutionContext 与 JDK 25 ScopedValue。TenantFilter 显式派生租户上下文、写入同名请求属性并包裹 FilterChain；REQUEST/ASYNC/ERROR 分派受支持，异常/结束由 JDK 恢复此前绑定，不再 set/clear。单租户模式固定使用 `default-tenant-id`；多租户模式解析请求来源，客户端租户提取配置不替代认证授权，集成方必须验证可访问租户。

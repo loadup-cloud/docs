@@ -41,7 +41,7 @@ loadup:
     locations: classpath:db/migration/mysql
 ```
 
-唯一维度为 `tenant_id + biz_type + unique_key`。启用多租户后复用 database 的租户上下文；未启用时使用内部全局范围。ID、审计和逻辑删除也由 database 统一提供。
+唯一维度为 `tenant_id + biz_type + unique_key`。启用多租户后复用 database 的租户上下文；未启用时使用 database 的 `default-tenant-id`。ID、审计和逻辑删除也由 database 统一提供。
 
 ## 能力矩阵
 
@@ -88,9 +88,10 @@ The database constraint is:
 UNIQUE (tenant_id, biz_type, unique_key)
 ```
 
-Tenant-enabled applications use `TenantContextHolder` or the database default tenant. When tenant
-support is disabled or optional context is absent, the reserved `__loadup_global__` tenant scope is
-used so the non-null unique constraint remains deterministic.
+Tenant-enabled applications use the tenant bound in `TenantUtil`. When tenant support is disabled,
+the database component's `default-tenant-id` scopes claims. When tenant support is enabled but
+context is optional and absent, the reserved `__loadup_global__` scope keeps the non-null unique
+constraint deterministic.
 
 `bizType` and `uniqueKey` are trimmed and required. Their maximum lengths are 64 and 255
 characters. `bizId` and `requestData` are diagnostic data and do not participate in uniqueness.

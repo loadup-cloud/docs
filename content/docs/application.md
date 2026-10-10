@@ -40,7 +40,7 @@ Micrometer 指标、Tracing 和导出由 Boot 与 Observability 统一装配；a
 
 ## 合约管理
 
-已引入 `loadup-modules-contract-web`，提供 `/api/contract/**`，请求序列见 Router.http；Flyway 创建目录版本、合约头和修订表。实际签约/解析需消费方提供可信 MerchantFactsProvider，并建立认证租户上下文与 contract 方法权限。启动器不提供伪造商户资料；现有前端页面仍为本地草稿，API 调用层已提供。接入细节见 [合约 README](../modules/contract/)。
+已引入 `loadup-modules-contract-web`，提供 `/api/contract/**`，请求序列见 Router.http；Flyway 创建目录版本、合约头和修订表。本地启动器复用 database 多租户配置：默认不启用多租户，所有 HTTP 请求和新建数据使用 `loadup.database.multi-tenant.default-tenant-id`（环境变量 `LOADUP_DEFAULT_TENANT_ID`，默认 `__default__`）。启用多租户后需从可信身份建立租户上下文，并授予 contract 方法权限。实际签约/解析还需消费方提供可信 MerchantFactsProvider；启动器不提供伪造商户资料。前端目录页面已接入管理 API。接入细节见 [合约 README](../modules/contract/)。
 
 ---
 

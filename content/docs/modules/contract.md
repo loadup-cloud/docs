@@ -56,7 +56,7 @@ spring:
 
 ## 身份与商户事实
 
-入口必须绑定经认证的租户：`TenantUtil.runWithTenant(tenantId, action)` / `callWithTenant`，通过 ScopedValue 管理作用域。HTTP 调用也必须经消费方可信身份适配建立租户，不能直接相信请求头中的 tenantId。接口正文没有 tenantId、actor 或商户事实字段。actor 来自 Authentication。
+入口必须绑定可信租户：单租户应用由 database 组件使用配置的 `default-tenant-id`；多租户应用由消费方验证身份及租户访问权后建立上下文，不能直接相信请求头中的 tenantId。非 HTTP 调用可用 `TenantUtil.runWithTenant(tenantId, action)` / `callWithTenant` 管理 ScopedValue 作用域。接口正文没有 tenantId、actor 或商户事实字段。actor 来自 Authentication。
 
 消费工程提供一个 `MerchantFactsProvider` Bean，通过可信商户仓储/服务查询 **tenantId + merchantId**，返回 `MerchantProfileDTO(merchantId, active, facts)`；事实键仅限 `merchant.*`，值为 `ValueDTO(type, value)`。商户不存在、停用、查询失败或未配置 Provider 均拒绝签约/运行。消费方仍需校验操作者能否管理该商户；后台权限只授予租户范围管理人员。
 
@@ -85,7 +85,7 @@ MerchantFactsProvider merchantFactsProvider(MerchantRegistry registry) {
 | `/merchant-contracts/status` | `contract:merchant:manage` | NORMAL/SUSPENDED/TERMINATED，携带 expectedGeneration |
 | `/runtime/resolve` | `contract:runtime:resolve` | 权威状态门禁、时间和使用条件判断 |
 
-所有 JSON 请求为 POST，外部默认 `/api` 前缀由 WebMVC 添加。响应为 HTTP200 的 result/data；使用 `result.status == "S"` 判断成功。错误码见 client 的 ContractError。接口不自动授予权限，消费工程须注册上述六类权限。
+所有 JSON 请求为 POST，外部 `/api` 前缀由 `loadup-components-webmvc` 统一添加。响应为 HTTP200 的 result/data；使用 `result.status == "S"` 判断成功。错误码见 client 的 ContractError。接口不自动授予权限，消费工程须注册上述七类权限；本地 `loadup-modules-upms/schema.sql` 为超级管理员提供示例授权，已有数据库需要执行其中新增的 Contract 权限语句并重新登录。
 
 `catalog/save` 使用 `{id?, expectedRowVersion?, kind, code, version, definition}`，kind 为 PRODUCT/CONDITION/BUNDLE/SALES_PLAN。definition 结构见 client 的 CatalogDefinitions 和前端 types.ts。服务端按 kind 反序列化并拒绝未知字段；草稿须结构有效，引用的版本必须已经发布。实际保存上限128KiB；不是任意未完成表单的暂存接口。
 

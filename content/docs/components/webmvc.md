@@ -21,7 +21,7 @@ UPMS Web 适配模块已经传递引入此组件。其他 Controller 应用可�
 
 ## JSON 约定
 
-业务 API 前缀固定为 `/api`。组件使用 Spring Boot 4 的 `JsonMapperBuilderCustomizer`，保留 Boot 的 Java Time/JDK8 模块发现机制，并沿用 `JsonUtil` 的日期规则：`LocalDate` 为 `yyyy-MM-dd`，`LocalDateTime` 和传统 `Date` 为 `yyyy-MM-dd HH:mm:ss`；同时注册对应反序列化模块，日期与时长不写为时间戳。Boot 创建的 `ObjectMapper`、`JsonUtil` 和 DTO 序列化共用该日期配置；MVC 使用从它复制的响应专用 Mapper，另加展示脱敏规则。应用可用更高顺序的 `JsonMapperBuilderCustomizer` 覆盖规则。
+业务 API 前缀固定为 `/api`，由本组件的 `LoadUpWebMvcAutoConfiguration` 对 `io.github.loadup.modules` 包下的 Controller 统一添加。模块 Controller 声明相对路径（如 `/contract`），不再自行写 `/api` 或定义 `WebMvcConfigurer`；应用自有包下的 Controller 不受此规则影响。组件使用 Spring Boot 4 的 `JsonMapperBuilderCustomizer`，保留 Boot 的 Java Time/JDK8 模块发现机制，并沿用 `JsonUtil` 的日期规则：`LocalDate` 为 `yyyy-MM-dd`，`LocalDateTime` 和传统 `Date` 为 `yyyy-MM-dd HH:mm:ss`；同时注册对应反序列化模块，日期与时长不写为时间戳。Boot 创建的 `ObjectMapper`、`JsonUtil` 和 DTO 序列化共用该日期配置；MVC 使用从它复制的响应专用 Mapper，另加展示脱敏规则。应用可用更高顺序的 `JsonMapperBuilderCustomizer` 覆盖规则。
 
 ## 自动装配
 
@@ -97,6 +97,8 @@ DTO / JsonUtil   ← SmartInitializingSingleton   ← Boot ObjectMapper
 ```
 
 `ApiPathMatcher` 只匹配 `/api` 和 `/api/**`（考虑 Servlet context path）。
+
+`LoadUpWebMvcAutoConfiguration` 使用 `WebMvcConfigurer#configurePathMatch` 为 `io.github.loadup.modules` 下的 Controller 统一添加 `/api`。各业务模块只声明相对路径；文档、Actuator、错误 Controller 和消费工程自有包不在匹配范围内。
 `ApiResponseAdvice` 对 JSON 与字符串响应设置 HTTP 200；已有 `IResponse` 保持原报文，
 `PageDTO` 使用分页报文，字节响应不包装。`ApiErrorController` 接管错误路径，
 将业务 API 的 400/401/403/404 等状态映射到 `FailureResponse`；非 API 请求保留原 HTTP 状态。
