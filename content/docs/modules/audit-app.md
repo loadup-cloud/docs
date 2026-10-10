@@ -17,7 +17,7 @@ sidebar:
 </dependency>
 ```
 
-版本由 `loadup-dependencies` BOM 管理。程序化接入注入 `io.github.loadup.modules.audit.app.service.AuditService`，对外返回 client DTO。自动带入 infrastructure；配置使用 `loadup.modules.audit.*`，所需 DFS/Gotone/RetryTask 依赖与服务操作示例见上层接入手册。
+版本由 `loadup-dependencies` BOM 管理。程序化接入注入 `io.github.loadup.modules.audit.client.facade.AuditFacade`，对外返回 client DTO。自动带入 infrastructure；配置使用 `loadup.modules.audit.*`，所需 DFS/Gotone/RetryTask 依赖与服务操作示例见上层接入手册。
 
 ## 能力契约
 

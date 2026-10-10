@@ -35,7 +35,7 @@ Web API 与配置见 [Web 适配说明](../file-web/)，设计见 [ARCHITECTURE.
 | --- | --- |
 | [`client`](../file-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现 |
 | [`domain`](../file-domain/) | 纯 Java 领域模型、分页值与 Gateway 接口 |
-| [`infrastructure`](../file-infrastructure/) | 默认 JDBC Gateway、Flyway 迁移与持久化装配 |
+| [`infrastructure`](../file-infrastructure/) | 默认 MyBatis-Flex Gateway、Flyway 迁移与持久化装配 |
 | [`app`](../file-app/) | 用例服务、DTO 映射与应用装配；程序化接入入口 |
 | [`web`](../file-web/) | 可选 Spring MVC 适配；自动引入 app |
 | [`test`](../file-test/) | 自动装配回归源码，不作为生产依赖 |
@@ -60,6 +60,10 @@ loadup:
 Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-app` 装配业务能力，引入 `*-web` 才提供 Controller，Web 适配不再提供独立 enabled 开关。模块整体启停仍使用 `loadup.modules.file.enabled`。
 
 JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契约；异常由全局 WebMVC 处理。下载仍为流式响应。请求与 DTO 字段声明 OpenAPI，凭证只写。持久化经 database 组件使用 MyBatis-Flex、Tables 常量和 Spring MapStruct Converter；数据库连接与可信租户来源由消费工程配置。新 schema 迁移与本轮 clean 编译、运行验证仍需本地执行。
+
+## 入参与分页约定
+
+写操作入参采用业务动作 Command，查询入参采用 Query，分页查询使用 PageQuery 后缀；纯 ID 查询复用公共 IdQuery。Facade 分页统一返回 `PageDTO<T>`，HTTP 分页统一返回 `PageResponse<T>`：`result` 表示结果，`data` 为当前页数组，顶层 `pageInfo` 提供 totalCount/pageIndex/pageSize。不再提供模块专用分页 DTO。完整规则与示例见 [commons-dto](../../commons/loadup-commons-dto/)。
 
 ---
 
@@ -101,7 +105,7 @@ web → app → domain
 - `FilePersistenceAutoConfiguration` 归 infrastructure，按 DataSource 和 `loadup.modules.file.enabled` 提供默认 Gateway，消费者可覆盖接口 Bean。
 - app 在持久化装配之后按 Gateway 及所需组件条件创建 `FileResourceService`。生成的 converter 通过显式 `@Import` 注册，避免 REGISTER_BEAN 阶段条件与组件扫描冲突。
 - web 只负责路由、可信身份/租户、方法授权和 HTTP 投影；请求契约归 client。全局响应、Jackson 与 `/api` 前缀由 WebMVC 组件处理。
-- 保留现有 JDBC 事务、参数绑定与 SQL 语义；此次组织调整没有改写存储方案或数据库历史脚本。Flyway 脚本集中在 infrastructure，名称与内容保持原样。
+- 仓储使用 MyBatis-Flex、Tables 常量与 Spring MapStruct；保留租户、锁、幂等及状态条件更新语义。Flyway 历史脚本保持原样，标准字段通过新增迁移补齐。
 - 所有子模块 parent 指向根 `loadup-parent`，所有内部依赖坐标由 BOM 管理。
 
 配置契约迁移到 `loadup.modules.file.*`，不保留旧前缀别名。自动装配、覆盖默认 Gateway 和关闭功能的回归源码见 `FileAutoConfigurationTest`，本次未执行；真实数据库与 HTTP 验收仍需由消费工程完成。
@@ -113,3 +117,7 @@ Facade 是 client 的业务契约，应用服务直接实现；Controller 和跨
 仓储依赖 database 的固定 UUID、审计时间、逻辑删除规则，显式声明空 BaseMapper，并通过模块生成的 Tables 表达查询。字典删除与文件引用解绑明确使用物理删除；文件状态、通知归档和任务生命周期是业务状态，独立于 BaseDO 的 deleted。
 
 所有数据对象的诊断文本使用 commons-json；诊断序列化与真实 API JSON 分离，避免因 HTTP 脱敏设置改变日志中的凭证披露规则。
+
+### Client 入参与分页边界
+
+client.command 表达业务写动作，client.query 表达只读条件；Controller 和 Facade 共用入参契约。模块专用 PageDTO 已移除，app 将领域分页对象映射为 commons-dto 的 PageDTO；Web 输出 PageResponse，避免分页结构随模块变化。领域 Gateway 的分页返回值不携带 HTTP envelope。

@@ -42,6 +42,6 @@ sidebar:
 HTTP /api/dictionaries/** → DictionaryController → DictionaryService → Repository
 ```
 
-Web 层只负责接收请求、从 `TenantUtil` 读取租户、将分页结果转为 `PageDTO`。编码规范、唯一性、启停规则和事务均属于核心服务。应用可只引入核心模块，不暴露 HTTP 接口。
+Web 层只负责接收 Command/Query、从 `TenantUtil` 读取租户、将公共 PageDTO 包装为 `PageResponse`。编码规范、唯一性、启停规则和事务均属于核心服务。应用可只引入核心模块，不暴露 HTTP 接口。
 
 接入示例见 [README.md](./)。

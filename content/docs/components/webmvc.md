@@ -73,6 +73,7 @@ HTTP JSON 输出中的 `13812345678` 变为 `138****5678`。注解支持字段�
 
 - `loadup-commons-dto`
 - `loadup-commons-util`
+- `loadup-commons-json`
 - `loadup-components-observability`
 
 直接依赖的外部坐标（不含测试与 provided scope）：

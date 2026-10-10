@@ -34,6 +34,10 @@ title: "Loadup Commons"
 
 [`loadup-commons-context`](loadup-commons-context/) 提供 JDK 25 ScopedValue 类型化只读 `ContextHolder`、不可变 ExecutionContext 与可选 ServiceTemplate。租户数据复用该存储，登录身份和 Trace 仍采用各自标准上下文。
 
+## JSON 诊断
+
+[commons-json](loadup-commons-json/) 统一提供 JsonUtil、日期序列化规则及受限、脱敏的 JSON `toString()`，供 DTO、领域数据和 DO 共用；WebMVC 复用其日期配置，诊断输出使用独立 mapper。
+
 ---
 
 <a id="architecture"></a>
