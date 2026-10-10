@@ -44,6 +44,10 @@ title: "Loadup Modules"
 - [`loadup-modules-transfer`](transfer/)：程序化导入导出任务。
 - [`loadup-modules-transfer-web`](transfer-web/)：HTTP 适配。
 
+## Merchant
+
+`loadup-modules-merchant` 提供 COLA 商户资料管理与可选 Web/Contract 适配，基本资料供合约资格查询使用。见 [接入手册](merchant/)。
+
 ---
 
 <a id="architecture"></a>
@@ -55,13 +59,14 @@ UPMS 按 COLA 分层：`client` 暴露 DTO/Command/Query，`domain` 保存纯领
 
 应用通过 Controller 暴露 HTTP 接口。UPMS 提供用户与权限数据，不负责独立令牌签发；SAS、Resource Server 和方法授权分别由独立组件承担。跨模块待办见根目录 `ROADMAP.md`。
 
-合约模块采用相同 COLA 目标分层，当前仅交付纯 Java domain 与测试；产品到合约的固定版本、参数覆盖和条件模型见 [合约详细设计](contract/#architecture)。持久化、编排和可选 Web 适配在后续阶段提供。
+合约模块采用相同 COLA 目标分层，已提供 client/domain/infrastructure/app 与可选 web；产品到合约的固定版本、参数覆盖和条件模型见 [合约详细设计](contract/#architecture)。商户资料通过可选 merchant-contract 适配和公开 MerchantLookup 供合约使用，两个核心模块没有相互依赖。
 
 ### 分层与调用路径
 
 ```text
 loadup-modules
-  ├─ loadup-modules-contract → 纯领域核心（阶段一）
+  ├─ loadup-modules-contract → 动态目录与合约管理
+  ├─ loadup-modules-merchant → 商户资料及可选合约事实适配
   ├─ loadup-modules-upms
   ├─ loadup-modules-audit + loadup-modules-audit-web
   ├─ loadup-modules-dictionary + loadup-modules-dictionary-web

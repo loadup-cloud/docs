@@ -42,6 +42,10 @@ Micrometer 指标、Tracing 和导出由 Boot 与 Observability 统一装配；a
 
 已引入 `loadup-modules-contract-web`，提供 `/api/contract/**`，请求序列见 Router.http；Flyway 创建目录版本、合约头和修订表。本地启动器复用 database 多租户配置：默认不启用多租户，所有 HTTP 请求和新建数据使用 `loadup.database.multi-tenant.default-tenant-id`（环境变量 `LOADUP_DEFAULT_TENANT_ID`，默认 `__default__`）。启用多租户后需从可信身份建立租户上下文，并授予 contract 方法权限。实际签约/解析还需消费方提供可信 MerchantFactsProvider；启动器不提供伪造商户资料。前端目录页面已接入管理 API。接入细节见 [合约 README](../modules/contract/)。
 
+## 商户基本信息
+
+已引入 merchant-web 与 merchant-contract，`/api/merchants/**` 管理资料，持久资料自动供合约资格与运行事实查询，启动器不再需要手工提供默认 MerchantFactsProvider。Router.http 先创建真实商户并保存返回 id，再签约。UPMS schema.sql 补 merchant:read/write/manage，已有数据库需补执行授权并重新登录。页面 `/merchants/list` 支持管理，合约签约页支持启用商户选择。详见 [Merchant README](../modules/merchant/)。
+
 ---
 
 <a id="architecture"></a>
