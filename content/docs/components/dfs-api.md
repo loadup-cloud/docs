@@ -38,7 +38,7 @@ Business code should use only `DfsService` and `io.github.loadup.components.dfs.
 
 ## 自动装配
 
-- [`DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-api/src/main/java/io/github/loadup/components/dfs/autoconfig/DfsAutoConfiguration.java)
+- [`DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/autoconfig/DfsAutoConfiguration.java)
   - 启用条件：`@ConditionalOnSingleCandidate(DfsProvider.class)`。
 
 设计边界与装配路径见 [ARCHITECTURE.md](./#architecture)。
@@ -62,7 +62,7 @@ Business code should use only `DfsService` and `io.github.loadup.components.dfs.
 
 主要入口文件：
 
-- [`DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-api/src/main/java/io/github/loadup/components/dfs/autoconfig/DfsAutoConfiguration.java)
+- [`DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/autoconfig/DfsAutoConfiguration.java)
 - [`DefaultDfsService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-api/src/main/java/io/github/loadup/components/dfs/DefaultDfsService.java)
 - [`DfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-api/src/main/java/io/github/loadup/components/dfs/DfsProvider.java)
 - [`DfsService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-api/src/main/java/io/github/loadup/components/dfs/DfsService.java)
@@ -78,7 +78,7 @@ Business code should use only `DfsService` and `io.github.loadup.components.dfs.
 
 ### 装配规则
 
-- [`DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-api/src/main/java/io/github/loadup/components/dfs/autoconfig/DfsAutoConfiguration.java) 是自动配置入口。
+- [`DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/autoconfig/DfsAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnSingleCandidate(DfsProvider.class)`
 
 ### 扩展契约

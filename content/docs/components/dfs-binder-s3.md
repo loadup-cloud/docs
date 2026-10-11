@@ -54,7 +54,7 @@ The binder persists filename and custom metadata in S3 object metadata, generate
 
 主要入口文件：
 
-- [`S3DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/autoconfig/S3DfsAutoConfiguration.java)
+- [`S3DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/s3/autoconfig/S3DfsAutoConfiguration.java)
 - [`S3DfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/S3DfsProvider.java)
 
 ### 分层与调用路径
@@ -68,7 +68,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`S3DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/autoconfig/S3DfsAutoConfiguration.java) 是自动配置入口。
+- [`S3DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/s3/autoconfig/S3DfsAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(S3Client.class)`
   - `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "s3")`
   - `@ConditionalOnMissingBean(DfsProvider.class)`

@@ -65,7 +65,7 @@ Apache License 2.0 (Apache-2.0)
 
 主要入口文件：
 
-- [`QuartzSchedulerAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-scheduler/loadup-components-scheduler-binder-quartz/src/main/java/io/github/loadup/components/scheduler/quartz/autoconfig/QuartzSchedulerAutoConfiguration.java)
+- [`QuartzSchedulerAutoConfiguration`](src/main/java/io/github/loadup/components/scheduler/quartz/autoconfig/QuartzSchedulerAutoConfiguration.java)
 - [`QuartzSchedulerTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-scheduler/loadup-components-scheduler-binder-quartz/src/main/java/io/github/loadup/components/scheduler/quartz/QuartzSchedulerTemplate.java)
 
 ### 分层与调用路径
@@ -79,7 +79,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`QuartzSchedulerAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-scheduler/loadup-components-scheduler-binder-quartz/src/main/java/io/github/loadup/components/scheduler/quartz/autoconfig/QuartzSchedulerAutoConfiguration.java) 是自动配置入口。
+- [`QuartzSchedulerAutoConfiguration`](src/main/java/io/github/loadup/components/scheduler/quartz/autoconfig/QuartzSchedulerAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass({Scheduler.class, JobDetail.class})`
 
 ### 设计取舍

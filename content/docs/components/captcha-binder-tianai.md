@@ -50,7 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [`TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java)
+- [`TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java)
   - 启用条件：`@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "tianai", matchIfMissing = true)`。
 
 ---
@@ -79,7 +79,7 @@ loadup:
 
 主要入口文件：
 
-- [`TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java)
+- [`TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java)
 - [`TianaiCaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/TianaiCaptchaProvider.java)
 
 ### 分层与调用路径
@@ -93,7 +93,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java) 是自动配置入口。
+- [`TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(TACBuilder.class)`
   - `@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "tianai", matchIfMissing = true)`
 

@@ -50,7 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [`ApolloConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-apollo/src/main/java/io/github/loadup/components/configcenter/apollo/autoconfig/ApolloConfigCenterAutoConfiguration.java)
+- [`ApolloConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/apollo/autoconfig/ApolloConfigCenterAutoConfiguration.java)
   - 启用条件：`@ConditionalOnProperty(prefix = "loadup.configcenter", name = "binder-type", havingValue = "apollo")`。
 
 ---
@@ -77,7 +77,7 @@ loadup:
 
 主要入口文件：
 
-- [`ApolloConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-apollo/src/main/java/io/github/loadup/components/configcenter/apollo/autoconfig/ApolloConfigCenterAutoConfiguration.java)
+- [`ApolloConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/apollo/autoconfig/ApolloConfigCenterAutoConfiguration.java)
 - [`ApolloConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-apollo/src/main/java/io/github/loadup/components/configcenter/apollo/ApolloConfigCenterProvider.java)
 
 ### 分层与调用路径
@@ -91,7 +91,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`ApolloConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-apollo/src/main/java/io/github/loadup/components/configcenter/apollo/autoconfig/ApolloConfigCenterAutoConfiguration.java) 是自动配置入口。
+- [`ApolloConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/apollo/autoconfig/ApolloConfigCenterAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(ConfigService.class)`
   - `@ConditionalOnProperty(prefix = "loadup.configcenter", name = "binder-type", havingValue = "apollo")`
 

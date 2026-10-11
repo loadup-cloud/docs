@@ -65,6 +65,10 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 写操作入参采用业务动作 Command，查询入参采用 Query，分页查询使用 PageQuery 后缀；纯 ID 查询复用公共 IdQuery。Facade 分页统一返回 `PageDTO<T>`，HTTP 分页统一返回 `PageResponse<T>`：`result` 表示结果，`data` 为当前页数组，顶层 `pageInfo` 提供 totalCount/pageIndex/pageSize。不再提供模块专用分页 DTO。完整规则与示例见 [commons-dto](../../commons/loadup-commons-dto/)。
 
+## 查询契约
+
+Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围为 UTC；tenantId 由服务端上下文解析。事件时间使用可替换的 `auditClock`，持久化 createdAt/updatedAt 由 database 负责。
+
 ---
 
 <a id="architecture"></a>
@@ -119,3 +123,7 @@ Facade 是 client 的业务契约，应用服务直接实现；Controller 和跨
 ### Client 入参与分页边界
 
 client.command 表达业务写动作，client.query 表达只读条件；Controller 和 Facade 共用入参契约。模块专用 PageDTO 已移除，app 将领域分页对象映射为 commons-dto 的 PageDTO；Web 输出 PageResponse，避免分页结构随模块变化。领域 Gateway 的分页返回值不携带 HTTP envelope。
+
+### 查询契约
+
+Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围为 UTC；tenantId 由服务端上下文解析。事件时间使用可替换的 `auditClock`，持久化 createdAt/updatedAt 由 database 负责。

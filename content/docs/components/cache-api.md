@@ -33,7 +33,7 @@ Cache 组件的 facade 模块：启用 Spring Cache 注解（`@EnableCaching`）
 
 ## 自动装配
 
-- [`LoadupCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-api/src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java)
+- [`LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java)
 
 设计边界与装配路径见 [ARCHITECTURE.md](./#architecture)。
 
@@ -59,7 +59,7 @@ Cache 组件的 facade 模块：启用 Spring Cache 注解（`@EnableCaching`）
 
 主要入口文件：
 
-- [`LoadupCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-api/src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java)
+- [`LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java)
 
 ### 分层与调用路径
 
@@ -72,7 +72,7 @@ Spring Cache 调用进入当前 `CacheManager`，由选中的 binder 处理缓�
 
 ### 装配规则
 
-- [`LoadupCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-api/src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java) 是自动配置入口。
+- [`LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(CacheManager.class)`
 
 ### 配置归属

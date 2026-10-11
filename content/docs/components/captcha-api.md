@@ -45,7 +45,7 @@ sidebar:
 
 ## 自动装配
 
-- [`CaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java)
+- [`CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java)
   - 启用条件：`@ConditionalOnSingleCandidate(CaptchaProvider.class)`。
 
 ---
@@ -69,7 +69,7 @@ sidebar:
 
 主要入口文件：
 
-- [`CaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java)
+- [`CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java)
 - [`CaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/CaptchaProvider.java)
 - [`CaptchaTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/CaptchaTemplate.java)
 - [`DefaultCaptchaTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/DefaultCaptchaTemplate.java)
@@ -85,7 +85,7 @@ sidebar:
 
 ### 装配规则
 
-- [`CaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java) 是自动配置入口。
+- [`CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnSingleCandidate(CaptchaProvider.class)`
   - `@ConditionalOnMissingBean(CaptchaTemplate.class)`
 

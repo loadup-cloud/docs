@@ -49,7 +49,7 @@ sidebar:
 
 ## 自动装配
 
-- [`ConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java)
+- [`ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java)
   - 启用条件：`@ConditionalOnSingleCandidate(ConfigCenterProvider.class)`。
 
 ---
@@ -73,7 +73,7 @@ sidebar:
 
 主要入口文件：
 
-- [`ConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java)
+- [`ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java)
 - [`ConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProvider.java)
 - [`ConfigCenterTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterTemplate.java)
 - [`DefaultConfigCenterTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/DefaultConfigCenterTemplate.java)
@@ -89,7 +89,7 @@ sidebar:
 
 ### 装配规则
 
-- [`ConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java) 是自动配置入口。
+- [`ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnSingleCandidate(ConfigCenterProvider.class)`
   - `@ConditionalOnMissingBean(ConfigCenterTemplate.class)`
 

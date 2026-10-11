@@ -74,7 +74,7 @@ Apache License 2.0 (Apache-2.0)
 
 主要入口文件：
 
-- [`JobRunrSchedulerAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-scheduler/loadup-components-scheduler-binder-jobrunr/src/main/java/io/github/loadup/components/scheduler/jobrunr/autoconfig/JobRunrSchedulerAutoConfiguration.java)
+- [`JobRunrSchedulerAutoConfiguration`](src/main/java/io/github/loadup/components/scheduler/jobrunr/autoconfig/JobRunrSchedulerAutoConfiguration.java)
 - [`JobRunrSchedulerTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-scheduler/loadup-components-scheduler-binder-jobrunr/src/main/java/io/github/loadup/components/scheduler/jobrunr/JobRunrSchedulerTemplate.java)
 
 ### 分层与调用路径
@@ -88,7 +88,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`JobRunrSchedulerAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-scheduler/loadup-components-scheduler-binder-jobrunr/src/main/java/io/github/loadup/components/scheduler/jobrunr/autoconfig/JobRunrSchedulerAutoConfiguration.java) 是自动配置入口。
+- [`JobRunrSchedulerAutoConfiguration`](src/main/java/io/github/loadup/components/scheduler/jobrunr/autoconfig/JobRunrSchedulerAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass({JobRequestScheduler.class, JobRequest.class})`
 
 ### 设计取舍

@@ -50,7 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [`NacosConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-nacos/src/main/java/io/github/loadup/components/configcenter/nacos/autoconfig/NacosConfigCenterAutoConfiguration.java)
+- [`NacosConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/nacos/autoconfig/NacosConfigCenterAutoConfiguration.java)
   - 启用条件：`@ConditionalOnProperty(prefix = "loadup.configcenter", name = "binder-type", havingValue = "nacos")`。
 
 ---
@@ -80,7 +80,7 @@ loadup:
 
 主要入口文件：
 
-- [`NacosConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-nacos/src/main/java/io/github/loadup/components/configcenter/nacos/autoconfig/NacosConfigCenterAutoConfiguration.java)
+- [`NacosConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/nacos/autoconfig/NacosConfigCenterAutoConfiguration.java)
 - [`NacosConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-nacos/src/main/java/io/github/loadup/components/configcenter/nacos/NacosConfigCenterProvider.java)
 
 ### 分层与调用路径
@@ -94,7 +94,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`NacosConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-nacos/src/main/java/io/github/loadup/components/configcenter/nacos/autoconfig/NacosConfigCenterAutoConfiguration.java) 是自动配置入口。
+- [`NacosConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/nacos/autoconfig/NacosConfigCenterAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(NacosFactory.class)`
   - `@ConditionalOnProperty(prefix = "loadup.configcenter", name = "binder-type", havingValue = "nacos")`
 

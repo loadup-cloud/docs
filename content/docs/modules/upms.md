@@ -77,6 +77,10 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 写操作入参采用业务动作 Command，查询入参采用 Query，分页查询使用 PageQuery 后缀；纯 ID 查询复用公共 IdQuery。Facade 分页统一返回 `PageDTO<T>`，HTTP 分页统一返回 `PageResponse<T>`：`result` 表示结果，`data` 为当前页数组，顶层 `pageInfo` 提供 totalCount/pageIndex/pageSize。不再提供模块专用分页 DTO。完整规则与示例见 [commons-dto](../../commons/loadup-commons-dto/)。
 
+## 输入与安全约定
+
+新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间使用名为 `upmsClock` 的 UTC Clock；数据库审计字段由 database 填充。
+
 ---
 
 <a id="architecture"></a>
@@ -97,7 +101,7 @@ flowchart LR
   Controller --> Method[方法级授权]
 ```
 
-UPMS 的 `AuthenticationService.login` 选择登录策略、校验账号凭证并记录登录结果，返回 `AuthenticatedUser`，不签发令牌。用户、角色、权限、部门数据仍由 UPMS 的 client/domain/infrastructure/app 分层管理。`loadup-modules-upms-authserver` 是可选适配器：`UpmsAuthenticationProvider` 使用 UPMS 登录接口，随后读取角色和权限；`UpmsTokenController` 为前端提供 `/api/auth/login` JSON 接口并签发用户 JWT。
+UPMS 的 `AuthenticationService.login` 选择登录策略、校验账号凭证并记录登录结果，返回 `AuthenticatedUserDTO`，不签发令牌。用户、角色、权限、部门数据仍由 UPMS 的 client/domain/infrastructure/app 分层管理。`loadup-modules-upms-authserver` 是可选适配器：`UpmsAuthenticationProvider` 使用 UPMS 登录接口，随后读取角色和权限；`UpmsTokenController` 为前端提供 `/api/auth/login` JSON 接口并签发用户 JWT。
 
 `loadup-components-authserver-binder-sas` 管理签名密钥和 JwtEncoder；启用 OAuth2 协议端点时也管理客户端、授权码和刷新令牌。JWT 的 `sub` 是 UPMS 用户 ID；`roles`、`permissions`、`username`、`aud` 与 `token_use` 在签发时写入。资源端由独立 `loadup-components-resource-server` 校验。关闭协议端点时，资源端直接用本地公钥验签。
 
@@ -144,3 +148,7 @@ Facade 是 client 的业务契约，应用服务直接实现；Controller 和跨
 ### Client 入参与分页边界
 
 client.command 表达业务写动作，client.query 表达只读条件；Controller 和 Facade 共用入参契约。模块专用 PageDTO 已移除，app 将领域分页对象映射为 commons-dto 的 PageDTO；Web 输出 PageResponse，避免分页结构随模块变化。领域 Gateway 的分页返回值不携带 HTTP envelope。
+
+### 输入与安全约定
+
+新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间使用名为 `upmsClock` 的 UTC Clock；数据库审计字段由 database 填充。

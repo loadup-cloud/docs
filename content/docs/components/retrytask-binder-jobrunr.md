@@ -40,7 +40,7 @@ sidebar:
 
 ## 自动装配
 
-- [`JobRunrRetryTaskAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-retrytask/loadup-components-retrytask-binder-jobrunr/src/main/java/io/github/loadup/retrytask/jobrunr/autoconfig/JobRunrRetryTaskAutoConfiguration.java)
+- [`JobRunrRetryTaskAutoConfiguration`](src/main/java/io/github/loadup/retrytask/jobrunr/autoconfig/JobRunrRetryTaskAutoConfiguration.java)
 
 ---
 
@@ -68,7 +68,7 @@ sidebar:
 
 主要入口文件：
 
-- [`JobRunrRetryTaskAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-retrytask/loadup-components-retrytask-binder-jobrunr/src/main/java/io/github/loadup/retrytask/jobrunr/autoconfig/JobRunrRetryTaskAutoConfiguration.java)
+- [`JobRunrRetryTaskAutoConfiguration`](src/main/java/io/github/loadup/retrytask/jobrunr/autoconfig/JobRunrRetryTaskAutoConfiguration.java)
 - [`JobRunrRetryTaskFacade`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-retrytask/loadup-components-retrytask-binder-jobrunr/src/main/java/io/github/loadup/retrytask/jobrunr/JobRunrRetryTaskFacade.java)
 
 ### 分层与调用路径
@@ -82,7 +82,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`JobRunrRetryTaskAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/execution/loadup-components-retrytask/loadup-components-retrytask-binder-jobrunr/src/main/java/io/github/loadup/retrytask/jobrunr/autoconfig/JobRunrRetryTaskAutoConfiguration.java) 是自动配置入口。
+- [`JobRunrRetryTaskAutoConfiguration`](src/main/java/io/github/loadup/retrytask/jobrunr/autoconfig/JobRunrRetryTaskAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass({JobRequestScheduler.class, JobRequest.class})`
 
 ### 配置归属

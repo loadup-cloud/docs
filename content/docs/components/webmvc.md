@@ -58,6 +58,10 @@ HTTP JSON 输出中的 `13812345678` 变为 `138****5678`。注解支持字段�
 
 应用的可信租户适配器应在此后确定元数据、写入同名请求属性，并通过 ContextHolder.callWith/runWith 包裹自己的 FilterChain。本组件不从外部请求自动绑定租户/用户。异步任务使用 Observability 的业务 TaskDecorator 或显式 wrap；只有标准 Micrometer snapshot 不会传播 ScopedValue。
 
+## 失败响应契约
+
+`/api` 下的 CommonException 保留 ResultCode，并返回 HTTP 200 的 FailureResponse（result、data）；输入绑定和 Validation 错误返回 PARAM_ILLEGAL，未知异常返回 SYS_ERROR。异常日志只记录类型，不记录可能携带请求明文的消息或异常链。Spring Security 异常交回认证/鉴权过滤器，非 API 协议端点保留原协议行为。
+
 ---
 
 <a id="architecture"></a>
@@ -138,3 +142,7 @@ MVC 输入使用同一转换器，但模块只修改 serializer，反序列化�
 ### 业务执行上下文生命周期
 
 `ExecutionContextFilter` 在 Boot HTTP Observation 和 Security 之前通过 ServiceTemplate 绑定不可变 ExecutionContext，作用域由 JDK 25 ScopedValue 自动结束；Servlet 重新分派通过 `ExecutionContext.class.getName()` 请求属性恢复显式绑定。可信租户适配器使用相同属性并包裹自己的 FilterChain；临时覆盖不回写父请求。嵌套 error 分派沿用当前作用域。业务数据不会写到 MDC、响应或指标中；Filter 不承担认证、授权或租户解析。
+
+### 失败响应契约
+
+`/api` 下的 CommonException 保留 ResultCode，并返回 HTTP 200 的 FailureResponse（result、data）；输入绑定和 Validation 错误返回 PARAM_ILLEGAL，未知异常返回 SYS_ERROR。异常日志只记录类型，不记录可能携带请求明文的消息或异常链。Spring Security 异常交回认证/鉴权过滤器，非 API 协议端点保留原协议行为。

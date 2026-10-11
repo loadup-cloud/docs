@@ -34,7 +34,7 @@ Select it with `loadup.dfs.binder-type=database`. Flyway creates the `dfs_file` 
 
 ## 自动装配
 
-- [`DatabaseDfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-database/src/main/java/io/github/loadup/components/dfs/database/autoconfig/DatabaseDfsAutoConfiguration.java)
+- [`DatabaseDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/database/autoconfig/DatabaseDfsAutoConfiguration.java)
   - 启用条件：`@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "database")`。
 
 设计边界与装配路径见 [ARCHITECTURE.md](./#architecture)。
@@ -76,7 +76,7 @@ loadup:
 
 主要入口文件：
 
-- [`DatabaseDfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-database/src/main/java/io/github/loadup/components/dfs/database/autoconfig/DatabaseDfsAutoConfiguration.java)
+- [`DatabaseDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/database/autoconfig/DatabaseDfsAutoConfiguration.java)
 - [`DatabaseDfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-database/src/main/java/io/github/loadup/components/dfs/database/DatabaseDfsProvider.java)
 
 ### 分层与调用路径
@@ -90,7 +90,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`DatabaseDfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-database/src/main/java/io/github/loadup/components/dfs/database/autoconfig/DatabaseDfsAutoConfiguration.java) 是自动配置入口。
+- [`DatabaseDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/database/autoconfig/DatabaseDfsAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass({FileStorageMapper.class, ObjectMapper.class})`
   - `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "database")`
   - `@ConditionalOnMissingBean(DfsProvider.class)`

@@ -57,7 +57,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`RedisCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-redis/src/main/java/io/github/loadup/components/cache/redis/autoconfig/RedisCacheAutoConfiguration.java) 是自动配置入口。
+- [`RedisCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/redis/autoconfig/RedisCacheAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass({RedisCacheManager.class, RedisConnectionFactory.class})`
   - `@ConditionalOnProperty(prefix = "loadup.cache", name = "type", havingValue = CacheBackendType.REDIS)`
   - `@ConditionalOnMissingBean(CacheManager.class)`
