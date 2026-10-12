@@ -124,6 +124,10 @@ mvn clean verify -pl loadup-components/reliability/loadup-components-outbox -am 
 
 设计细节见 [ARCHITECTURE.md](./#architecture)。
 
+## 默认时区
+
+时间默认使用系统本地时区（JVM `ZoneId.systemDefault()`）。无偏移的 JSON 日期按本地时区解释；数据库会话和应用时区保持一致。Outbox 就绪时间和租约仍由数据库会话的 `CURRENT_TIMESTAMP(6)` 计算。显式偏移或 epoch 协议时间保持绝对时间语义。
+
 ---
 
 <a id="architecture"></a>
@@ -164,7 +168,7 @@ PROCESSING（租约过期）→ 再领取或 FAILED
 FAILED → PENDING（有记录的人工重放）
 ```
 
-每次领取生成新的 UUID 凭证。租约过期后的旧执行者不能确认或改写新执行者状态。数据库 `UTC_TIMESTAMP(6)` 统一计算就绪时间和租约，避免不同工作节点时钟差异。成功确认时租约必须有效。
+每次领取生成新的 UUID 凭证。租约过期后的旧执行者不能确认或改写新执行者状态。数据库 `CURRENT_TIMESTAMP(6)` 统一计算就绪时间和租约，避免不同工作节点时钟差异。成功确认时租约必须有效。
 
 一次只领取一条，再执行处理器，避免批量预领取导致尚未执行的事件租约已过期。`batch-size` 限制一轮处理数量，单实例串行执行；规模扩展首先使用多工作节点。过期恢复也消耗尝试次数，防止进程不断退出而无限重试。
 
@@ -187,3 +191,7 @@ Inbox 使用 `(tenant_id, consumer_id, event_id)` 唯一索引，必须在可写
 表具有标准 ID、租户、时间和 deleted 字段，但队列与 Inbox 不使用通用逻辑删除改变投递或唯一语义。重放历史独立保存。自动归档尚未实现；Inbox 保留期限须覆盖业务允许的重放窗口，超过期限的事件不得无约束重放。
 
 首版只有本地处理器；未来接入消息队列时，投递确认表示 broker 接收，而最终消费者需自己实现 Inbox。不得把 broker 确认误认为最终业务完成。
+
+### 默认时区
+
+时间默认使用系统本地时区（JVM `ZoneId.systemDefault()`）。无偏移的 JSON 日期按本地时区解释；数据库会话和应用时区保持一致。Outbox 就绪时间和租约仍由数据库会话的 `CURRENT_TIMESTAMP(6)` 计算。显式偏移或 epoch 协议时间保持绝对时间语义。

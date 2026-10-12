@@ -189,6 +189,10 @@ mvn clean -pl loadup-components/security/loadup-components-signature -am test \
 
 设计和职责见 [ARCHITECTURE](./#architecture)，生产接入待办见 [ROADMAP](https://github.com/loadup-cloud/loadup-framework/blob/main/ROADMAP.md)。
 
+## 默认时钟
+
+请求签名复用唯一的（或 Primary）Clock；多个业务 Clock 共存时使用系统本地时区默认 Clock。签名时间戳仍使用 epoch 秒，时区不参与签名载荷。
+
 ---
 
 <a id="architecture"></a>
@@ -264,3 +268,7 @@ HTTP 组件可发送签名后的原始字节。含变量/query 的请求必须�
 后续以真实消费工程验证 OpenBao、Redis、多实例时间、代理 target、原始 body wrapper 和入口错误映射，按明确开放接口需求接入 Spring Security。若跨组织互操作明确要求 RFC 9421，使用经过评估的标准实现新增协议版本，不悄然改变 v1 字节规范。
 
 接入方式见 [README](./)，待办见 [ROADMAP](https://github.com/loadup-cloud/loadup-framework/blob/main/ROADMAP.md)。
+
+### 默认时钟
+
+请求签名复用唯一的（或 Primary）Clock；多个业务 Clock 共存时使用系统本地时区默认 Clock。签名时间戳仍使用 epoch 秒，时区不参与签名载荷。

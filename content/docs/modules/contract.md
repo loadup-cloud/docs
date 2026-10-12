@@ -120,7 +120,7 @@ const { data } = await saveCatalog({
 await publishCatalog<'PRODUCT'>(data.id, data.rowVersion)
 ```
 
-草稿转换提供 productDefinition、conditionDefinition、bundleDefinition、salesPlanDefinition 和 signingCommand，移除 UI 元数据，空选项转 null。时间必须携带 UTC 偏移（如 Z）；页面需先将本地时间显式转换。一次签约生成一次 newSigningRequestKey，自动重试不可重新生成。现有页面尚未接入这些方法。
+草稿转换提供 productDefinition、conditionDefinition、bundleDefinition、salesPlanDefinition 和 signingCommand，移除 UI 元数据，空选项转 null。合约有效期使用携带偏移的 ISO 时间（如 +08:00），页面按本地时区选择时间并携带对应偏移。一次签约生成一次 newSigningRequestKey，自动重试不可重新生成。现有页面尚未接入这些方法。
 
 ## 验证状态
 

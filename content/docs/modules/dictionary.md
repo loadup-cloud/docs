@@ -67,7 +67,7 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 ## 通用输入与时间约定
 
-分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间使用具名 `dictionaryClock` 并显式转换为 UTC；持久化审计字段由 database 填充。可在测试或消费工程提供同名 Clock Bean。
+分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间使用具名 `dictionaryClock` 并使用 Clock 所绑定的时区（默认系统本地时区）；持久化审计字段由 database 填充。可在测试或消费工程提供同名 Clock Bean。
 
 ---
 
@@ -126,4 +126,4 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 
 ### 通用输入与时间约定
 
-分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间使用具名 `dictionaryClock` 并显式转换为 UTC；持久化审计字段由 database 填充。可在测试或消费工程提供同名 Clock Bean。
+分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间使用具名 `dictionaryClock` 并使用 Clock 所绑定的时区（默认系统本地时区）；持久化审计字段由 database 填充。可在测试或消费工程提供同名 Clock Bean。
