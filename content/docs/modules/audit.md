@@ -69,6 +69,10 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围使用应用本地时区；tenantId 由服务端上下文解析。事件时间使用可替换的 `auditClock`，持久化 createdAt/updatedAt 由 database 负责。
 
+## 错误码契约
+
+公开错误枚举位于 `io.github.loadup.modules.audit.client.error.AuditResultCodeEnum`，错误码以 `AUDIT_` 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
+
 ---
 
 <a id="architecture"></a>
@@ -127,3 +131,7 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 ### 查询契约
 
 Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围使用应用本地时区；tenantId 由服务端上下文解析。事件时间使用可替换的 `auditClock`，持久化 createdAt/updatedAt 由 database 负责。
+
+### 错误码契约
+
+公开错误枚举位于 `io.github.loadup.modules.audit.client.error.AuditResultCodeEnum`，错误码以 `AUDIT_` 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。

@@ -86,7 +86,7 @@ MerchantFactsProvider merchantFactsProvider(MerchantRegistry registry) {
 | `/merchant-contracts/status` | `contract:merchant:manage` | NORMAL/SUSPENDED/TERMINATED，携带 expectedGeneration |
 | `/runtime/resolve` | `contract:runtime:resolve` | 权威状态门禁、时间和使用条件判断 |
 
-所有 JSON 请求为 POST，外部 `/api` 前缀由 `loadup-components-webmvc` 统一添加。响应为 HTTP200 的 result/data；使用 `result.status == "S"` 判断成功。错误码见 client 的 ContractError。接口不自动授予权限，消费工程须注册上述七类权限；本地 `loadup-modules-upms/schema.sql` 为超级管理员提供示例授权，已有数据库需要执行其中新增的 Contract 权限语句并重新登录。
+所有 JSON 请求为 POST，外部 `/api` 前缀由 `loadup-components-webmvc` 统一添加。响应为 HTTP200 的 result/data；使用 `result.status == "S"` 判断成功。错误码见 client 的 ContractResultCodeEnum。接口不自动授予权限，消费工程须注册上述七类权限；本地 `loadup-modules-upms/schema.sql` 为超级管理员提供示例授权，已有数据库需要执行其中新增的 Contract 权限语句并重新登录。
 
 `catalog/save` 使用 `{id?, expectedRowVersion?, kind, code, version, definition}`，kind 为 PRODUCT/CONDITION/BUNDLE/SALES_PLAN。definition 结构见 client 的 CatalogDefinitions 和前端 types.ts。服务端按 kind 反序列化并拒绝未知字段；草稿须结构有效，引用的版本必须已经发布。实际保存上限128KiB；不是任意未完成表单的暂存接口。
 
@@ -151,6 +151,10 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 ## 公开接口与时间
 
 Web Controller 依赖 client.facade 中的 CatalogFacade、MerchantContractFacade、ContractResolveFacade。服务编排与 MapStruct 转换由 app 负责；数据库 Gateway 使用生成的 Mapper 与 Tables。业务 Clock 以 `contractClock` 具名注入，避免多个模块同时装配产生歧义。
+
+## 错误码契约
+
+公开错误枚举位于 `io.github.loadup.modules.contract.client.error.ContractResultCodeEnum`，错误码以 `CONTRACT_` 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
 
 ---
 
@@ -366,3 +370,7 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 ### 公开接口与时间
 
 Web Controller 依赖 client.facade 中的 CatalogFacade、MerchantContractFacade、ContractResolveFacade。服务编排与 MapStruct 转换由 app 负责；数据库 Gateway 使用生成的 Mapper 与 Tables。业务 Clock 以 `contractClock` 具名注入，避免多个模块同时装配产生歧义。
+
+### 错误码契约
+
+公开错误枚举位于 `io.github.loadup.modules.contract.client.error.ContractResultCodeEnum`，错误码以 `CONTRACT_` 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。

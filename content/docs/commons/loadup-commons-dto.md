@@ -26,7 +26,7 @@ title: "Loadup Common DTO"
 
 - [`DTO`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/dto/DTO.java)
 - [`LoadUpMapStructConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/mapping/LoadUpMapStructConfig.java)
-- [`ResultCode`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/result/ResultCode.java)
+- [`ResultCode`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-error/src/main/java/io/github/loadup/commons/result/ResultCode.java)
 - [`IEnum`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/enums/IEnum.java)
 - [`CommonConstants`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/constant/CommonConstants.java)
 - [`AssertionCallback`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/error/AssertionCallback.java)
@@ -69,6 +69,10 @@ PageResponse<FileResourceDTO> response = PageResponse.of(page);
 
 `PageDTO.map(converter::toView)` 支持展示 DTO 转换并保留分页元数据。PageResponse 实现 IResponse，WebMVC 不重复包裹，仍支持统一展示脱敏。非分页成功响应使用 SuccessResponse，错误响应使用 FailureResponse。
 
+## 错误契约
+
+ResultCode 与 CommonException 由 [commons-error](../loadup-commons-error/) 提供。Result 是不可变响应元数据，失败工厂只接收枚举 ResultCode。FailureResponse.of(code) 或 of(code, traceId) 不接收字符串错误码/文案；读取外部报文仍支持 Jackson creator。
+
 ---
 
 <a id="architecture"></a>
@@ -106,7 +110,7 @@ PageResponse<FileResourceDTO> response = PageResponse.of(page);
 
 - [`DTO`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/dto/DTO.java)：由实现方或调用方按接口定义对接。
 - [`LoadUpMapStructConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/mapping/LoadUpMapStructConfig.java)：由实现方或调用方按接口定义对接。
-- [`ResultCode`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/result/ResultCode.java)：由实现方或调用方按接口定义对接。
+- [`ResultCode`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-error/src/main/java/io/github/loadup/commons/result/ResultCode.java)：由实现方或调用方按接口定义对接。
 - [`IEnum`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/enums/IEnum.java)：由实现方或调用方按接口定义对接。
 - [`CommonConstants`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/constant/CommonConstants.java)：由实现方或调用方按接口定义对接。
 - [`AssertionCallback`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-commons/loadup-commons-dto/src/main/java/io/github/loadup/commons/error/AssertionCallback.java)：由实现方或调用方按接口定义对接。
@@ -128,3 +132,7 @@ MoneyFormatter/MoneyUtil 在 util，单向依赖此模块。数学运算、Jacks
 PageDTO 是 Facade 的通用分页数据，不携带成功状态。PageResponse 是 HTTP 成功分页 envelope，实现 sealed IResponse，与 SuccessResponse/FailureResponse 并列，字段顺序为 result、data、pageInfo。领域层保留自己的分页对象，app 的 Spring MapStruct Converter 映射记录和页码元数据；Web 层只包装响应或通过 PageDTO.map 做展示投影。
 
 该划分减少七个业务模块的重复分页 DTO；分页 HTTP data 是列表，不再次嵌套 items/total。商户和合约前端已改用顶层 pageInfo.totalCount。字典命令合并原有 Request 包装，直接携带 id/typeCode；Router.http 和前端请求同步改为扁平字段。
+
+### 错误契约
+
+ResultCode 与 CommonException 由 [commons-error](../loadup-commons-error/) 提供。Result 是不可变响应元数据，失败工厂只接收枚举 ResultCode。FailureResponse.of(code) 或 of(code, traceId) 不接收字符串错误码/文案；读取外部报文仍支持 Jackson creator。

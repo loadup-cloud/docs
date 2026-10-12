@@ -8,6 +8,8 @@ title: "Loadup Commons"
 
 ## 子模块
 
+- [`loadup-commons-error`](loadup-commons-error/)：JDK-only ResultCode 枚举与异常基础。
+
 - [`loadup-commons-dto`](loadup-commons-dto/)
 - [`loadup-commons-util`](loadup-commons-util/)
 - [`loadup-commons-log`](loadup-commons-log/)

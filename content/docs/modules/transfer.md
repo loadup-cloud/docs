@@ -80,6 +80,10 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间使用具名 `transferClock` 并使用 Clock 所绑定的时区（默认系统本地时区）；持久化审计字段由 database 填充。可在测试或消费工程提供同名 Clock Bean。
 
+## 错误码契约
+
+公开错误枚举位于 `io.github.loadup.modules.transfer.client.error.TransferResultCodeEnum`，错误码以 `TRANSFER_` 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
+
 ---
 
 <a id="architecture"></a>
@@ -144,3 +148,7 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 ### 通用输入与时间约定
 
 分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间使用具名 `transferClock` 并使用 Clock 所绑定的时区（默认系统本地时区）；持久化审计字段由 database 填充。可在测试或消费工程提供同名 Clock Bean。
+
+### 错误码契约
+
+公开错误枚举位于 `io.github.loadup.modules.transfer.client.error.TransferResultCodeEnum`，错误码以 `TRANSFER_` 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
