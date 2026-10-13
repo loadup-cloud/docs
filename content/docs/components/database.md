@@ -169,6 +169,12 @@ mvnd clean test -pl loadup-components/data/loadup-components-database -am \
 
 The IT requires Docker and uses real MySQL through the framework Testcontainers annotation. Consumer failover/restore rehearsals and P95/P99 capacity measurements are separate production acceptance work.
 
+## Explicit integer logical deletion
+
+`BaseDO.deleted` is an `Integer` annotated with `@Column(isLogicDelete = true)`, inherited by each mapped DO. The database component installs `IntegerLogicDeleteProcessor` and retains the fixed global column `deleted`, normal value 0 and deleted value 1. MySQL storage stays `TINYINT NOT NULL DEFAULT 0`; no schema migration is required. The processor expresses Java integer 0/1 semantics and does not require a four-byte SQL INT column. Do not mix a Boolean field or BooleanLogicDeleteProcessor into this contract.
+
+Generated BaseMapper delete operations follow logical deletion, and ordinary mapped queries filter deleted rows. Explicit `LogicDeleteManager.execWithoutLogicDelete` remains an intentional bypass for approved physical lifecycle operations. The sequence allocation table continues to prohibit deletion and resetting its counters.
+
 ---
 
 <a id="architecture"></a>
@@ -321,3 +327,9 @@ Every business table uses the five standard fields shown in `schema.sql`. Tenant
 ### 租户绑定生命周期
 
 TenantUtil 基于 commons-context 的不可变 ExecutionContext 与 JDK 25 ScopedValue。TenantFilter 显式派生租户上下文、写入同名请求属性并包裹 FilterChain；REQUEST/ASYNC/ERROR 分派受支持，异常/结束由 JDK 恢复此前绑定，不再 set/clear。单租户模式固定使用 `default-tenant-id`；多租户模式解析请求来源，客户端租户提取配置不替代认证授权，集成方必须验证可访问租户。
+
+### Explicit integer logical deletion
+
+`BaseDO.deleted` is an `Integer` annotated with `@Column(isLogicDelete = true)`, inherited by each mapped DO. The database component installs `IntegerLogicDeleteProcessor` and retains the fixed global column `deleted`, normal value 0 and deleted value 1. MySQL storage stays `TINYINT NOT NULL DEFAULT 0`; no schema migration is required. The processor expresses Java integer 0/1 semantics and does not require a four-byte SQL INT column. Do not mix a Boolean field or BooleanLogicDeleteProcessor into this contract.
+
+Generated BaseMapper delete operations follow logical deletion, and ordinary mapped queries filter deleted rows. Explicit `LogicDeleteManager.execWithoutLogicDelete` remains an intentional bypass for approved physical lifecycle operations. The sequence allocation table continues to prohibit deletion and resetting its counters.

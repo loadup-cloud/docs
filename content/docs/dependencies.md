@@ -24,6 +24,9 @@ title: "LoadUp BOM"
 
 然后在消费工程中按需声明具体组件或业务模块，不需要为受 BOM 管理的坐标重复写版本。版本调整及依赖边界见 [ARCHITECTURE.md](./#architecture)。
 
+测试栈使用 Spring Boot 4.1.1 BOM 管理的 JUnit 6.0.3，Jupiter 与 Platform 版本保持一致。
+架构规则在普通 Jupiter 测试中通过 `com.tngtech.archunit:archunit` 执行，版本由本 BOM 管理。
+
 ---
 
 <a id="architecture"></a>

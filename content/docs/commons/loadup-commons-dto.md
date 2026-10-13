@@ -81,6 +81,10 @@ Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shar
 
 The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared contracts. No URL or frontend payload-field migration is required.
 
+## BaseDO logical-delete field
+
+`BaseDO.deleted` uses `Integer` and explicitly declares `@Column(isLogicDelete = true)`. Subclass DOs inherit this metadata; do not redeclare the field. The database component owns the `IntegerLogicDeleteProcessor` and 0/1 values; the standard MySQL column remains `deleted TINYINT NOT NULL DEFAULT 0`.
+
 ---
 
 <a id="architecture"></a>
@@ -152,3 +156,7 @@ Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fiel
 Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and `PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and Controllers return PageResponse. No HTTP envelope enters a Gateway.
 
 The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared contracts. No URL or frontend payload-field migration is required.
+
+### BaseDO logical-delete field
+
+`BaseDO.deleted` uses `Integer` and explicitly declares `@Column(isLogicDelete = true)`. Subclass DOs inherit this metadata; do not redeclare the field. The database component owns the `IntegerLogicDeleteProcessor` and 0/1 values; the standard MySQL column remains `deleted TINYINT NOT NULL DEFAULT 0`.
