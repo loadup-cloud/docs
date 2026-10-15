@@ -74,6 +74,10 @@ title: "Loadup Components Extension"
   - `@ConditionalOnClass({ExtensionExecutor.class, ExtensionRegistry.class})`
   - `@ConditionalOnMissingBean(BizScenarioInterceptor.class)`
 
+### 业务上下文作用域
+
+`BizScenarioInterceptor` 优先使用方法注解中显式指定的业务身份，否则从参数中的 `BizIdentity` 解析。无法解析时沿用当前上下文；成功解析时仅在当前调用内绑定，正常返回或抛出异常都恢复进入前的外层上下文。最外层调用结束后清理绑定，避免后续请求读取残留场景。
+
 ### 扩展契约
 
 - [`ExtensionProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-extension/src/main/java/io/github/loadup/components/extension/spi/ExtensionProvider.java)：由实现方或调用方按接口定义对接。

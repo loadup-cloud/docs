@@ -109,3 +109,9 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 选择独立 binder，使 Spring Cache 的实现依赖留在集成应用；替换底层实现时，业务侧仍使用 `CacheManager` 契约。
 
 集成方式与配置示例见 [README.md](./)。
+
+### Spring Cache 加载与生命周期
+
+配置的缓存名称在 Spring CacheManager 初始化阶段注册，避免提前预热后被初始化流程覆盖。显式预热遵循同一缓存创建规则。
+
+带 loader 的读取将 JetCache 包装的 Spring `Cache.ValueRetrievalException` 恢复为原异常，保留 loader 和原始 cause；其他 JetCache 异常继续按后端异常传播。真实 Redis 与本地缓存集成测试分别验证加载、过期及预热行为。

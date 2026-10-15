@@ -51,6 +51,7 @@ Logger adapterLogger = LogUtil.getLogger(OrderService.class);
 | 应用配置覆盖默认 pattern | ✓ |
 | traceId / spanId MDC 约定 | ✓ |
 | requestId MDC 辅助 API | ✓ |
+| `@ServiceDigest` 标记类或方法 | 注解由本模块提供，运行需 Observability |
 | JSON 编码器绑定 | ✗（由集成方日志后端配置） |
 
 该模块不绑定具体日志实现；日志后端仍由 Spring Boot / 集成方选择。
@@ -78,6 +79,21 @@ logging:
 ```
 
 消费工程按需启用。启动器的 `json` profile 使用同样配置；默认使用统一文本格式。该组件不打包 Logback XML 或创建独立日志后端。文件输出仍需配置 `logging.file.name` 或 `logging.file.path`，本组件不会自动创建文件。应用自定义 `logging.config` 时须自行保持日志字段和编码器契约。
+
+## Service 摘要标记
+
+本模块提供纯注解 `io.github.loadup.commons.log.annotation.ServiceDigest`。标记类可选择其 public 方法，标记方法可单独选择；由 Spring 管理的对象通过代理调用时才生效。
+
+```java
+@ServiceDigest
+public class OrderService {
+    public void confirm() {
+        // Execute business logic.
+    }
+}
+```
+
+消费应用引入 `loadup-components-observability` 后启用执行逻辑：使用 Guava Stopwatch 和 LogUtil 记录方法、结果码、耗时及异常类型，traceId/spanId 复用 MDC。入参、返回值和异常消息不进入摘要。commons-log 自身不创建 AOP 代理或引入 Guava；关闭配置、代理及异步边界见 [Observability 接入手册](../../components/observability/#service-摘要日志)。
 
 ---
 
@@ -139,3 +155,7 @@ Both styles delegate to SLF4J parameterized logging. Direct calls resolve the ca
 框架源码的日志打印统一走 `LogUtil` 显式来源类重载，保留 SLF4J 的级别、参数化和末尾 Throwable 语义。第三方日志适配可通过 `LogUtil.getLogger` 获得原生 Logger。调用入口不创建 Trace 或 MeterRegistry，也不修改 MDC 的 traceId/spanId。
 
 EnvironmentPostProcessor 同时提供 console/file 默认 pattern，file 未单独配置时沿用 LoadUp console pattern。标准 `logging.pattern.*` 属性优先于组件默认值。JSON 使用 Boot `logging.structured.format.*`，启动器不再维护重复的 Logback 配置。
+
+### Service digest annotation
+
+`annotation.ServiceDigest` is a runtime, inherited marker for classes, methods and composed annotations. It has no Spring AOP dependency. The Observability component owns advisor registration, Stopwatch timing and invocation logging; commons-log only supplies the marker, LogUtil and existing MDC conventions. Neither arguments nor return values are captured by this contract. Spring proxy interception and asynchronous completion semantics are documented in the Observability README.

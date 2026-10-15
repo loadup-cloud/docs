@@ -46,6 +46,23 @@ loadup-components/
 
 能力边界与目录决策见 [ARCHITECTURE.md](./#architecture)。
 
+## 测试与覆盖率
+
+单元测试使用 `*Test`；集成测试使用 `*IT`，数据库及 Redis 等后端使用真实 Testcontainers。运行全部组件测试需要 Docker，执行范围包括组件的独立测试模块及构建依赖：
+
+```bash
+mvnd clean verify -pl "$(python3 tools/component-coverage.py --list-modules)" -am --fail-at-end \
+  -Dskip.spotless=true -Dskip.spotbugs=true
+mvnd -N dependency:get -Dartifact=org.jacoco:org.jacoco.cli:0.8.15:jar:nodeps -Dtransitive=false
+python3 tools/component-coverage.py --jacoco-cli /absolute/path/to/org.jacoco.cli-0.8.15-nodeps.jar
+```
+
+上述命令从仓库根目录执行。CLI jar 位于本机 Maven 仓库中；使用 Maven 输出的实际路径。只有 `verify` 成功后才执行覆盖率门禁。跳过格式与静态分析用于收集测试结果，不能替代发布检查。
+
+验收要求是每个组件行、分支覆盖率均 ≥90%。工具进一步逐运行时 jar 检查：合并所有组件的单测与 IT 执行数据，解决测试位于兄弟 `*-test` 模块时报告漏计的问题。手写 DTO、配置及异常全部计入，只排除不在 `src/main/java` 的生成代码。无分支的 jar 分支指标视为不适用；缺失编译产物、陈旧执行数据或未达标时返回非零状态。`--report-only` 仅供诊断，不能用作验收门禁。
+
+报告写入 `loadup-components/target/coverage/summary.md` 和 `summary.json`，各 jar 的 `html/index.html` 列出未覆盖源码。2026-10-16 本地完整组件运行及正式覆盖率门禁已通过：**48/48 个运行时 jar 行、分支均 ≥90%**，653 项单测、148 项 IT 全部通过，无失败、错误或跳过。该结果来自同一次完整运行，不使用分批历史报告替代验收。License 与 Spotless 检查通过；SpotBugs、远端 CI 和真实供应商环境验收仍见根 ROADMAP。
+
 ---
 
 <a id="architecture"></a>
@@ -91,5 +108,11 @@ commons → components → modules → 消费工程
 源码引用、定向 Maven 路径及根 Parent 的相对路径随目录迁移更新。优先采用 `-pl :artifactId` 的选择方式减少路径耦合。CodeGraph 与 IDE 的本地索引应在迁移后刷新。
 
 ### 验证边界
+
+组件质量按运行时 Maven jar 分别计量，行、分支覆盖率各 ≥90%；测试 jar 不作为生产代码分母。单测与 IT 常位于独立 `*-test` 模块，因此先合并所有组件执行数据，再使用每个 jar 的手写源码对应字节码生成独立 JaCoCo 报告，避免只查看实现模块本地 exec 导致漏计。
+
+`tools/component-coverage.py` 提供报告与门禁，默认未达标即失败。生成代码不计入，手写 DTO、配置、异常及适配器均计入；缺失或部分编译的模块、陈旧字节码执行数据拒绝通过。测试过程必须先成功完成 `clean verify`；诊断模式及部分模块运行的报告不代表整组验收通过。覆盖率不能替代断言，应覆盖公开契约、异常传播、事务与资源生命周期，以及真实后端行为。
+
+MySQL 测试中，拥有 Flyway 清库或持久作业执行器的组件使用 `reuse=false` 的独立容器，防止清库删掉其他组件的表、后台执行器消费其他测试作业，或迁移历史相互干扰。采用模拟仓储的单元测试只验证编排，不作为数据库 IT。
 
 目录迁移以 Java 文件内容摘要、artifact/Parent 契约、模块聚合路径、文档映射与链接检查作为静态证据。构建和运行验证由消费工程按项目约定执行，不把静态检查当成编译或测试通过。

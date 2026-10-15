@@ -79,7 +79,7 @@ loadup:
 
 主要入口文件：
 
-- [`TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java)
+- [`TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
 - [`TianaiCaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/TianaiCaptchaProvider.java)
 
 ### 分层与调用路径
@@ -93,7 +93,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfig/TianaiCaptchaAutoConfiguration.java) 是自动配置入口。
+- [`TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(TACBuilder.class)`
   - `@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "tianai", matchIfMissing = true)`
 
@@ -106,3 +106,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 选择独立 binder，使验证码实现的依赖留在集成应用；替换底层实现时，业务侧仍使用 `CaptchaTemplate` 契约。
 
 集成方式与配置示例见 [README.md](./)。
+
+### 校验失败与日志
+
+支持数值百分比、轨迹对象及轨迹 JSON；空 ID、空输入、非法 JSON、未知输入类型或引擎异常返回 `false`。解析异常只记录异常类型，不记录轨迹 JSON、异常消息或异常链，避免解析器泄露请求内容。关闭默认资源时由接入方提供资源，过期配置按类型传入引擎。

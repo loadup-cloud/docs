@@ -78,7 +78,7 @@ loadup:
 
 主要入口文件：
 
-- [`NanocaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfig/NanocaptchaAutoConfiguration.java)
+- [`NanocaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
 - [`NanocaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/NanocaptchaProvider.java)
 
 ### 分层与调用路径
@@ -92,7 +92,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [`NanocaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfig/NanocaptchaAutoConfiguration.java) 是自动配置入口。
+- [`NanocaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java) 是自动配置入口。
   - `@ConditionalOnClass(ImageCaptcha.class)`
   - `@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "nanocaptcha")`
 
@@ -105,3 +105,9 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 选择独立 binder，使验证码实现的依赖留在集成应用；替换底层实现时，业务侧仍使用 `CaptchaTemplate` 契约。
 
 集成方式与配置示例见 [README.md](./)。
+
+### 校验与存储边界
+
+空 ID、非字符串输入及不存在或过期的验证码返回 `false`。字符串比较忽略大小写及两端空白；第一次有效类型的校验尝试即消费答案，错误答案也不可重试。非字符串输入不消费答案。
+
+答案保存在当前 JVM，达到 5000 条时清理过期条目；这不是硬容量上限，也不适合多实例共享校验。接入方需限制生成频率，并保证生成和校验落到同一实例。测试通过 SDK 构造边界提供固定答案，真实 PNG 渲染覆盖数字、拉丁和中文字符集，不反射读取答案。

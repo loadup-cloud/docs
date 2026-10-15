@@ -602,6 +602,14 @@ Licensed under the Apache License 2.0
 <a id="architecture"></a>
 ## 设计与实现
 
+### 当前运行与验证契约
+
+`TestContainersPropertyInitializer` 优先注入监听器在当前测试线程收集的属性；无属性时绑定 `loadup.testcontainers`，仅启动全局和对应类型均启用的容器。配置模式支持 MySQL、PostgreSQL、MongoDB、Redis、Kafka、Elasticsearch、LocalStack 七种类型。监听器在测试类结束后清除线程状态。
+
+LocalStack 与其他容器一致，把 `reusable` 传递给 Testcontainers；不复用时注册退出停止钩子。连接密钥不写入日志。容器实例按 JVM 共享，首次成功启动后继续调用不会改变配置；修改配置需使用独立测试进程。
+
+单元测试验证配置分支、属性注入、启动失败重试及 SDK 调用；集成测试访问真实容器，包含 Elasticsearch 写入、读取和删除索引。两类验证分别由 Surefire 与 Failsafe 执行；SDK 模拟不视为真实容器验收。下文中的旧静态初始化示意仅用于解释概念，实际启动由监听器或初始化器显式调用。
+
 ### 📋 概述
 
 `loadup-components-testcontainers` 模块提供企业级的 TestContainers 共享容器功能，支持在 TestContainers

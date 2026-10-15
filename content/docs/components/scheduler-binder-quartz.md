@@ -87,3 +87,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 选择独立 binder，使周期任务实现的依赖留在集成应用；替换底层实现时，业务侧仍使用 `SchedulerTemplate` 契约。
 
 集成方式与配置示例见 [README.md](./)。
+
+### Cron 更新与时区
+
+更新已有 cron 时，读取原 CronTrigger 并保留其时区，避免更新计划后触发时刻发生偏移。原触发器缺失或不是 CronTrigger 时使用 Quartz 默认调度行为；初次注册默认使用系统本地时区，显式 zoneId 优先。
