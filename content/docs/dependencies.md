@@ -29,6 +29,8 @@ title: "LoadUp BOM"
 
 当前管理 JobRunr 9.0.0、Groovy / Groovy JSON 6.0.0 和 commons-text 1.15.0；Awaitility 使用 Spring Boot BOM 的 4.3.0，消费模块不再单独固定旧版本。Groovy 当前仅提供依赖版本管理，仓库没有直接使用它的运行时代码；采用自定义脚本的消费工程需按 [Groovy 6 变更说明](https://groovy-lang.org/releasenotes/groovy-6.0.html)验证语法和行为。
 
+嵌入式 Tomcat 统一固定为 11.0.27，满足 ≥11.0.25 的最低版本要求。BOM 通过 `tomcat.version` 同步管理 core、EL、WebSocket 和 Jasper，避免只覆盖 core 导致版本混用；固定版本保证构建可复现，不使用无上界的 Maven 版本区间。版本信息见 [Tomcat 官方变更记录](https://tomcat.apache.org/tomcat-11.0-doc/changelog.html)。
+
 ---
 
 <a id="architecture"></a>
