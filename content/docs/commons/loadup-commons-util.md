@@ -55,9 +55,15 @@ String localized = MoneyFormatter.format(amount, Locale.US);
 已提供 `MoneyTest` 12个场景源码，已通过 Maven 编译，尚未运行。用户可本地执行：
 
 ```bash
-mvn clean test -pl loadup-commons/loadup-commons-util -am -Dtest=MoneyTest \
+mvnd clean test -pl loadup-commons/loadup-commons-util -am -Dtest=MoneyTest \
   -Dsurefire.failIfNoSpecifiedTests=false -Dskip.spotless=true -Dskip.spotbugs=true
 ```
+
+## 基础转换契约
+
+- `NumberUtil.toBigDecimal(String)` / `toBigInteger(String)` 直接按 JDK 数字文本语法解析；无效文本抛出 `NumberFormatException`，不吞掉异常或递归重试。`toBigInteger(Number)` 对普通数字使用 `longValue()` 截断语义；金额计算应使用前述 Money API。
+- `StringUtils.format(template, values, true)` 保留值为 null 的占位符；`ignoreNull=false` 时替换为文本 `null`。
+- `IdUtils.randomLong()` 返回非负 long，包括零；不承诺业务 ID 唯一性。`getSecureRandom()` 返回独立随机源，不暴露内部共享实例。持久化业务 ID 使用 database 的 IdGenerator。
 
 ---
 

@@ -85,3 +85,7 @@ title: "Loadup Components Extension"
 - [`IExtensionPoint`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-extension/src/main/java/io/github/loadup/components/extension/api/IExtensionPoint.java)：由实现方或调用方按接口定义对接。
 
 集成方式与配置示例见 [README.md](./)。
+
+### 场景匹配缓存
+
+缓存键由扩展接口类型、bizCode、useCase、scenario 四部分构成，使用不可变 record 的值相等语义。不同 BizScenario 实例表达同一组值时可命中同一项，预热去重也使用同一契约。缓存仍采用弱键；GC 可以回收缓存项，回收后重新计算，缓存命中不是业务正确性的前提。
