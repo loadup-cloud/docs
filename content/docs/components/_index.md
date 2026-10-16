@@ -14,7 +14,7 @@ LoadUp 组件通过功能分类目录组织源码。消费工程引入 `loadup-d
 | `web/` | Web 接入 | [webmvc](webmvc/)、[springdoc](springdoc/) |
 | `data/` | 数据与存储 | [cache](cache/)、[database](database/)、[dfs](dfs/) |
 | `integration/` | 外部集成 | [http](http/)、[gotone](gotone/) |
-| `reliability/` | 可靠性 | [lock](lock/)、[outbox](outbox/)、[globalunique](globalunique/)、[resilience4j](resilience4j/) |
+| `reliability/` | 可靠性 | [async-result](async-result/)、[lock](lock/)、[outbox](outbox/)、[globalunique](globalunique/)、[resilience4j](resilience4j/) |
 | `execution/` | 任务与执行 | [scheduler](scheduler/)、[retrytask](retrytask/)、[pipeline](pipeline/) |
 | `platform/` | 平台基础 | [configcenter](configcenter/)、[extension](extension/)、[observability](observability/)、[testcontainers](testcontainers/) |
 
@@ -26,7 +26,7 @@ loadup-components/
 ├── web/            webmvc, springdoc
 ├── data/           cache, database, dfs
 ├── integration/    http, gotone
-├── reliability/    lock, outbox, globalunique, resilience4j
+├── reliability/    async-result, lock, outbox, globalunique, resilience4j
 ├── execution/      scheduler, retrytask, pipeline
 └── platform/       configcenter, extension, observability, testcontainers
 ```
@@ -61,7 +61,9 @@ python3 tools/component-coverage.py --jacoco-cli /absolute/path/to/org.jacoco.cl
 
 验收要求是每个组件行、分支覆盖率均 ≥90%。工具进一步逐运行时 jar 检查：合并所有组件的单测与 IT 执行数据，解决测试位于兄弟 `*-test` 模块时报告漏计的问题。手写 DTO、配置及异常全部计入，只排除不在 `src/main/java` 的生成代码。无分支的 jar 分支指标视为不适用；缺失编译产物、陈旧执行数据或未达标时返回非零状态。`--report-only` 仅供诊断，不能用作验收门禁。
 
-报告写入 `loadup-components/target/coverage/summary.md` 和 `summary.json`，各 jar 的 `html/index.html` 列出未覆盖源码。2026-10-16 本地完整组件运行及正式覆盖率门禁已通过：**48/48 个运行时 jar 行、分支均 ≥90%**，653 项单测、148 项 IT 全部通过，无失败、错误或跳过。该结果来自同一次完整运行，不使用分批历史报告替代验收。License 与 Spotless 检查通过；SpotBugs、远端 CI 和真实供应商环境验收仍见根 ROADMAP。
+报告写入 `loadup-components/target/coverage/summary.md` 和 `summary.json`，各 jar 的 `html/index.html` 列出未覆盖源码。2026-10-16 本地完整组件运行及正式覆盖率门禁已通过：**48/48 个运行时 jar 行、分支均 ≥90%**，653 项单测、148 项 IT 全部通过，无失败、错误或跳过。该结果来自同一次完整运行，不使用分批历史报告替代验收。License 与 Spotless 检查通过；SpotBugs 静态验收后续已完成，远端 CI 和真实供应商环境验收仍见根 ROADMAP。
+
+新增 AsyncResult 的 3 个运行时 jar 在独立定向运行中均达到行/分支 ≥90%，21 项单测及 4 项 Redis/Kafka/MySQL IT 通过，报告见 [AsyncResult Test](async-result-test/)。该结果不与前述 48 个 jar 合并宣称为同一次全量验收。
 
 ---
 
@@ -84,7 +86,7 @@ commons → components → modules → 消费工程
 | `web` | Web 接入 | webmvc：JSON 报文和错误处理；springdoc：OpenAPI 与 Scalar |
 | `data` | 数据与存储 | cache：缓存；database：数据库集成；dfs：文件存储 |
 | `integration` | 外部集成 | http：出站 HTTP；gotone：多渠道通知 |
-| `reliability` | 可靠性 | lock：同步分布式互斥；outbox：可靠事务事件；globalunique：幂等控制；resilience4j：熔断、重试、限流 |
+| `reliability` | 可靠性 | async-result：异步业务结果等待与跨实例回传；lock：同步分布式互斥；outbox：可靠事务事件；globalunique：幂等控制；resilience4j：熔断、重试、限流 |
 | `execution` | 任务与执行 | scheduler：调度；retrytask：持久重试任务；pipeline：流水线编排 |
 | `platform` | 平台基础 | configcenter：配置中心；extension：扩展机制；observability：Micrometer 指标与追踪；testcontainers：测试容器 |
 
