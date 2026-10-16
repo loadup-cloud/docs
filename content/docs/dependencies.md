@@ -31,6 +31,8 @@ title: "LoadUp BOM"
 
 嵌入式 Tomcat 统一固定为 11.0.27，满足 ≥11.0.25 的最低版本要求。BOM 通过 `tomcat.version` 同步管理 core、EL、WebSocket 和 Jasper，避免只覆盖 core 导致版本混用；固定版本保证构建可复现，不使用无上界的 Maven 版本区间。版本信息见 [Tomcat 官方变更记录](https://tomcat.apache.org/tomcat-11.0-doc/changelog.html)。
 
+Jackson 两代版本独立管理：业务侧 `tools.jackson` 使用 3.2.3；SpringDoc / Swagger 等第三方所需的 Jackson 2 通过 `jackson-2-bom.version=2.21.7` 统一升级，覆盖 core、databind、YAML 与 JSR310。共享 `jackson-annotations` 保持 2.22。两代 JSON API 不能互换，但可在不同依赖链共存，详见 [SpringDoc 接入说明](../components/springdoc/)。
+
 ---
 
 <a id="architecture"></a>
