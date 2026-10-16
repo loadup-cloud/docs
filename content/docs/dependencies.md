@@ -33,6 +33,8 @@ title: "LoadUp BOM"
 
 Jackson 两代版本独立管理：业务侧 `tools.jackson` 使用 3.2.3；SpringDoc / Swagger 等第三方所需的 Jackson 2 通过 `jackson-2-bom.version=2.21.7` 统一升级，覆盖 core、databind、YAML 与 JSR310。共享 `jackson-annotations` 保持 2.22。两代 JSON API 不能互换，但可在不同依赖链共存，详见 [SpringDoc 接入说明](../components/springdoc/)。
 
+`at.yawk.lz4:lz4-java` 统一管理为 1.11.4，覆盖 Kafka 客户端等传递依赖中的旧版本。此项仅管理版本，不主动引入 Redisson 的可选 LZ4 codec 依赖；消费方需要时按坐标声明，无需重复写版本。
+
 ---
 
 <a id="architecture"></a>
