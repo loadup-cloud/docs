@@ -204,7 +204,7 @@ JobRunr 的 `scheduler.create` 对已存在 jobId 的任务不覆盖。`register
 
 JobRunr 用 Jackson 序列化 `JobRequest`，需要无参构造 + bean 属性（getter/setter）。
 `RetryTaskJobRequest` 因此实现为可变 POJO，而不是 record；`args` 用
-`LinkedHashMap<String, String>` 保持顺序与稳定性。JobRunr 8.8.2 是 multi-release jar，
+`LinkedHashMap<String, String>` 保持顺序与稳定性。JobRunr 9.0.0 是 multi-release jar，
 项目使用 Java 25 和 Jackson 3（`tools.jackson`），binder 依赖 `spring-boot-starter-json`。
 
 #### 5. 失败告警：RetryTaskNotifier + ApplyStateFilter
