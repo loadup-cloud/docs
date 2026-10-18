@@ -112,7 +112,7 @@ cron 使用 Quartz 6/7 段格式，如 `0 0 9 * * ?`。
 | 注册/更新（幂等） | `register` | ✓ | ✓ |
 | 周期执行 | cron | ✓ | ✓ |
 | 手动触发 | `trigger` | ✓ | ✓ |
-| 修改 cron | `updateCron` | ✓ | ✓ |
+| 修改 cron | `updateCron` | ✓（需共享补丁运行时） | ✓ |
 | 删除 | `delete` | ✓ | ✓ |
 | 状态查询 | `getStatus` | ✓ | ✓ |
 | 集群/持久化 | 不感知 | ✓（JobRunr 内置） | ✓（JDBC 集群） |
@@ -122,7 +122,7 @@ cron 使用 Quartz 6/7 段格式，如 `0 0 9 * * ?`。
 ## 实现与决策
 
 API 与 binder 结构见 [loadup-components-scheduler-api/README.md](../scheduler-api/)；
-JobRunr binder 与 retrytask 共用引擎，Quartz binder 作为轻量内嵌备选。
+JobRunr binder 与 retrytask 共用引擎，Quartz binder 支持原生 reschedule。原版 JobRunr 9.0.0 的远期 cron 热更新缓存问题由 [共享补丁运行时](../jobrunr/) 修复，通过正常轮询生效；不承诺同步立即执行。
 
 ## 许可证
 
