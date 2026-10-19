@@ -55,3 +55,7 @@ loadup-dependencies
 聚合 POM 组织模块与版本，运行时依赖由子模块决定。
 
 集成方式与配置示例见 [README.md](./)。
+
+### Boot 运行时依赖管理
+
+移除框架的 vertx.version 覆盖与 Vert.x BOM 导入，Vert.x 使用上游依赖的默认解析版本。Netty 和 Log4j 恢复 Spring Boot 继承的依赖管理，不额外导入补偿 BOM，避免旧第三方 BOM 把 Boot 运行时依赖降级。不在测试模块单独降级 Lettuce 或固定单个 Netty jar。
