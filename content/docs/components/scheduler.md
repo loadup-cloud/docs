@@ -57,3 +57,5 @@ binder 根据 `loadup.scheduler.binder-type` 创建 Provider。API 自动配置�
 ### 扩展与验证
 
 新增 binder 实现 SchedulerProvider 并独立装配，不修改业务扫描器。XXL-JOB / JobRunr 尚未实现。测试覆盖注册校验、生命周期、异常释放、重叠抑制、实际 @Scheduled 唤醒与 PowerJob Processor 调用同一入口（不启动 Server）。
+
+SchedulerTemplate 为 final 类，扩展通过 SchedulerProvider 与 ScheduledTask 组合完成。构造时仍拒绝非法或重复任务名；禁止继承可避免子类终结器接触构造失败后的半初始化对象。
