@@ -56,4 +56,4 @@ binder 根据 `loadup.scheduler.binder-type` 创建 Provider。API 自动配置�
 
 ### 扩展与验证
 
-新增 binder 实现 SchedulerProvider 并独立装配，不修改业务扫描器。XXL-JOB / JobRunr 尚未实现。测试覆盖注册校验、生命周期、异常释放、重叠抑制、实际 @Scheduled 唤醒与真实 PowerJob Server 调用同一入口。
+新增 binder 实现 SchedulerProvider 并独立装配，不修改业务扫描器。XXL-JOB / JobRunr 尚未实现。测试覆盖注册校验、生命周期、异常释放、重叠抑制、实际 @Scheduled 唤醒与 PowerJob Processor 调用同一入口（不启动 Server）。

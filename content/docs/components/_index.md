@@ -15,7 +15,7 @@ LoadUp 组件通过功能分类目录组织源码。消费工程引入 `loadup-d
 | `data/` | 数据与存储 | [cache](cache/)、[database](database/)、[dfs](dfs/) |
 | `integration/` | 外部集成 | [http](http/)、[gotone](gotone/) |
 | `reliability/` | 可靠性 | [DelayedTask](delayedtask/)、[async-result](async-result/)、[lock](lock/)、[outbox](outbox/)、[globalunique](globalunique/)、[resilience4j](resilience4j/) |
-| `execution/` | 任务与执行 | [Scheduler](scheduler/)、[PowerJob](powerjob/)、[pipeline](pipeline/) |
+| `execution/` | 任务与执行 | [Scheduler](scheduler/)、[pipeline](pipeline/) |
 | `platform/` | 平台基础 | [configcenter](configcenter/)、[extension](extension/)、[observability](observability/)、[testcontainers](testcontainers/) |
 
 ## 目录与接入
@@ -27,7 +27,7 @@ loadup-components/
 ├── data/           cache, database, dfs
 ├── integration/    http, gotone
 ├── reliability/    delayedtask, async-result, lock, outbox, globalunique, resilience4j
-├── execution/      scheduler, powerjob, pipeline
+├── execution/      scheduler, pipeline
 └── platform/       configcenter, extension, observability, testcontainers
 ```
 
@@ -87,7 +87,7 @@ commons → components → modules → 消费工程
 | `data` | 数据与存储 | cache：缓存；database：数据库集成；dfs：文件存储 |
 | `integration` | 外部集成 | http：出站 HTTP；gotone：多渠道通知 |
 | `reliability` | 可靠性 | async-result：异步业务结果等待与跨实例回传；lock：同步分布式互斥；outbox：可靠事务事件；globalunique：幂等控制；resilience4j：熔断、重试、限流 |
-| `execution` | 任务与执行 | Scheduler：可切换本地 / PowerJob 唤醒；PowerJob：原生调度；DelayedTask（reliability）：持久化业务截止任务；pipeline：流水线编排 |
+| `execution` | 任务与执行 | Scheduler：可切换本地 / PowerJob 唤醒（PowerJob 能力归属 binder）；DelayedTask（reliability）：持久化业务截止任务；pipeline：流水线编排 |
 | `platform` | 平台基础 | configcenter：配置中心；extension：扩展机制；observability：Micrometer 指标与追踪；testcontainers：测试容器 |
 
 ### 分类目录与 Maven 边界
