@@ -62,7 +62,7 @@ External projects must define the example version properties to match the select
 
 The explicit processor list avoids running upstream Flex a second time through service discovery. Both Flex paths are explicit so compilation works before the processor artifact is installed into the local repository. Build using `mvn clean ...` to avoid generating the same sources twice from stale output. Import `infrastructure.mapper.XxxDOMapper` and inject it into repositories; scan the generated mapper package with `@MapperScan`. MapStruct remains an independent processor for Spring-managed converters.
 
-Fixed options live in `DatabaseAptConfiguration` Java code. No project `mybatis-flex.config` or application property is needed; ancestor config files cannot change these options. The generated config in compiler output is an upstream implementation bridge, not an application configuration file.
+Fixed options live in the processor jar's canonical `mybatis-flex.config` resource. No project `mybatis-flex.config` or application property is needed; the wrapper copies the resource into compiler output and ancestor config files cannot change these options. The generated config in compiler output is an upstream implementation bridge, not an application configuration file.
 
 ## Configuration
 
@@ -320,9 +320,9 @@ The servlet filter always propagates request context. With multi-tenancy disable
 
 ### Code generation
 
-Generation belongs to the database component's `loadup-components-database-processor` build-time jar. `DatabaseAptConfiguration` fixes the options in Java; `LoadUpMyBatisFlexProcessor` delegates source generation to the upstream MyBatis-Flex processor. It generates uppercase TableDef properties, module-local `Tables`, and `XxxDOMapper extends BaseMapper<XxxDO>` annotated with MyBatis `@Mapper`. DOs in `.dataobject` produce interfaces in the sibling `.mapper` package. Generated sources stay under `target/generated-sources/annotations` and must not be committed.
+Generation belongs to the database component's `loadup-components-database-processor` build-time jar. Its canonical `mybatis-flex.config` resource fixes the options; `LoadUpMyBatisFlexProcessor` copies it into compiler output and delegates source generation to the upstream MyBatis-Flex processor. It generates uppercase TableDef properties, module-local `Tables`, and `XxxDOMapper extends BaseMapper<XxxDO>` annotated with MyBatis `@Mapper`. DOs in `.dataobject` produce interfaces in the sibling `.mapper` package. Generated sources stay under `target/generated-sources/annotations` and must not be committed.
 
-Upstream 1.11.8 reads generation configuration only from files. Before initializing the delegate, the wrapper writes its fixed options into `CLASS_OUTPUT/mybatis-flex.config` and enables `stopBubbling`; parent configuration is ignored. This bridge avoids reflection, copied upstream generator code and runtime Spring configuration for a compile-time concern. The compile test verifies that disabling generation or changing packages in a parent config cannot override the defaults.
+Upstream 1.11.8 reads generation configuration only from files, not from the classpath. Before initializing the delegate, the wrapper copies the processor jar's `mybatis-flex.config` into `CLASS_OUTPUT`; the resource keeps `stopBubbling` enabled, so parent configuration is ignored. This bridge avoids reflection, copied upstream generator code and runtime Spring configuration for a compile-time concern. The compile test verifies that disabling generation or changing packages in a parent config cannot override the defaults.
 
 The processor jar is an independent reactor module beneath database; the runtime database artifact remains a jar. Infrastructure modules declare it as optional/provided and explicitly select the wrapper alongside MapStruct and Boot processors. The upstream processor path supplies the delegate but is not selected independently, preventing duplicate generation. The wrapper is not a dependency of the runtime database artifact. Empty hand-written persistence Mapper interfaces are removed; MapStruct converter contracts remain unchanged.
 

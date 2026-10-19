@@ -59,7 +59,7 @@ python3 tools/component-coverage.py --jacoco-cli /absolute/path/to/org.jacoco.cl
 
 上述命令从仓库根目录执行。CLI jar 位于本机 Maven 仓库中；使用 Maven 输出的实际路径。只有 `verify` 成功后才执行覆盖率门禁。跳过格式与静态分析用于收集测试结果，不能替代发布检查。
 
-验收要求是每个组件行、分支覆盖率均 ≥90%。工具进一步逐运行时 jar 检查：合并所有组件的单测与 IT 执行数据，解决测试位于兄弟 `*-test` 模块时报告漏计的问题。手写 DTO、配置及异常全部计入，只排除不在 `src/main/java` 的生成代码。无分支的 jar 分支指标视为不适用；缺失编译产物、陈旧执行数据或未达标时返回非零状态。`--report-only` 仅供诊断，不能用作验收门禁。
+验收要求是每个组件行、分支覆盖率均 ≥90%。工具进一步逐运行时 jar 检查：合并所有组件的单测与 IT 执行数据，解决测试位于兄弟 `*-test` 模块时报告漏计的问题。手写 DTO、配置及异常全部计入，只排除不在 `src/main/java` 的生成代码。无分支的 jar 分支指标视为不适用；缺失编译产物、陈旧执行数据或未达标时返回非零状态。工具核对每个模块 Surefire/Failsafe 的已执行用例：对应 jacoco-unit.exec / jacoco-it.exec 缺失或为空时直接失败，包括只有测试源码的兄弟模块；全部跳过的测试不要求执行数据。`--report-only` 仅放宽覆盖率阈值，不放宽数据完整性检查，不能用作验收门禁。
 
 报告写入 `loadup-components/target/coverage/summary.md` 和 `summary.json`，各 jar 的 `html/index.html` 列出未覆盖源码。2026-10-16 本地完整组件运行及正式覆盖率门禁已通过：**48/48 个运行时 jar 行、分支均 ≥90%**，653 项单测、148 项 IT 全部通过，无失败、错误或跳过。该结果来自同一次完整运行，不使用分批历史报告替代验收。License 与 Spotless 检查通过；SpotBugs 静态验收后续已完成，远端 CI 和真实供应商环境验收仍见根 ROADMAP。
 

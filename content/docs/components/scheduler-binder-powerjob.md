@@ -139,7 +139,7 @@ Consumer application (Boot 4 / Java 25)
 
 ### 执行作用域
 
-PowerJobProcessorAspect 拦截 Spring BasicProcessor.process，绑定全新不可变 ExecutionContext。标识键由 PowerJobExecutionContext 声明；不继承执行线程残留的业务上下文，不读取任务任意字段当作身份。业务服务根据数据库中的可信记录恢复租户。普通嵌套调用结束和异常退出都恢复上层 ScopedValue。
+PowerJobProcessorAspect 通过 `target(BasicProcessor)` 限定处理器，再匹配 `process(TaskContext)` 方法及参数，避免在 execution 的声明类型中解析 lambda 隐藏实现类。JDK 与 CGLIB 代理均经过同一切面，绑定全新不可变 ExecutionContext。标识键由 PowerJobExecutionContext 声明；不继承执行线程残留的业务上下文，不读取任务任意字段当作身份。业务服务根据数据库中的可信记录恢复租户。普通嵌套调用结束和异常退出都恢复上层 ScopedValue。
 
 每次执行建立独立 `loadup.powerjob.process` Observation，停止时标记 success/failure。失败返回值同样计为失败；null 违反原生结果契约，转成规范错误。业务异常原样传回 PowerJob 决定重试；观测错误仅保留固定错误码，避免异常链携带 payload。不同实例标识不进入指标标签，跨进程 Trace 不自动串联。
 
@@ -151,6 +151,6 @@ Transfer 是实际消费方：提交与源文件引用在业务数据库事务�
 
 ### 验证边界
 
-binder 内单测验证配置校验、Client 覆盖/关闭、结果/异常观测、ScopedValue 与 Observation 恢复及 ScheduledTask 分派。测试不启动独立 Server，不下载 Server jar；不再维护自定义 Server 启动器、Server 专用测试模块或启动 profile。此前真实 Server 运行记录不代表当前仍保留自动化平台验收。
+binder 内单测验证配置校验、Client 覆盖/关闭、结果/异常观测、lambda、匿名类及具名类的 JDK/CGLIB 代理、ScopedValue 与父 Observation 恢复及 ScheduledTask 分派。测试不启动独立 Server，不下载 Server jar；不再维护自定义 Server 启动器、Server 专用测试模块或启动 profile。此前真实 Server 运行记录不代表当前仍保留自动化平台验收。
 
 平台通信、动态改期、实例重试、Server 重启恢复、多节点接管及容量由独立部署环境验收。Transfer / DelayedTask 的真实数据库测试仍验证其各自的持久化队列语义，不依赖 PowerJob Server。
