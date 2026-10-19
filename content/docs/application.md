@@ -22,7 +22,7 @@ title: "本地集成启动器"
 
 站内通知通过 `/api/notifications/**` 提供管理员发布和个人收件箱，消息持久化到 MySQL；Gotone 的 `IN_APP` 渠道也可将业务通知投递到同一收件箱。账号安全自助接口在 `/api/account/security/**`，提供概览、登录记录和修改本人密码。已签发 JWT 的撤销尚未实现，旧令牌在有效期结束前仍可使用。
 
-导入导出任务通过 `/api/transfer-tasks/**` 提交、查询进度和获取结果文件 ID；上传导入源文件先使用 `/api/files`。本地示例包含 `demo-csv-import`（CSV 校验报告）与 `demo-csv-export`（示例 CSV 数据）两个处理器。任务由已有 JobRunr RetryTask binder 执行，默认不自动重试，失败后需显式重试。
+导入导出任务通过 `/api/transfer-tasks/**` 提交、查询进度和获取结果文件 ID；上传导入源文件先使用 `/api/files`。本地示例包含 `demo-csv-import`（CSV 校验报告）与 `demo-csv-export`（示例 CSV 数据）两个处理器。任务持久化到业务数据库，由 Scheduler 的 transfer.scan 扫描器领取，默认 local binder 使用 Spring @Scheduled 每分钟唤醒，无需独立 Server。失败后显式重试。启动器同时引入 DelayedTask，扫描器名 delayedtask.scan；生产业务需实现幂等 Handler。切换分布式调度时替换为 PowerJob binder，配置 binder-type 与原生 Worker，并在 Server 创建 loadupSchedulerProcessor 任务、以 jobParams 指定扫描器名。
 
 ## 设计
 
@@ -66,8 +66,7 @@ Micrometer 指标、Tracing 和导出由 Boot 与 Observability 统一装配；a
 - `loadup-modules-upms-authserver`
 - `loadup-commons-log`
 - `loadup-components-observability`
-- `loadup-components-retrytask-binder-jobrunr`
-- `loadup-components-scheduler-binder-jobrunr`
+- `loadup-components-powerjob`（独立 Server；示例 Worker 默认关闭）
 
 直接依赖的外部坐标（不含测试与 provided scope）：
 

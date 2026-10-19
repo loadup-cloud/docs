@@ -216,7 +216,7 @@ BOM 固定 Redisson core 4.8.0，客户端配置由原生 Config.fromYAML 或应
 
 共享 MeterRegistry 可选；预注册有限结果标签的获取与持有 Timer、释放失败 Counter。获取 outcome 统一 success/failure，reason 只表达有限失败原因；不使用动态业务键标签。计时记录 RuntimeException 用 LogUtil 记录，不阻断正常锁生命周期；组件不创建新的 Registry/Tracer。
 
-Lock 与 GlobalUnique/Outbox/Scheduler 职责独立。租约锁不能保证 exactly-once，不能代替数据库约束、幂等、状态条件更新；要求防止旧持有者写入时由资源验证 fencing token。首版不提供注解切面、后端 SPI、HTTP 接口、管理页面或默认全服务加锁。
+Lock 与 GlobalUnique/Outbox/PowerJob 职责独立。租约锁不能保证 exactly-once，不能代替数据库约束、幂等、状态条件更新；要求防止旧持有者写入时由资源验证 fencing token。首版不提供注解切面、后端 SPI、HTTP 接口、管理页面或默认全服务加锁。
 
 ### 验证
 

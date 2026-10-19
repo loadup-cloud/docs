@@ -96,7 +96,7 @@ long version = http.refresh(new HttpProperties(validatedClients));
 
 默认不记录请求/响应内容和认证头；禁止通过日志打印完整调用对象、配置或原始响应。Boot 的标准客户端 Observation 负责 Trace 和 HTTP 指标；另有 `loadup.http.calls`，使用配置中的 client、operation 和固定 outcome 标签，不放入订单、租户或 traceId。
 
-**不自动重试、不跟随重定向、不使用共享 Cookie 状态。** Apache 自动重试明确关闭。需要业务重试时使用稳定渠道请求号或下游幂等协议，再由业务选择 RetryTask/Outbox；不能让多个组件重复包装重试。
+**不自动重试、不跟随重定向、不使用共享 Cookie 状态。** Apache 自动重试明确关闭。需要业务重试时使用稳定渠道请求号或下游幂等协议，再由业务选择 PowerJob/Outbox；不能让多个组件重复包装重试。
 
 ## 能力矩阵
 

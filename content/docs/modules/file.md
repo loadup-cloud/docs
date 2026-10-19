@@ -153,3 +153,7 @@ Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fiel
 Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and `PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and Controllers return PageResponse. No HTTP envelope enters a Gateway.
 
 The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared contracts. No URL or frontend payload-field migration is required.
+
+### 迁移顺序
+
+BaseDO 补字段脚本版本为 V20261010000101，排在 V20261002000003 建表之后。旧 12 位版本号会导致空库先 ALTER 未建表，现已修正。已执行旧版迁移的消费工程需核对 Flyway 历史后再升级，框架不自动重写迁移记录。
