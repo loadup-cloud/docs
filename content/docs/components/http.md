@@ -105,7 +105,7 @@ long version = http.refresh(new HttpProperties(validatedClients));
 | 命名客户端与操作 | 地址、方法、模板、默认头、凭证引用 |
 | 请求体 | JSON 对象、原始 String/byte[] |
 | 响应 | 原始状态/头/byte[]，JSON 解析 |
-| 下载 | 有上限的流式复制，自动关闭响应 |
+| 下载 | 有上限的流式复制，可用最终 URI/原字节 signer，自动关闭响应、不关闭调用方输出流 |
 | 网络 | Apache 连接池、分阶段超时、TLS Bundle、受信任代理 |
 | 配置更新 | 显式原子刷新，旧池延后释放 |
 | 自动重试 / 重定向 | 明确关闭 |
@@ -115,7 +115,7 @@ long version = http.refresh(new HttpProperties(validatedClients));
 `HttpTemplateTest` 使用本地 HTTP 服务验证协议状态、无重试与重定向、JSON、原始下载、大小限制、地址策略、URI 编码和刷新失败保留旧配置。用户可本地执行：
 
 ```shell
-mvn clean test -pl loadup-components/integration/loadup-components-http \
+mvnd clean test -pl loadup-components/integration/loadup-components-http \
   -Dtest=HttpTemplateTest -Dskip.spotless=true -Dskip.spotbugs=true
 ```
 
@@ -124,6 +124,25 @@ mvn clean test -pl loadup-components/integration/loadup-components-http \
 ## 统一指标
 
 使用消费工程提供的 Micrometer `MeterRegistry`，`loadup.http.calls` 的 outcome 统一为 success/failure；非 2xx 与传输失败均计为 failure。client/operation 仅取已配置的有限名称，目标参数和原始 URI 不进入标签。引入 Observability 后公共 application 标签由标准 management 配置统一提供。
+
+## 最终请求签名与流式下载
+
+`exchange(client, operation, call, signer)` 和 `download(client, operation, call, output, signer)` 共用同一路径：
+先解析配置目标、编码实际 URI、序列化原请求字节并检查目标策略，再调用 `HttpRequestSigner`，将签名头最后合并后发送。
+签名逻辑不应重新拼接 URI 或对业务对象再次序列化；可先核对传入的最终 method/URI/body，再调用 KMS。
+
+```java
+var response = http.download("channel-bill", "download", call, boundedOutput,
+    (method, uri, bytes) -> protocol.sign(method, uri, bytes));
+```
+
+签名版本保留命名客户端的大小上限、固定缓冲区复制、连接/DNS 策略和禁止重定向/重试。
+调用方还可传入更严格的有界 OutputStream，超限直接中断，不能先完整缓存再检查。
+组件始终关闭响应，不关闭调用方输出；异常时可能有部分字节，调用方自行丢弃临时文件或未提交对象。
+HTTP 4xx/5xx 仍返回 ResponseEntity，应先检查状态与完整性再认定文件有效。
+
+`HttpTemplateTest.signedStreamObservesTheExactWireTargetAndPropagatesCallerOutputLimitsWithoutClosingOutput`
+已补最终 URI/请求字节、输出内容、调用方异常和输出流生命周期测试源码；2026-10-28 未运行编译或测试。
 
 ---
 
@@ -143,6 +162,7 @@ mvn clean test -pl loadup-components/integration/loadup-components-http \
 → 解析配置中的操作及编码变量
 → 校验目标与认证头
 → 将请求体序列化为受限 byte[]
+→ 可选 signer 接收最终 method/URI/原字节，签名头最后合并
 → RestClient exchange
 → 读取受限响应或复制到调用方输出流
 → 保留协议状态与头
@@ -172,3 +192,10 @@ ConfigurationProperties 使用 record 与不可变 Map。每个命名客户端�
 Boot RestClient.Builder 被注入并 clone，保留其自动定制。默认不新增请求报文日志，指标以可信配置名称而非动态请求值作为标签。应用还需限制自定义 RestClient interceptor 及 tracing exporter 中的敏感信息采集。
 
 组件不提供重试配置，Apache 自动重试关闭；需要重试时由业务确认幂等后接入现有任务或容错能力。Outbox 的失败重投和外部请求的受理状态分别管理，下游已受理但响应丢失时仍可能再次发送同一业务请求。
+
+### 签名下载路径（2026-10-28）
+
+带 signer 的流式下载与原始 exchange 共用 execute，避免业务为了签名先缓存完整响应或另拼编码不同的 URL。
+调用方可用有界输出流收紧单次大小上限；框架仍执行客户端 Content-Length/实际字节限制和响应关闭。
+输出流由调用方持有，写入失败不回滚已写字节，也不关闭该流；业务来源校验与正式提交在负责层完成。
+最终签名不改变固定 origin、DNS/代理约束、无自动重试/无重定向。新增测试源码未执行。
