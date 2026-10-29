@@ -186,7 +186,7 @@ loadup-components-gotone/
   （channel mapping + 模板 + 降级链 + 渠道配置 JSON）、`gotone_notification_record`
   （逐接收者发送记录）。
 - 实现 `ServiceConfigProvider` / `ChannelConfigProvider` / `RecordHandler` 三个可选 SPI，
-  schema 由 Flyway `V1__gotone_store.sql` 自动迁移。
+  schema 由 Flyway `V20261002000005__gotone_store.sql` 自动迁移。
 
 #### binders（渠道实现）
 
