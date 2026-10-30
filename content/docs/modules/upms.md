@@ -79,7 +79,7 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 ## 输入与安全约定
 
-新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间使用名为 `upmsClock` 的系统本地时区 Clock；数据库审计字段由 database 填充。
+新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间和数据库审计字段使用 Spring 共享的 Clock，默认采用系统本地时区。
 
 ## 错误码契约
 
@@ -163,7 +163,7 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 
 ### 输入与安全约定
 
-新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间使用名为 `upmsClock` 的系统本地时区 Clock；数据库审计字段由 database 填充。
+新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间和数据库审计字段使用 Spring 共享的 Clock，默认采用系统本地时区。
 
 ### 错误码契约
 

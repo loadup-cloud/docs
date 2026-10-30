@@ -145,7 +145,7 @@ String[] businessIds = generator.generateBatch(command, 100);
 BusinessIdParts parts = formatter.parse(businessId);
 ```
 
-Encoding: date(8) + dataVersion(1) + systemVersion(1) + eventCode(8) + extension(0..32) + site(3) + shard(3) + sequence(8). Length is 32..64; numeric fields preserve leading zeros. Date uses `databaseClock` and its local zone, captured once per generation call. Business sequence scope is date + versions + event + site, shared across shards/extensions. It allows at most 99,999,999 allocated numbers per scope per day, including unused reservations.
+Encoding: date(8) + dataVersion(1) + systemVersion(1) + eventCode(8) + extension(0..32) + site(3) + shard(3) + sequence(8). Length is 32..64; numeric fields preserve leading zeros. Date uses the shared `Clock` and its local zone, captured once per generation call. Business sequence scope is date + versions + event + site, shared across shards/extensions. It allows at most 99,999,999 allocated numbers per scope per day, including unused reservations.
 
 `shard` is a logical bucket from 000 to 999. The application registers event codes and chooses a stable routing policy, for example customer affinity via a versioned hash. Supply the resolved bucket in the command. For sequence-derived routing, use the numeric Sequence and formatter together; do not invent a second random bucket or assume 1,000 physical tables. A shard field does not provide authorization or tenant isolation.
 

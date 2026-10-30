@@ -67,7 +67,7 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 ## 查询契约
 
-Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围使用应用本地时区；tenantId 由服务端上下文解析。事件时间使用可替换的 `auditClock`，持久化 createdAt/updatedAt 由 database 负责。
+Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围使用应用本地时区；tenantId 由服务端上下文解析。事件时间和持久化 createdAt/updatedAt 使用 Spring 共享的 Clock，可由应用提供 Clock Bean 覆盖默认值。
 
 ## 错误码契约
 
@@ -138,7 +138,7 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 
 ### 查询契约
 
-Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围使用应用本地时区；tenantId 由服务端上下文解析。事件时间使用可替换的 `auditClock`，持久化 createdAt/updatedAt 由 database 负责。
+Controller 与 Facade 复用 `AuditPageQuery`；page、size 缺省为 1、20，size 上限 100，非法值返回 PARAM_ILLEGAL。时间范围使用应用本地时区；tenantId 由服务端上下文解析。事件时间和持久化 createdAt/updatedAt 使用 Spring 共享的 Clock，可由应用提供 Clock Bean 覆盖默认值。
 
 ### 错误码契约
 

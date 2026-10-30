@@ -150,7 +150,7 @@ JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契
 
 ## 公开接口与时间
 
-Web Controller 依赖 client.facade 中的 CatalogFacade、MerchantContractFacade、ContractResolveFacade。服务编排与 MapStruct 转换由 app 负责；数据库 Gateway 使用生成的 Mapper 与 Tables。业务 Clock 以 `contractClock` 具名注入，避免多个模块同时装配产生歧义。
+Web Controller 依赖 client.facade 中的 CatalogFacade、MerchantContractFacade、ContractResolveFacade。服务编排与 MapStruct 转换由 app 负责；数据库 Gateway 使用生成的 Mapper 与 Tables。业务和持久化使用 Spring 共享的 Clock，可由应用提供 Clock Bean 覆盖默认值。
 
 ## 错误码契约
 
@@ -377,7 +377,7 @@ client.command 表达业务写动作，client.query 表达只读条件；Control
 
 ### 公开接口与时间
 
-Web Controller 依赖 client.facade 中的 CatalogFacade、MerchantContractFacade、ContractResolveFacade。服务编排与 MapStruct 转换由 app 负责；数据库 Gateway 使用生成的 Mapper 与 Tables。业务 Clock 以 `contractClock` 具名注入，避免多个模块同时装配产生歧义。
+Web Controller 依赖 client.facade 中的 CatalogFacade、MerchantContractFacade、ContractResolveFacade。服务编排与 MapStruct 转换由 app 负责；数据库 Gateway 使用生成的 Mapper 与 Tables。业务和持久化使用 Spring 共享的 Clock，可由应用提供 Clock Bean 覆盖默认值。
 
 ### 错误码契约
 
