@@ -20,12 +20,15 @@ mvn -pl loadup-modules/loadup-modules-notification/loadup-modules-notification-t
 
 ## 能力契约
 
-| 能力 | 本层提供 |
-| --- | --- |
-| 应用与持久化组合装配的定向回归测试。 | 是 |
-| HTTP 适配 | 由同一业务目录下可选 web 提供 |
+| 能力                                 | 本层提供                      |
+|--------------------------------------|-------------------------------|
+| 应用与持久化组合装配的定向回归测试。 | 是                            |
+| HTTP 适配                            | 由同一业务目录下可选 web 提供 |
 
 完整业务 API、配置及使用示例见 [模块接入手册](../notification/)；内部职责见 [ARCHITECTURE.md](./#architecture)。
+
+`NotificationSubmissionIT` 使用 PostgreSQL Testcontainers 验证异步入站、请求幂等、并发受理、来源隔离、内容冲突、
+外层回滚、目标重放、收件人规范化与过期新请求回滚。该批次仅编写及静态检查，尚未执行。
 
 ---
 
@@ -36,6 +39,7 @@ mvn -pl loadup-modules/loadup-modules-notification/loadup-modules-notification-t
 
 应用与持久化组合装配的定向回归测试。
 
-ApplicationContextRunner 按 infrastructure → app 组合加载，验证服务/映射器装配、默认 Gateway 可覆盖以及 enabled=false 禁用。替身只用于装配单测，不声明真实数据库验收成功。
+ApplicationContextRunner 按 infrastructure → app 组合加载，验证服务/映射器装配、默认 Gateway 可覆盖以及 enabled=false
+禁用。替身只用于装配单测，不声明真实数据库验收成功。
 
 整体职责、事务和失败语义见 [业务架构](../notification/#architecture)，接入见 [README.md](./)。
