@@ -30,11 +30,16 @@ loadup:
           - /api/auth/login
 ```
 
-默认只采集配置路径上的 POST、PUT、PATCH、DELETE；可用 `loadup.modules.audit.web.include-methods` 调整。采集结果包括操作者、当前租户、路由模板、成功/失败和 MDC `traceId`；不读取请求体、查询字符串、密码或令牌。HTTP 错误和通用 `FailureResponse` 被记为失败。登录前的操作者可能为空；MVC 之前被安全过滤器拒绝的请求不在采集范围。写入失败仅记录服务器日志，不回滚业务操作。
+默认只采集配置路径上的 POST、PUT、PATCH、DELETE；可用 `loadup.modules.audit.web.include-methods`
+调整。采集结果包括操作者、当前租户、路由模板、成功/失败和 MDC `traceId`；不读取请求体、查询字符串、密码或令牌。HTTP 错误和通用
+`FailureResponse` 被记为失败。登录前的操作者可能为空；MVC 之前被安全过滤器拒绝的请求不在采集范围。写入失败仅记录服务器日志，不回滚业务操作。
 
-管理员使用 `POST /api/audit/events/query` 查询，要求 `ROLE_SUPER_ADMIN`，支持 `actorId`、`action`、`outcome`、`from`、`to`、`page`、`size`。查询自动使用当前 `TenantUtil` 租户 ID，不接受客户端指定租户。`Maven *-web dependency: false` 关闭 Web 适配。
+管理员使用 `POST /api/audit/events/query` 查询，要求 `ROLE_SUPER_ADMIN`，支持 `actorId`、`action`、`outcome`、`from`、`to`、
+`page`、`size`。查询自动使用当前 `TenantUtil` 租户 ID，不接受客户端指定租户。`Maven *-web dependency: false` 关闭 Web 适配。
 
-`actorId` 取自 `Authentication.getName()`。框架的 `LoadUpUser` 返回 `userId`（JWT 的 `sub`），不会保存角色、权限或用户对象的字符串表示。接入自定义认证时，应让 principal 实现 `Principal` 或 Spring Security 的身份接口，并返回稳定的操作者标识；匿名请求的操作者为空。
+`actorId` 取自 `Authentication.getName()`。框架的 `LoadUpUser` 返回 `userId`（JWT 的 `sub`
+），不会保存角色、权限或用户对象的字符串表示。接入自定义认证时，应让 principal 实现 `Principal` 或 Spring Security
+的身份接口，并返回稳定的操作者标识；匿名请求的操作者为空。
 
 实现边界见 [ARCHITECTURE.md](./#architecture)。
 
@@ -45,17 +50,21 @@ loadup:
 
 ### 采集路径
 
-`AuditWebAutoConfiguration` 在审计核心服务存在时注册 `AuditCaptureInterceptor`、`AuditResponseAdvice` 和 `AuditController`。拦截器仅注册到 `loadup.modules.audit.web.include-paths`，列表为空时不采集请求；处理完成后再按 `include-methods` 过滤 HTTP 方法。业务服务与 Controller 无需依赖审计模块。
+`AuditWebAutoConfiguration` 在审计核心服务存在时注册 `AuditCaptureInterceptor`、`AuditResponseAdvice` 和
+`AuditController`。拦截器仅注册到 `loadup.modules.audit.web.include-paths`，列表为空时不采集请求；处理完成后再按
+`include-methods` 过滤 HTTP 方法。业务服务与 Controller 无需依赖审计模块。
 
 ```text
 配置的 MVC 路由 → 业务处理 → 响应标记 → afterCompletion → AuditService
 管理员查询 → AuditController → AuditService → 租户范围内的分页事件
 ```
 
-`AuditResponseAdvice` 标记采用 HTTP 200 的 `FailureResponse`；`afterCompletion` 综合异常、HTTP 状态和标记判定结果。操作者来自 Spring Security，租户来自 `TenantUtil`，traceId 来自 MDC；记录路由模板以避免把动态 URL 参数写入审计表。不读取请求体或查询字符串。
+`AuditResponseAdvice` 标记采用 HTTP 200 的 `FailureResponse`；`afterCompletion` 综合异常、HTTP 状态和标记判定结果。操作者来自
+Spring Security，租户来自 `TenantUtil`，traceId 来自 MDC；记录路由模板以避免把动态 URL 参数写入审计表。不读取请求体或查询字符串。
 
 ### 安全与边界
 
-查询接口使用 `@PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")`，仍须由接入方的 Resource Server 保护 `/api/**`。审计写入发生在 MVC 处理后，失败不会更改业务结果。SecurityFilterChain 在请求进入 MVC 前拒绝时不触发拦截器；首版不覆盖该类事件，也不承诺与业务事务原子提交。
+查询接口使用 `@PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")`，仍须由接入方的 Resource Server 保护 `/api/**`。审计写入发生在
+MVC 处理后，失败不会更改业务结果。SecurityFilterChain 在请求进入 MVC 前拒绝时不触发拦截器；首版不覆盖该类事件，也不承诺与业务事务原子提交。
 
 配置示例见 [README.md](./)。

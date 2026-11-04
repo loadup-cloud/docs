@@ -52,9 +52,11 @@ loadup:
 
 ## 当前发送与测试边界
 
-三个内置发送路径在凭证存在时也明确返回失败，不把占位日志计为发送成功。`isAvailable()` 当前仅表示必需凭证已配置；真实厂商 SDK/HTTP 传输尚未接入。业务侧通过逐收件人的状态与错误判断发送结果。
+三个内置发送路径在凭证存在时也明确返回失败，不把占位日志计为发送成功。`isAvailable()` 当前仅表示必需凭证已配置；真实厂商
+SDK/HTTP 传输尚未接入。业务侧通过逐收件人的状态与错误判断发送结果。
 
-渠道参数覆盖、无效号码、部分失败、配置装配和开关由契约测试验证。测试替身只验证 SPI 边界，不代表阿里云、华为云或云片已完成真实发送验收。`ChannelSendRequest` 已复制并规范化收件人及配置，provider 依赖这一输入契约。
+渠道参数覆盖、无效号码、部分失败、配置装配和开关由契约测试验证。测试替身只验证 SPI 边界，不代表阿里云、华为云或云片已完成真实发送验收。
+`ChannelSendRequest` 已复制并规范化收件人及配置，provider 依赖这一输入契约。
 
 ---
 
@@ -80,7 +82,8 @@ loadup:
 
 主要入口文件：
 
-- [`SmsChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
+- [
+  `SmsChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
 - [`AliyunSmsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/AliyunSmsProvider.java)
 - [`HuaweiSmsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/HuaweiSmsProvider.java)
 - [`YunpianSmsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/YunpianSmsProvider.java)
@@ -92,21 +95,29 @@ loadup:
 ```text
 业务代码 → API/facade → 当前 binder → 第三方引擎或基础设施
 ```
+
 binder 实现框架契约，把实现库及其配置隔离在业务 API 之外。
 
 ### 装配规则
 
-- [`SmsChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnProperty( prefix = "loadup.gotone.binder.sms.aliyun", name = "enabled", havingValue = "true", matchIfMissing = true)`
-  - `@ConditionalOnMissingBean(name = "aliyunSmsProvider")`
-  - `@ConditionalOnProperty( prefix = "loadup.gotone.binder.sms.huawei", name = "enabled", havingValue = "true", matchIfMissing = true)`
-  - `@ConditionalOnMissingBean(name = "huaweiSmsProvider")`
+- [
+  `SmsChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
+  是自动配置入口。
+    -
+    `@ConditionalOnProperty( prefix = "loadup.gotone.binder.sms.aliyun", name = "enabled", havingValue = "true", matchIfMissing = true)`
+    - `@ConditionalOnMissingBean(name = "aliyunSmsProvider")`
+    -
+    `@ConditionalOnProperty( prefix = "loadup.gotone.binder.sms.huawei", name = "enabled", havingValue = "true", matchIfMissing = true)`
+    - `@ConditionalOnMissingBean(name = "huaweiSmsProvider")`
 
 ### 配置归属
 
-- [`AliyunSmsConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/AliyunSmsConfig.java) 绑定 `loadup.gotone.binder.sms.aliyun`。
-- [`YunpianSmsConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/YunpianSmsConfig.java) 绑定 `loadup.gotone.binder.sms.yunpian`。
-- [`HuaweiSmsConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/HuaweiSmsConfig.java) 绑定 `loadup.gotone.binder.sms.huawei`。
+- [`AliyunSmsConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/AliyunSmsConfig.java) 绑定
+  `loadup.gotone.binder.sms.aliyun`。
+- [`YunpianSmsConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/YunpianSmsConfig.java) 绑定
+  `loadup.gotone.binder.sms.yunpian`。
+- [`HuaweiSmsConfig`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/HuaweiSmsConfig.java) 绑定
+  `loadup.gotone.binder.sms.huawei`。
 
 ### 设计取舍
 
@@ -116,4 +127,6 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 未实现传输的失败语义
 
-内置厂商调用仍为占位实现，凭证缺失或传输尚未实现时使用 `CommonException(INVALID_STATE)`；`send` 捕获单个收件人的错误并汇总失败，不产生虚假的成功计数。业务调用 `NotificationService` 无需处理厂商 SDK 类型。`isAvailable` 目前只检查凭证配置，与实际发送成功分开。凭证管理接入不等于传输验收，后续应以真实厂商沙箱或受控账户验证。
+内置厂商调用仍为占位实现，凭证缺失或传输尚未实现时使用 `CommonException(INVALID_STATE)`；`send`
+捕获单个收件人的错误并汇总失败，不产生虚假的成功计数。业务调用 `NotificationService` 无需处理厂商 SDK 类型。`isAvailable`
+目前只检查凭证配置，与实际发送成功分开。凭证管理接入不等于传输验收，后续应以真实厂商沙箱或受控账户验证。

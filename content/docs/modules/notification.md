@@ -10,7 +10,7 @@ title: "In-App Notifications"
 ## 引入
 
 ```xml
-<dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-modules-notification-app</artifactId></dependency>
+<dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-modules-notification-core</artifactId></dependency>
 ```
 
 应用需要 PostgreSQL `DataSource`；Flyway 执行 `V20261003000001__create_notification_inbox.sql`。设置
@@ -29,18 +29,15 @@ Gotone `IN_APP` 渠道使用 `NotificationRequest.channels = ["IN_APP"]`，接�
 
 Web 接口见 [Web 适配](../notification-web/)，设计见 [ARCHITECTURE.md](./#architecture)。
 
-## COLA 模块选择
+## 模块选择
 
 本目录的 Maven 坐标 `loadup-modules-notification` 为聚合 POM。业务接入选择具体 jar，版本由根 BOM 管理：
 
-| 子模块                                                                   | 用途                                           |
-|--------------------------------------------------------------------------|------------------------------------------------|
-| [`client`](../notification-client/)                 | 对外 DTO、请求契约；不依赖 Spring 或持久化实现 |
-| [`domain`](../notification-domain/)                 | 纯 Java 领域模型、分页值与 Gateway 接口        |
-| [`infrastructure`](../notification-infrastructure/) | 默认 JDBC Gateway、Flyway 迁移与持久化装配     |
-| [`app`](../notification-app/)                       | 用例服务、DTO 映射与应用装配；程序化接入入口   |
-| [`web`](../notification-web/)                       | 可选 Spring MVC 适配；自动引入 app             |
-| [`test`](../notification-test/)                     | 自动装配回归源码，不作为生产依赖               |
+| 子模块                                                    | 用途                                                         |
+|-----------------------------------------------------------|--------------------------------------------------------------|
+| [`client`](../notification-client/)  | 对外 DTO、请求契约；不依赖 Spring 或持久化实现               |
+| [`core`](../notification-core/)      | 领域模型、用例服务、DTO 映射、JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
+| [`web`](../notification-web/)        | 可选 Spring MVC 适配；自动引入 core                          |
 
 `InboxService` 现在位于 `io.github.loadup.modules.notification.app.service`；公开结果位于
 `io.github.loadup.modules.notification.client.dto`。领域 Gateway 不引用客户端 DTO，也不引用数据库或 Spring API。HTTP
@@ -62,7 +59,7 @@ Flyway 对已在 classpath 上的脚本执行。不要在已有数据库重复�
 
 ## 统一接入契约
 
-Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-app` 装配业务能力，引入
+Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-core` 装配业务能力，引入
 `*-web` 才提供 Controller，Web 适配不再提供独立 enabled 开关。模块整体启停仍使用 `loadup.modules.notification.enabled`。
 
 JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契约；异常由全局 WebMVC 处理。下载仍为流式响应。请求与 DTO

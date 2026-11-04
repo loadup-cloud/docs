@@ -172,7 +172,7 @@ mvn clean -pl loadup-components/security/loadup-components-kms -am test \
 
 ## Local binder
 
-引入 `loadup-components-kms-binder-local` 依赖，设置 `loadup.kms.enabled=true`（`loadup.kms.binder` 默认为 `local`），并由应用提供 `LocalKmsKeyStore` Bean。Bean 包含已加载的 Java KeyStore 和各密钥条目共用的密码；应用负责加载及持久化 KeyStore。RSA 私钥条目需要证书链，AES 密钥使用 SecretKeyEntry。可用 Java 的 KeyPairGenerator 和 KeyGenerator 生成密钥，RSA 条目还需配套证书。
+引入 `loadup-components-kms-binder-local` 依赖，设置 `loadup.kms.enabled=true`（`loadup.kms.binder` 默认为 `local`），可由应用提供 `LocalKmsKeyStore` Bean，或使用 [local binder 的文件加载配置](../kms-binder-local/)。Bean 包含已加载的 Java KeyStore 和各密钥条目共用的密码；集成方负责生成、导入和持久化 KeyStore，加载器只读打开既有文件。RSA 私钥条目需要证书链，AES 密钥使用 SecretKeyEntry。可用 Java 的 KeyPairGenerator 和 KeyGenerator 生成密钥，RSA 条目还需配套证书。
 
 本地实现支持 RSA SHA-256 签名和验签、AES-GCM 加解密以及公钥和元数据查询。别名对应 KMS 密钥名，目前只支持版本 1，不提供密钥轮换或管理接口。本地密文使用 `local:v1:` 前缀，与 OpenBao 密文不可互换；切换后端前须保留原有后端以解密历史数据。不要把密码或密钥写入普通配置文件。
 

@@ -24,12 +24,13 @@ OAuth2 授权服务器与令牌签发的业务契约与接口模块；实现由�
 ## 接入步骤
 
 需要 SAS 协议与 JWT 签发时引入 binder-sas；用户密码校验由业务认证适配提供。
-运行时还需在应用侧引入一种对应 binder；仅有接口 jar 不会创建实际后端能力。
+运行时还需在应用侧引入对应 AuthServer binder 与 KMS binder；仅有接口 jar 不会创建后端能力。
+签名配置为 signing.active-key（明确 name/version）与 verification-keys（保留公钥引用），不配置或传递私钥值；详见 [接入说明](../authserver/)。
 
 ## 配置入口
 
-| 前缀 | 配置类 |
-|---|---|
+| 前缀                          | 配置类                                                                                                                          |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | `loadup.security.auth-server` | [`LoadUpAuthServerProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authserver/loadup-components-authserver-api/src/main/java/io/github/loadup/components/authserver/properties/LoadUpAuthServerProperties.java) |
 
 ## 对外契约
@@ -60,7 +61,8 @@ OAuth2 授权服务器与令牌签发的业务契约与接口模块；实现由�
 
 - [`LoadUpJwtTokenCustomizer`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authserver/loadup-components-authserver-api/src/main/java/io/github/loadup/components/authserver/jwt/LoadUpJwtTokenCustomizer.java)
 - [`LoadUpSubject`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authserver/loadup-components-authserver-api/src/main/java/io/github/loadup/components/authserver/jwt/LoadUpSubject.java)
-- [`LoadUpAuthServerProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authserver/loadup-components-authserver-api/src/main/java/io/github/loadup/components/authserver/properties/LoadUpAuthServerProperties.java)
+- [
+  `LoadUpAuthServerProperties`](src/main/java/io/github/loadup/components/authserver/properties/LoadUpAuthServerProperties.java)
 
 ### 分层与调用路径
 
@@ -69,6 +71,7 @@ API 定义主体与认证契约；SAS binder 配置令牌签发、JWK 和可选 
 ```text
 认证后的 Principal（LoadUpSubject）→ JwtTokenCustomizer → sub/roles/permissions Claims
 ```
+
 接口模块固定业务侧依赖方向；实现与基础设施通过独立模块接入。
 
 ### 扩展契约
@@ -77,7 +80,9 @@ API 定义主体与认证契约；SAS binder 配置令牌签发、JWK 和可选 
 
 ### 配置归属
 
-- [`LoadUpAuthServerProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authserver/loadup-components-authserver-api/src/main/java/io/github/loadup/components/authserver/properties/LoadUpAuthServerProperties.java) 绑定 `loadup.security.auth-server`。
+- [
+  `LoadUpAuthServerProperties`](src/main/java/io/github/loadup/components/authserver/properties/LoadUpAuthServerProperties.java)
+  绑定 `loadup.security.auth-server`。
 
 ### 设计取舍
 

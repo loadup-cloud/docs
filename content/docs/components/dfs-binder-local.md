@@ -22,7 +22,8 @@ loadup:
     binder.local.base-path: /var/lib/loadup-dfs
 ```
 
-Objects are stored below `<base-path>/objects`; metadata is persisted below `<base-path>/metadata`. This binder has no presigned URL or multipart capability and requires a filesystem visible to the application node.
+Objects are stored below `<base-path>/objects`; metadata is persisted below `<base-path>/metadata`. This binder has no
+presigned URL or multipart capability and requires a filesystem visible to the application node.
 
 ---
 
@@ -48,7 +49,8 @@ Objects are stored below `<base-path>/objects`; metadata is persisted below `<ba
 
 主要入口文件：
 
-- [`LocalDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/local/autoconfig/LocalDfsAutoConfiguration.java)
+- [
+  `LocalDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
 - [`LocalDfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/LocalDfsProvider.java)
 
 ### 分层与调用路径
@@ -58,17 +60,22 @@ Objects are stored below `<base-path>/objects`; metadata is persisted below `<ba
 ```text
 业务代码 → API/facade → 当前 binder → 第三方引擎或基础设施
 ```
+
 binder 实现框架契约，把实现库及其配置隔离在业务 API 之外。
 
 ### 装配规则
 
-- [`LocalDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/local/autoconfig/LocalDfsAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "local", matchIfMissing = true)`
-  - `@ConditionalOnMissingBean(DfsProvider.class)`
+- [
+  `LocalDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
+  是自动配置入口。
+    -
+    `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "local", matchIfMissing = true)`
+    - `@ConditionalOnMissingBean(DfsProvider.class)`
 
 ### 配置归属
 
-- [`LocalDfsProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/LocalDfsProperties.java) 绑定 `loadup.dfs.binder.local`。
+- [`LocalDfsProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/LocalDfsProperties.java) 绑定
+  `loadup.dfs.binder.local`。
 
 ### 设计取舍
 

@@ -27,7 +27,9 @@ loadup:
     binder.s3.path-style-access-enabled: false
 ```
 
-The binder persists filename and custom metadata in S3 object metadata, generates presigned GET URLs, and supports initiate/upload-part/complete/abort multipart operations. The bucket and credentials are external infrastructure; `create-bucket` is intended for development only.
+The binder persists filename and custom metadata in S3 object metadata, generates presigned GET URLs, and supports
+initiate/upload-part/complete/abort multipart operations. The bucket and credentials are external infrastructure;
+`create-bucket` is intended for development only.
 
 ---
 
@@ -54,7 +56,7 @@ The binder persists filename and custom metadata in S3 object metadata, generate
 
 主要入口文件：
 
-- [`S3DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/s3/autoconfig/S3DfsAutoConfiguration.java)
+- [`S3DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/autoconfigure/S3DfsAutoConfiguration.java)
 - [`S3DfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/S3DfsProvider.java)
 
 ### 分层与调用路径
@@ -64,18 +66,21 @@ The binder persists filename and custom metadata in S3 object metadata, generate
 ```text
 业务代码 → API/facade → 当前 binder → 第三方引擎或基础设施
 ```
+
 binder 实现框架契约，把实现库及其配置隔离在业务 API 之外。
 
 ### 装配规则
 
-- [`S3DfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/s3/autoconfig/S3DfsAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnClass(S3Client.class)`
-  - `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "s3")`
-  - `@ConditionalOnMissingBean(DfsProvider.class)`
+- [`S3DfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/autoconfigure/S3DfsAutoConfiguration.java)
+  是自动配置入口。
+    - `@ConditionalOnClass(S3Client.class)`
+    - `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "s3")`
+    - `@ConditionalOnMissingBean(DfsProvider.class)`
 
 ### 配置归属
 
-- [`S3DfsProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/S3DfsProperties.java) 绑定 `loadup.dfs.binder.s3`。
+- [`S3DfsProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-s3/src/main/java/io/github/loadup/components/dfs/s3/S3DfsProperties.java) 绑定
+  `loadup.dfs.binder.s3`。
 
 ### 设计取舍
 

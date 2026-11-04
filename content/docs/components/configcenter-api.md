@@ -34,8 +34,8 @@ sidebar:
 
 ## 配置入口
 
-| 前缀 | 配置类 |
-|---|---|
+| 前缀                  | 配置类                                                                                                         |
+|-----------------------|----------------------------------------------------------------------------------------------------------------|
 | `loadup.configcenter` | [`ConfigCenterProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProperties.java) |
 
 ## 对外契约
@@ -49,8 +49,9 @@ sidebar:
 
 ## 自动装配
 
-- [`ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java)
-  - 启用条件：`@ConditionalOnSingleCandidate(ConfigCenterProvider.class)`。
+- [
+  `ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfigure/ConfigCenterAutoConfiguration.java)
+    - 启用条件：`@ConditionalOnSingleCandidate(ConfigCenterProvider.class)`。
 
 ---
 
@@ -73,10 +74,12 @@ sidebar:
 
 主要入口文件：
 
-- [`ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java)
+- [
+  `ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfigure/ConfigCenterAutoConfiguration.java)
 - [`ConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProvider.java)
 - [`ConfigCenterTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterTemplate.java)
-- [`DefaultConfigCenterTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/DefaultConfigCenterTemplate.java)
+- [
+  `DefaultConfigCenterTemplate`](src/main/java/io/github/loadup/components/configcenter/DefaultConfigCenterTemplate.java)
 
 ### 分层与调用路径
 
@@ -85,22 +88,28 @@ sidebar:
 ```text
 业务调用 → ConfigCenterTemplate → SPI/领域契约 → 运行时实现
 ```
+
 接口模块固定业务侧依赖方向；实现与基础设施通过独立模块接入。
 
 ### 装配规则
 
-- [`ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfig/ConfigCenterAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnSingleCandidate(ConfigCenterProvider.class)`
-  - `@ConditionalOnMissingBean(ConfigCenterTemplate.class)`
+- [
+  `ConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/autoconfigure/ConfigCenterAutoConfiguration.java)
+  是自动配置入口。
+    - `@ConditionalOnSingleCandidate(ConfigCenterProvider.class)`
+    - `@ConditionalOnMissingBean(ConfigCenterTemplate.class)`
 
 ### 扩展契约
 
-- [`ConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProvider.java)：由实现方或调用方按接口定义对接。
-- [`ConfigCenterTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterTemplate.java)：由实现方或调用方按接口定义对接。
+- [`ConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProvider.java)
+  ：由实现方或调用方按接口定义对接。
+- [`ConfigCenterTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterTemplate.java)
+  ：由实现方或调用方按接口定义对接。
 
 ### 配置归属
 
-- [`ConfigCenterProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProperties.java) 绑定 `loadup.configcenter`。
+- [`ConfigCenterProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-api/src/main/java/io/github/loadup/components/configcenter/ConfigCenterProperties.java) 绑定
+  `loadup.configcenter`。
 
 ### 设计取舍
 

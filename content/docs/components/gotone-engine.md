@@ -33,13 +33,14 @@ sidebar:
 
 ## 配置入口
 
-| 前缀 | 配置类 |
-|---|---|
+| 前缀                       | 配置类                                                                                                                  |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------------|
 | `loadup.gotone.resilience` | [`GotoneResilienceProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/GotoneResilienceProperties.java) |
 
 ## 自动装配
 
-- [`GotoneEngineAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/GotoneEngineAutoConfiguration.java)
+- [
+  `GotoneEngineAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/engine/GotoneEngineAutoConfiguration.java)
 
 ---
 
@@ -66,9 +67,12 @@ sidebar:
 
 主要入口文件：
 
-- [`GotoneEngineAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/GotoneEngineAutoConfiguration.java)
-- [`DefaultNotificationService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/DefaultNotificationService.java)
-- [`ResilientNotificationChannelProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/ResilientNotificationChannelProvider.java)
+- [
+  `GotoneEngineAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/engine/GotoneEngineAutoConfiguration.java)
+- [
+  `DefaultNotificationService`](src/main/java/io/github/loadup/components/gotone/engine/DefaultNotificationService.java)
+- [
+  `ResilientNotificationChannelProvider`](src/main/java/io/github/loadup/components/gotone/engine/ResilientNotificationChannelProvider.java)
 
 ### 分层与调用路径
 
@@ -80,12 +84,16 @@ sidebar:
 
 ### 装配规则
 
-- [`GotoneEngineAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/GotoneEngineAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnMissingBean(NotificationService.class)`
+- [
+  `GotoneEngineAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/engine/GotoneEngineAutoConfiguration.java)
+  是自动配置入口。
+    - `@ConditionalOnMissingBean(NotificationService.class)`
 
 ### 配置归属
 
-- [`GotoneResilienceProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-engine/src/main/java/io/github/loadup/components/gotone/engine/GotoneResilienceProperties.java) 绑定 `loadup.gotone.resilience`。
+- [
+  `GotoneResilienceProperties`](src/main/java/io/github/loadup/components/gotone/engine/GotoneResilienceProperties.java)
+  绑定 `loadup.gotone.resilience`。
 
 ### 设计取舍
 

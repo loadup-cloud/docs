@@ -224,7 +224,7 @@ HTTP 4xx/5xx 仍返回 ResponseEntity，应先检查状态与完整性再认定�
 ## 共享出站身份配置默认值
 
 HttpClientDefaults.bind(environment, modulePrefix, targetApplication, Settings.class) 仅复用 Boot Binder 绑定默认配置，不负责认证。
-模块显式配置优先，其次是 loadup.http.client.{tenant-id,service-id,audience,token-file}；tenant-id 默认 __default__，
+模块显式配置优先，其次是 loadup.http.client.{service-id,audience,token-file}；
 service-id 默认调用方 spring.application.name，audience 默认目标应用，token-file 默认 /var/run/loadup/secrets/<目标应用>.jwt。
 多目标调用须分别指定 audience/token-file，避免把共享目标配置误用于另一服务。helper 不读/缓存 token、不设置全局认证头；
 调用方仍逐次验证并读取凭证。旧 RPC 配置前缀不在此 helper 中提供兼容别名。
@@ -331,7 +331,7 @@ HttpServiceResponses 复用 commons-dto 的标准信封，只有 SUCCESS/S 且�
 ### 共享出站身份配置默认值
 
 HttpClientDefaults.bind(environment, modulePrefix, targetApplication, Settings.class) 仅复用 Boot Binder 绑定默认配置，不负责认证。
-模块显式配置优先，其次是 loadup.http.client.{tenant-id,service-id,audience,token-file}；tenant-id 默认 __default__，
+模块显式配置优先，其次是 loadup.http.client.{service-id,audience,token-file}；
 service-id 默认调用方 spring.application.name，audience 默认目标应用，token-file 默认 /var/run/loadup/secrets/<目标应用>.jwt。
 多目标调用须分别指定 audience/token-file，避免把共享目标配置误用于另一服务。helper 不读/缓存 token、不设置全局认证头；
 调用方仍逐次验证并读取凭证。旧 RPC 配置前缀不在此 helper 中提供兼容别名。

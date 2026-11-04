@@ -8,7 +8,8 @@ sidebar:
 
 UPMS 应用服务与业务编排。
 
-`AccountSecurityService` 提供本人安全概览、按用户 ID 查询登录历史以及使用旧密码修改密码的应用入口。HTTP 适配见 `loadup-modules-upms-web`。登录失败跟踪和临时锁定由 `loadup.modules.upms.security.login` 控制；管理员手动锁定不会因超时自动解除。
+`AccountSecurityService` 提供本人安全概览、按用户 ID 查询登录历史以及使用旧密码修改密码的应用入口。HTTP 适配见
+`loadup-modules-upms-web`。登录失败跟踪和临时锁定由 `loadup.modules.upms.security.login` 控制；管理员手动锁定不会因超时自动解除。
 
 ## 引入
 
@@ -35,8 +36,8 @@ UPMS 应用服务与业务编排。
 
 ## 配置入口
 
-| 前缀 | 配置类 |
-|---|---|
+| 前缀                           | 配置类                                                                                                                |
+|--------------------------------|-----------------------------------------------------------------------------------------------------------------------|
 | `loadup.modules.upms.security` | [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java) |
 
 ## 对外契约
@@ -50,7 +51,9 @@ UPMS 应用服务与业务编排。
 
 ## 受控明文读取
 
-`UserSensitiveReadService.read(actorId, query)` 要求可信 actor、有效 RBAC/ABAC 和可用的可靠 `SensitiveReadAudit`。recorder 必须同步持久化且传播失败；缺失 recorder 时拒绝明文。输出 DTO 在审计成功后由 Spring MapStruct converter 构造。HTTP 入口由 web 适配提供；配置与授权示例见 [UPMS README](../upms/)。
+`UserSensitiveReadService.read(actorId, query)` 要求可信 actor、有效 RBAC/ABAC 和可用的可靠 `SensitiveReadAudit`。recorder
+必须同步持久化且传播失败；缺失 recorder 时拒绝明文。输出 DTO 在审计成功后由 Spring MapStruct converter 构造。HTTP 入口由
+web 适配提供；配置与授权示例见 [UPMS README](../upms/)。
 
 ---
 
@@ -98,7 +101,8 @@ Client Service → 应用服务编排 → 领域服务/Gateway → 基础设施�
 
 ### 装配规则
 
-- [`UpmsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsAutoConfiguration.java) 是自动配置入口。
+- [`UpmsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsAutoConfiguration.java)
+  是自动配置入口。
 
 ### 扩展契约
 
@@ -107,7 +111,8 @@ Client Service → 应用服务编排 → 领域服务/Gateway → 基础设施�
 
 ### 配置归属
 
-- [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java) 绑定 `loadup.modules.upms.security`。
+- [`UpmsSecurityProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-app/src/main/java/io/github/loadup/modules/upms/app/autoconfigure/UpmsSecurityProperties.java)
+  绑定 `loadup.modules.upms.security`。
 
 ### 设计取舍
 
@@ -117,4 +122,6 @@ Client Service → 应用服务编排 → 领域服务/Gateway → 基础设施�
 
 ### 可靠敏感访问
 
-`UserSensitiveReadService` 不依赖具体审计实现，通过 `ObjectProvider<SensitiveReadAudit>` 支持普通 UPMS 无审计部署；明文操作必须有 recorder。顺序为参数校验 → 租户范围内目标查询 → 最新角色及资源数据范围判定 → 可靠审计 → MapStruct 输出映射。任一步失败不返回原值。禁止超级管理员短路或根据请求参数关闭审计。
+`UserSensitiveReadService` 不依赖具体审计实现，通过 `ObjectProvider<SensitiveReadAudit>` 支持普通 UPMS 无审计部署；明文操作必须有
+recorder。顺序为参数校验 → 租户范围内目标查询 → 最新角色及资源数据范围判定 → 可靠审计 → MapStruct
+输出映射。任一步失败不返回原值。禁止超级管理员短路或根据请求参数关闭审计。

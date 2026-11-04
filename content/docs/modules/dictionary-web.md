@@ -17,31 +17,38 @@ sidebar:
 </dependency>
 ```
 
-本模块自动引入字典核心、WebMVC 响应约定和方法授权组件。所有接口以 `/api/dictionaries` 开头，返回统一的 `result`、`data` 报文；列表还包含 `pageInfo`。
+本模块自动引入字典核心、WebMVC 响应约定和方法授权组件。所有接口以 `/api/dictionaries` 开头，返回统一的 `result`、`data`
+报文；列表还包含 `pageInfo`。
 
-| 方法 | 路径 | 用途 |
-|---|---|---|
+| 方法 | 路径                                 | 用途                                |
+|------|--------------------------------------|-------------------------------------|
 | POST | `/types/{create,update,delete,list}` | 创建、更新/启停、删除、分页查询类型 |
 | POST | `/items/{create,update,delete,list}` | 创建、更新/启停、删除、分页查询条目 |
-| POST | `/options` | 查询启用选项，仅返回 value 和 label |
+| POST | `/options`                           | 查询启用选项，仅返回 value 和 label |
 
-接口统一使用 JSON body。分页请求传 `{ "page": 1, "size": 20 }`；条目列表额外传 `typeCode`。更新请求传 `{ "id": "...", "command": { ... } }`；创建条目传 `{ "typeCode": "...", "command": { ... } }`；删除传 `{ "id": "..." }`。
+接口统一使用 JSON body。分页请求传 `{ "page": 1, "size": 20 }`；条目列表额外传 `typeCode`。更新请求传
+`{ "id": "...", "command": { ... } }`；创建条目传 `{ "typeCode": "...", "command": { ... } }`；删除传 `{ "id": "..." }`。
 
-管理接口要求 `ROLE_SUPER_ADMIN`；选项接口由接入方的 `/api/**` 资源服务器规则保护。请求中的租户 ID 由当前 `TenantUtil` 上下文决定。设置 `Maven *-web dependency: false` 可关闭 Web 适配。
+管理接口要求 `ROLE_SUPER_ADMIN`；选项接口由接入方的 `/api/**` 资源服务器规则保护。请求中的租户 ID 由当前 `TenantUtil`
+上下文决定。设置 `Maven *-web dependency: false` 可关闭 Web 适配。
 
-控制器带有 OpenAPI 注解；引入可选的 `loadup-components-springdoc` 后可在 `/scalar` 浏览。设计见 [ARCHITECTURE.md](./#architecture)。
+控制器带有 OpenAPI 注解；引入可选的 `loadup-components-springdoc` 后可在 `/scalar`
+浏览。设计见 [ARCHITECTURE.md](./#architecture)。
 
 ---
 
 <a id="architecture"></a>
 ## 设计与实现
 
-`DictionaryWebAutoConfiguration` 在字典服务存在时注册 `DictionaryController`。管理操作调用 `DictionaryService`，由 `@PreAuthorize` 要求 `ROLE_SUPER_ADMIN`；业务选项接口只暴露启用条目的 `value` 和 `label`，实际身份校验仍由 Resource Server 的 `/api/**` 规则负责。
+`DictionaryWebAutoConfiguration` 在字典服务存在时注册 `DictionaryController`。管理操作调用 `DictionaryService`，由
+`@PreAuthorize` 要求 `ROLE_SUPER_ADMIN`；业务选项接口只暴露启用条目的 `value` 和 `label`，实际身份校验仍由 Resource Server
+的 `/api/**` 规则负责。
 
 ```text
 HTTP /api/dictionaries/** → DictionaryController → DictionaryService → Repository
 ```
 
-Web 层只负责接收 Command/Query、从 `TenantUtil` 读取租户、将公共 PageDTO 包装为 `PageResponse`。编码规范、唯一性、启停规则和事务均属于核心服务。应用可只引入核心模块，不暴露 HTTP 接口。
+Web 层只负责接收 Command/Query、从 `TenantUtil` 读取租户、将公共 PageDTO 包装为 `PageResponse`
+。编码规范、唯一性、启停规则和事务均属于核心服务。应用可只引入核心模块，不暴露 HTTP 接口。
 
 接入示例见 [README.md](./)。

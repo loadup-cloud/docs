@@ -26,7 +26,9 @@ sidebar:
 ## 接入步骤
 
 此模块用于验证组件契约，通常只在本项目的测试构建中使用；应用接入请选同级 API 与实现模块。
-需要单独执行时，可在仓库根目录使用 `mvn clean test -pl loadup-components/integration/loadup-components-gotone/loadup-components-gotone-test -am`；外部服务和容器要求以测试类及测试配置为准。
+需要单独执行时，可在仓库根目录使用
+`mvn clean test -pl loadup-components/integration/loadup-components-gotone/loadup-components-gotone-test -am`
+；外部服务和容器要求以测试类及测试配置为准。
 
 ---
 
@@ -67,6 +69,7 @@ sidebar:
 ```text
 测试用例 → 测试配置/容器 → 被测 API 与实现 → 契约断言
 ```
+
 测试模块处于依赖链末端，用真实装配验证调用路径；不向业务代码暴露新契约。
 
 ### 设计取舍

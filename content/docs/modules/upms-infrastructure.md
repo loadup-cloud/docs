@@ -78,11 +78,16 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 
 ### 扩展契约
 
-- [`DepartmentConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/DepartmentConverter.java)：由实现方或调用方按接口定义对接。
-- [`LoginLogConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/LoginLogConverter.java)：由实现方或调用方按接口定义对接。
-- [`PermissionConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/PermissionConverter.java)：由实现方或调用方按接口定义对接。
-- [`UserConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/UserConverter.java)：由实现方或调用方按接口定义对接。
-- [`RoleConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/RoleConverter.java)：由实现方或调用方按接口定义对接。
+- [`DepartmentConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/DepartmentConverter.java)
+  ：由实现方或调用方按接口定义对接。
+- [`LoginLogConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/LoginLogConverter.java)
+  ：由实现方或调用方按接口定义对接。
+- [`PermissionConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/PermissionConverter.java)
+  ：由实现方或调用方按接口定义对接。
+- [`UserConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/UserConverter.java)
+  ：由实现方或调用方按接口定义对接。
+- [`RoleConverter`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-infrastructure/src/main/java/io/github/loadup/modules/upms/infrastructure/converter/RoleConverter.java)
+  ：由实现方或调用方按接口定义对接。
 
 ### 设计取舍
 

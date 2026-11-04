@@ -26,10 +26,12 @@ loadup:
     console-pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId:-},%X{spanId:-}] %logger{36} - %msg%n%wEx"
 ```
 
-模块通过 Spring Boot `EnvironmentPostProcessor` 设置 `logging.pattern.console` 与 `logging.pattern.file` 默认值；集成方显式配置的
-`logging.pattern.console` / `logging.pattern.file` 具有更高优先级。`LogContext` 统一使用 `traceId`、`spanId` 和 `requestId` MDC 键。
+Runtime 模块通过 Spring Boot `EnvironmentPostProcessor` 设置 `logging.pattern.console` 与 `logging.pattern.file` 默认值；集成方显式配置的
+`logging.pattern.console` / `logging.pattern.file` 具有更高优先级。`LogContext` 统一使用 `traceId`、`spanId` 和
+`requestId` MDC 键。
 
-引入 `loadup-components-observability` 后，Spring Boot 的 Micrometer Tracing 将当前 Span 的 `traceId` / `spanId` 写入 MDC，并负责上下文传播。
+引入 `loadup-components-observability` 后，Spring Boot 的 Micrometer Tracing 将当前 Span 的 `traceId` / `spanId` 写入
+MDC，并负责上下文传播。
 
 ## LogUtil
 
@@ -41,24 +43,27 @@ LogUtil.error(OrderService.class, "Failed to create order id={}", orderId, excep
 Logger adapterLogger = LogUtil.getLogger(OrderService.class);
 ```
 
-`LogUtil` 保留 SLF4J 参数化日志写法，异常作为最后参数。框架日志打印统一使用 `LogUtil.info/warn/error(Source.class, ...)` 等显式来源类方法，避免生产路径中的 StackWalker；省略来源类的方法仅用于开发诊断。第三方 SDK 要求 Logger 时使用 `LogUtil.getLogger`，不直接创建 LoggerFactory。
+`LogUtil` 保留 SLF4J 参数化日志写法，异常作为最后参数。框架日志打印统一使用 `LogUtil.info/warn/error(Source.class, ...)`
+等显式来源类方法，避免生产路径中的 StackWalker；省略来源类的方法仅用于开发诊断。第三方 SDK 要求 Logger 时使用
+`LogUtil.getLogger`，不直接创建 LoggerFactory。
 
 ## 能力矩阵
 
-| 能力 | 支持 |
-|------|------|
-| 统一 console/file 文本格式默认值 | ✓ |
-| 应用配置覆盖默认 pattern | ✓ |
-| traceId / spanId MDC 约定 | ✓ |
-| requestId MDC 辅助 API | ✓ |
-| `@ServiceDigest` 标记类或方法 | 注解由本模块提供，运行需 Observability |
-| JSON 编码器绑定 | ✗（由集成方日志后端配置） |
+| 能力                             | 支持                                   |
+|----------------------------------|----------------------------------------|
+| 统一 console/file 文本格式默认值 | ✓                                     |
+| 应用配置覆盖默认 pattern         | ✓                                     |
+| traceId / spanId MDC 约定        | ✓                                     |
+| requestId MDC 辅助 API           | ✓                                     |
+| `@ServiceDigest` 标记类或方法    | 注解由本模块提供，运行需 Observability |
+| JSON 编码器绑定                  | ✗（由集成方日志后端配置）             |
 
 该模块不绑定具体日志实现；日志后端仍由 Spring Boot / 集成方选择。
 
 ## 敏感日志
 
-输出 DTO 的 `@Masked` 只保护 MVC JSON 响应，不保护日志、`JsonUtil`、`toString()` 或异常文字。需要记录个人字段时显式引入 `loadup-commons-masking`：
+输出 DTO 的 `@Masked` 只保护 MVC JSON 响应，不保护日志、`JsonUtil`、`toString()` 或异常文字。需要记录个人字段时显式引入
+`loadup-commons-masking`：
 
 ```java
 LogUtil.info(ContactService.class, "Contact mobile={}", Masking.mask(mobile, MaskType.PHONE));
@@ -78,11 +83,13 @@ logging:
       file: ecs
 ```
 
-消费工程按需启用。启动器的 `json` profile 使用同样配置；默认使用统一文本格式。该组件不打包 Logback XML 或创建独立日志后端。文件输出仍需配置 `logging.file.name` 或 `logging.file.path`，本组件不会自动创建文件。应用自定义 `logging.config` 时须自行保持日志字段和编码器契约。
+消费工程按需启用。启动器的 `json` profile 使用同样配置；默认使用统一文本格式。该组件不打包 Logback XML 或创建独立日志后端。文件输出仍需配置
+`logging.file.name` 或 `logging.file.path`，本组件不会自动创建文件。应用自定义 `logging.config` 时须自行保持日志字段和编码器契约。
 
 ## Service 摘要标记
 
-本模块提供纯注解 `io.github.loadup.commons.log.annotation.ServiceDigest`。标记类可选择其 public 方法，标记方法可单独选择；由 Spring 管理的对象通过代理调用时才生效。
+本模块提供纯注解 `io.github.loadup.commons.log.annotation.ServiceDigest`。标记类可选择其 public 方法，标记方法可单独选择；由
+Spring 管理的对象通过代理调用时才生效。
 
 ```java
 @ServiceDigest
@@ -93,7 +100,11 @@ public class OrderService {
 }
 ```
 
-消费应用引入 `loadup-components-observability` 后启用执行逻辑：使用 Guava Stopwatch 和 LogUtil 记录方法、结果码、耗时及异常类型，traceId/spanId 复用 MDC。入参、返回值和异常消息不进入摘要。commons-log 自身不创建 AOP 代理或引入 Guava；关闭配置、代理及异步边界见 [Observability 接入手册](../../components/observability/#service-摘要日志)。
+消费应用引入 `loadup-components-observability` 后启用执行逻辑：使用 Guava Stopwatch 和 LogUtil
+记录方法、结果码、耗时及异常类型，traceId/spanId 复用 MDC。入参、返回值和异常消息不进入摘要。commons-log 自身不创建 AOP 代理或引入
+Guava；关闭配置、代理及异步边界见 [Observability 接入手册](../../components/observability/#service-摘要日志)。
+
+Spring Boot 配置属性、EnvironmentPostProcessor 和自动配置已迁至 `loadup-components-runtime`，仅引入 commons-log 不触发装配。
 
 ---
 
@@ -104,7 +115,7 @@ public class OrderService {
 
 `loadup-commons-log` owns the logging contract shared by applications and framework components:
 
-- default `logging.pattern.console` / `logging.pattern.file` for Spring Boot applications;
+- framework logging pattern constants (Spring Boot assembly belongs to runtime);
 - stable MDC keys for `traceId`, `spanId`, and `requestId`;
 - a small `LogContext` utility for framework integrations.
 
@@ -152,10 +163,18 @@ Both styles delegate to SLF4J parameterized logging. Direct calls resolve the ca
 
 ### 统一入口与输出
 
-框架源码的日志打印统一走 `LogUtil` 显式来源类重载，保留 SLF4J 的级别、参数化和末尾 Throwable 语义。第三方日志适配可通过 `LogUtil.getLogger` 获得原生 Logger。调用入口不创建 Trace 或 MeterRegistry，也不修改 MDC 的 traceId/spanId。
+框架源码的日志打印统一走 `LogUtil` 显式来源类重载，保留 SLF4J 的级别、参数化和末尾 Throwable 语义。第三方日志适配可通过
+`LogUtil.getLogger` 获得原生 Logger。调用入口不创建 Trace 或 MeterRegistry，也不修改 MDC 的 traceId/spanId。
 
-EnvironmentPostProcessor 同时提供 console/file 默认 pattern，file 未单独配置时沿用 LoadUp console pattern。标准 `logging.pattern.*` 属性优先于组件默认值。JSON 使用 Boot `logging.structured.format.*`，启动器不再维护重复的 Logback 配置。
+EnvironmentPostProcessor 同时提供 console/file 默认 pattern，file 未单独配置时沿用 LoadUp console pattern。标准
+`logging.pattern.*` 属性优先于组件默认值。JSON 使用 Boot `logging.structured.format.*`，启动器不再维护重复的 Logback 配置。
 
 ### Service digest annotation
 
-`annotation.ServiceDigest` is a runtime, inherited marker for classes, methods and composed annotations. It has no Spring AOP dependency. The Observability component owns advisor registration, Stopwatch timing and invocation logging; commons-log only supplies the marker, LogUtil and existing MDC conventions. Neither arguments nor return values are captured by this contract. Spring proxy interception and asynchronous completion semantics are documented in the Observability README.
+`annotation.ServiceDigest` is a runtime, inherited marker for classes, methods and composed annotations. It has no
+Spring AOP dependency. The Observability component owns advisor registration, Stopwatch timing and invocation logging;
+commons-log only supplies the marker, LogUtil and existing MDC conventions. Neither arguments nor return values are
+captured by this contract. Spring proxy interception and asynchronous completion semantics are documented in the
+Observability README.
+
+Spring Boot 配置属性、EnvironmentPostProcessor 和自动配置已迁至 `loadup-components-runtime`，仅引入 commons-log 不触发装配。

@@ -34,9 +34,14 @@ sidebar:
 
 ## 自动装配
 
-- [`WebhookChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
-  - 启用条件：`@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.dingtalk", name = "enabled", havingValue = "true", matchIfMissing = true)`。
-  - 启用条件：`@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.wechat", name = "enabled", havingValue = "true", matchIfMissing = true)`。
+- [
+  `WebhookChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
+    - 启用条件：
+      `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.dingtalk", name = "enabled", havingValue = "true", matchIfMissing = true)`。
+    - 启用条件：
+      `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.wechat", name = "enabled", havingValue = "true", matchIfMissing = true)`。
+
+Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Clock；消费者通过参数注入，不创建默认兜底实例。独立测试需显式提供所需 Bean。
 
 ---
 
@@ -63,10 +68,14 @@ sidebar:
 
 主要入口文件：
 
-- [`WebhookChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
-- [`DingtalkWebhookProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/DingtalkWebhookProvider.java)
-- [`FeishuWebhookProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/FeishuWebhookProvider.java)
-- [`WechatWebhookProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/WechatWebhookProvider.java)
+- [
+  `WebhookChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
+- [
+  `DingtalkWebhookProvider`](src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/DingtalkWebhookProvider.java)
+- [
+  `FeishuWebhookProvider`](src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/FeishuWebhookProvider.java)
+- [
+  `WechatWebhookProvider`](src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/WechatWebhookProvider.java)
 
 ### 分层与调用路径
 
@@ -75,15 +84,20 @@ sidebar:
 ```text
 业务代码 → API/facade → 当前 binder → 第三方引擎或基础设施
 ```
+
 binder 实现框架契约，把实现库及其配置隔离在业务 API 之外。
 
 ### 装配规则
 
-- [`WebhookChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.dingtalk", name = "enabled", havingValue = "true", matchIfMissing = true)`
-  - `@ConditionalOnMissingBean(name = "dingtalkWebhookProvider")`
-  - `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.wechat", name = "enabled", havingValue = "true", matchIfMissing = true)`
-  - `@ConditionalOnMissingBean(name = "wechatWebhookProvider")`
+- [
+  `WebhookChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
+  是自动配置入口。
+    -
+    `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.dingtalk", name = "enabled", havingValue = "true", matchIfMissing = true)`
+    - `@ConditionalOnMissingBean(name = "dingtalkWebhookProvider")`
+    -
+    `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.wechat", name = "enabled", havingValue = "true", matchIfMissing = true)`
+    - `@ConditionalOnMissingBean(name = "wechatWebhookProvider")`
 
 ### 设计取舍
 
@@ -93,6 +107,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 传输失败与取消
 
-请求异常统一产生固定的失败文案，避免空异常消息导致构造失败结果时再次抛异常。捕获 `InterruptedException` 后恢复线程中断标记，让上层保留取消语义。当前成功判定是 HTTP 2xx；厂商响应体中的业务错误码不在现有判定范围内。
+请求异常统一产生固定的失败文案，避免空异常消息导致构造失败结果时再次抛异常。捕获 `InterruptedException`
+后恢复线程中断标记，让上层保留取消语义。当前成功判定是 HTTP 2xx；厂商响应体中的业务错误码不在现有判定范围内。
 
 本地 HTTP 服务集成测试覆盖 JSON 请求体、mentions/markdown 参数、非 2xx、非法 URL 和取消；不会访问真实机器人地址。

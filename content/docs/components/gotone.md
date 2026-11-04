@@ -10,16 +10,16 @@ title: "LoadUp Gotone"
 
 ## 模块结构
 
-| 模块 | 职责 |
-|------|------|
-| `-api` | `NotificationService` facade + `NotificationChannelProvider` SPI + 可选存储 SPI |
-| `-engine` | 纯发送引擎（零存储、零 DB）：可用性过滤、provider 降级链、resilience4j 包装、异步发送、模板渲染 |
-| `-store-jdbc` | 默认存储实现（MyBatis-Flex，3 张表，Flyway 自动迁移） |
-| `-binder-email` | SMTP（Spring Mail），真实实现 |
-| `-binder-sms` | aliyun / huawei / yunpian（stub，待接厂商 SDK） |
-| `-binder-push` | fcm（stub，待接 Firebase Admin SDK） |
-| `-binder-webhook` | dingtalk / wechat / feishu，JDK HttpClient 真实 HTTP 发送 |
-| `-test` | 引擎单测 + webhook 本地 HTTP 测试 + JDBC 存储容器测试 |
+| 模块              | 职责                                                                                            |
+|-------------------|-------------------------------------------------------------------------------------------------|
+| `-api`            | `NotificationService` facade + `NotificationChannelProvider` SPI + 可选存储 SPI                 |
+| `-engine`         | 纯发送引擎（零存储、零 DB）：可用性过滤、provider 降级链、resilience4j 包装、异步发送、模板渲染 |
+| `-store-jdbc`     | 默认 Spring JDBC 存储实现（3 张表，PostgreSQL Flyway 迁移）                                     |
+| `-binder-email`   | SMTP（Spring Mail），真实实现                                                                   |
+| `-binder-sms`     | aliyun / huawei / yunpian（stub，待接厂商 SDK）                                                 |
+| `-binder-push`    | fcm（stub，待接 Firebase Admin SDK）                                                            |
+| `-binder-webhook` | dingtalk / wechat / feishu，JDK HttpClient 真实 HTTP 发送                                       |
+| `-test`           | 引擎单测 + webhook 本地 HTTP 测试 + JDBC 存储容器测试                                           |
 
 ## 引入
 
@@ -77,21 +77,22 @@ spring:
 
 ## 能力矩阵
 
-| 能力 | 支持 |
-|------|------|
-| ServiceCode 路由 | ✓ |
-| 直接指定渠道（无配置时） | ✓ |
-| 多渠道一次发送 | ✓ |
-| 渠道内 provider 降级链 | ✓ |
-| 熔断 + 重试（resilience4j） | ✓ |
-| 异步发送 | ✓ |
-| 模板渲染（`${var}`） | ✓ |
-| 发送记录（可选） | ✓（store-jdbc） |
-| 失败重试（跨实例） | 消费方使用 PowerJob/Outbox 并保证业务幂等 |
+| 能力                        | 支持                                      |
+|-----------------------------|-------------------------------------------|
+| ServiceCode 路由            | ✓                                        |
+| 直接指定渠道（无配置时）    | ✓                                        |
+| 多渠道一次发送              | ✓                                        |
+| 渠道内 provider 降级链      | ✓                                        |
+| 熔断 + 重试（resilience4j） | ✓                                        |
+| 异步发送                    | ✓                                        |
+| 模板渲染（`${var}`）        | ✓                                        |
+| 发送记录（可选）            | ✓（store-jdbc）                          |
+| 失败重试（跨实例）          | 消费方使用 PowerJob/Outbox 并保证业务幂等 |
 
 ## 后台任务与告警
 
-跨实例补偿由消费方的原生 PowerJob Processor / Outbox 编排，Gotone 只负责发送。旧的 RetryTask 专用通知桥已移除；按 PowerJob 原生告警机制接入运维通知，不重复构建执行历史。
+跨实例补偿由消费方的原生 PowerJob Processor / Outbox 编排，Gotone 只负责发送。旧的 RetryTask 专用通知桥已移除；按 PowerJob
+原生告警机制接入运维通知，不重复构建执行历史。
 
 ## 文档
 
@@ -108,10 +109,10 @@ Apache License 2.0 (Apache-2.0)
 
 ### 1. 设计定位
 
-Gotone 是 LoadUp 的**统一通知组件**，采用 **Mode B（多后端共存模式）**：多个通知渠道
+Gotone 是 LoadUp 的 **统一通知组件**，采用 **Mode B（多后端共存模式）**：多个通知渠道
 Provider 同时活跃，由运行时配置（serviceCode → channel mapping）驱动路由，存储可选。
 
-设计目标与项目总纲一致：**底层 OSS + 薄集成**。业务代码只依赖
+设计目标与项目总纲一致： **底层 OSS + 薄集成**。业务代码只依赖
 `loadup-components-gotone-api` 的 `NotificationService`，不感知具体渠道 SDK（Spring Mail、
 厂商短信 SDK、webhook 协议）。存储（发送记录）通过可选 SPI 接入，引擎本身零存储、零 DB。
 
@@ -134,7 +135,7 @@ NotificationChannelProvider SPI
         ├── binder-push    → fcm（stub）
         └── binder-webhook → dingtalk / wechat / feishu（真实 HTTP）
         ▼
-RecordHandler（可选）→ store-jdbc（MyBatis-Flex，3 张表）
+RecordHandler（可选）→ store-jdbc（Spring Data JDBC / Spring JDBC，3 张表）
 ```
 
 ### 3. 模块结构（Mode B）
@@ -144,7 +145,7 @@ loadup-components-gotone/
 ├── pom.xml                                    # 聚合 POM
 ├── loadup-components-gotone-api/              # SPI + facade + 模型（零框架依赖）
 ├── loadup-components-gotone-engine/           # 纯发送引擎（零存储、零 DB）
-├── loadup-components-gotone-store-jdbc/       # 默认存储实现（MyBatis-Flex，可选）
+├── loadup-components-gotone-store-jdbc/       # 默认存储实现（Spring JDBC，可选）
 ├── channels/
 │   ├── loadup-components-gotone-binder-email/    # Spring Mail 真实实现
 │   ├── loadup-components-gotone-binder-sms/      # stub
@@ -212,13 +213,14 @@ loadup-components-gotone/
 
 #### 4.3 降级链 + resilience4j
 
-降级链是**进程内、按 provider 顺序**的快速失败切换；resilience4j 提供**跨调用窗口**的熔断
+降级链是 **进程内、按 provider 顺序**的快速失败切换；resilience4j 提供 **跨调用窗口**的熔断
 与重试。二者正交：熔断打开只跳过当前 provider，由降级链切到备用 provider。instance 命名
 `gotone-<channel>-<provider>` 允许按 provider 用标准 `resilience4j.*` 配置。
 
 #### 4.4 与后台任务的分工
 
-通知的进程内降级与重试由 Gotone 引擎处理；跨实例的最终一致性补偿由消费方的 PowerJob/Outbox 编排，业务需保证幂等。执行历史和平台告警使用 PowerJob 原生能力，Gotone 不反向依赖调度组件。API 模型继续使用不可变 record。
+通知的进程内降级与重试由 Gotone 引擎处理；跨实例的最终一致性补偿由消费方的 PowerJob/Outbox 编排，业务需保证幂等。执行历史和平台告警使用
+PowerJob 原生能力，Gotone 不反向依赖调度组件。API 模型继续使用不可变 record。
 
 ### 5. 扩展点
 

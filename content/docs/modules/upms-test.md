@@ -10,7 +10,8 @@ sidebar:
 
 ## 运行条件
 
-需要 Java 25、Maven Daemon（`mvnd`）和可用的 Docker。`application.yml` 默认激活 `test` profile，`application-test.yml` 与 `application-ci.yml` 分别配置本地和 CI 环境。
+需要 Java 25、Maven Daemon（`mvnd`）和可用的 Docker。`application.yml` 默认激活 `test` profile，`application-test.yml` 与
+`application-ci.yml` 分别配置本地和 CI 环境。
 
 ## 执行测试
 
@@ -31,11 +32,13 @@ mvnd -B -ntp -T 1 clean verify \
   -Dfailsafe.failIfNoSpecifiedTests=false
 ```
 
-`test` 阶段只运行 Surefire 单测，`verify` 才会执行和检查 Failsafe 集成测试。报告分别位于 `target/surefire-reports` 与 `target/failsafe-reports`；Failsafe verify 失败时先查看具体用例异常。
+`test` 阶段只运行 Surefire 单测，`verify` 才会执行和检查 Failsafe 集成测试。报告分别位于 `target/surefire-reports` 与
+`target/failsafe-reports`；Failsafe verify 失败时先查看具体用例异常。
 
 ## 数据准备与装配
 
-- `TestApplication` 使用 `@SpringBootConfiguration` + `@EnableAutoConfiguration`，由正式自动配置提供服务、Gateway、Converter、Mapper 和 database 能力；不直接扫描 database 自动配置类。
+- `TestApplication` 使用 `@SpringBootConfiguration` + `@EnableAutoConfiguration`，由正式自动配置提供服务、Gateway、Converter、Mapper
+  和 database 能力；不直接扫描 database 自动配置类。
 - 公共 `application.yml` 先执行 `schema-test.sql`，再执行 database 组件提供的 Sequence 建表 SQL。本地及 CI 共用初始化顺序。
 - `schema-test.sql` 仅重置测试数据库，包含清理旧 Sequence 表；真实消费工程仍应通过迁移管理 Sequence。
 - 不配置 `mybatis-flex.global-config`，持久化约定由 database 代码统一维护；测试也不能绕过配置保护。
@@ -69,6 +72,7 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 ```text
 测试用例 → 测试配置/容器 → 被测 API 与实现 → 契约断言
 ```
+
 测试模块处于依赖链末端，用真实装配验证调用路径；不向业务代码暴露新契约。
 
 ### 设计取舍
@@ -79,8 +83,11 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 
 ### 启动与数据生命周期
 
-测试启动器只开启 Boot 自动配置，不再手动扫描 `io.github.loadup.components.database`，也不重复声明 UPMS 的 Mapper 扫描。正式自动配置负责装配顺序与条件判断，真实数据库不会替换为 Mock。
+测试启动器只开启 Boot 自动配置，不再手动扫描 `io.github.loadup.components.database`，也不重复声明 UPMS 的 Mapper
+扫描。正式自动配置负责装配顺序与条件判断，真实数据库不会替换为 Mock。
 
-本地与 CI 共用 `application.yml` 的 SQL 初始化：先重置 UPMS 测试表及 Sequence 分配元数据，再执行 database 提供的 `V2026101201__sequence_allocation.sql`。测试容器数据可清理；这些初始化脚本不得用于生产数据库。
+本地与 CI 共用 `application.yml` 的 SQL 初始化：先重置 UPMS 测试表及 Sequence 分配元数据，再执行 database 提供的
+`V2026101201__sequence_allocation.sql`。测试容器数据可清理；这些初始化脚本不得用于生产数据库。
 
-`mybatis-flex.global-config` 属于 database 的受保护配置，测试 profile 不提供覆盖项。该保护持续生效；不能为了通过测试而关闭保护或替换框架默认 ID 策略。`UserServiceIT` 通过真实自动装配、数据初始化和服务调用构成此次启动失败的回归入口。
+`mybatis-flex.global-config` 属于 database 的受保护配置，测试 profile 不提供覆盖项。该保护持续生效；不能为了通过测试而关闭保护或替换框架默认
+ID 策略。`UserServiceIT` 通过真实自动装配、数据初始化和服务调用构成此次启动失败的回归入口。

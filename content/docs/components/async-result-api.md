@@ -14,11 +14,13 @@ sidebar:
 
 ## 能力矩阵
 
-| 能力 | 契约 |
-|---|---|
-| 模块职责 | 业务仅依赖本模块，通过 AsyncResultTemplate 使用同步/异步等待；AsyncResultProvider 是单后端 SPI。 |
-| 配置与示例 | [组件接入手册](../async-result/) |
-| 架构边界 | [ARCHITECTURE.md](./#architecture) |
+| 能力       | 契约                                                                                             |
+|------------|--------------------------------------------------------------------------------------------------|
+| 模块职责   | 业务仅依赖本模块，通过 AsyncResultTemplate 使用同步/异步等待；AsyncResultProvider 是单后端 SPI。 |
+| 配置与示例 | [组件接入手册](../async-result/)                                                                     |
+| 架构边界   | [ARCHITECTURE.md](./#architecture)                                                               |
+
+Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Clock；消费者通过参数注入，不创建默认兜底实例。独立测试需显式提供所需 Bean。
 
 ---
 
@@ -33,4 +35,5 @@ sidebar:
 
 [整体设计](../async-result/#architecture) 统一定义状态、事务、过期、跨实例回传与故障语义。本模块不定义额外业务状态或响应 envelope。
 
-业务调用 Template → 注册 Pending → Provider 注册 → AsyncDispatch → Provider 结果查询/通知 → 完成 Future。共享 Micrometer 和应用 ObjectMapper 由构造器注入。
+业务调用 Template → 注册 Pending → Provider 注册 → AsyncDispatch → Provider 结果查询/通知 → 完成 Future。共享 Micrometer
+和应用 ObjectMapper 由构造器注入。

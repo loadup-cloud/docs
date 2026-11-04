@@ -34,7 +34,9 @@ UPMS 对外 DTO、Command 与 Query 契约。
 
 ## 展示与明文 DTO
 
-`UserDetailDTO` 的 realName/email/mobile 带 `@Masked`，用于 WebMVC 响应和诊断文本；内部服务返回的对象仍有原值。`UserSensitiveQuery` 使用目标 ID 和枚举 `SensitiveReadPurpose`；独立 `UserSensitiveDTO` 仅由经过授权和可靠审计的 app 服务返回。明文 DTO 的 toString 不包含个人字段。
+`UserDetailDTO` 的 realName/email/mobile 带 `@Masked`，用于 WebMVC 响应和诊断文本；内部服务返回的对象仍有原值。
+`UserSensitiveQuery` 使用目标 ID 和枚举 `SensitiveReadPurpose`；独立 `UserSensitiveDTO` 仅由经过授权和可靠审计的 app
+服务返回。明文 DTO 的 toString 不包含个人字段。
 
 ---
 
@@ -70,12 +72,15 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 ```text
 业务调用 → AuthenticationService → SPI/领域契约 → 运行时实现
 ```
+
 接口模块固定业务侧依赖方向；实现与基础设施通过独立模块接入。
 
 ### 扩展契约
 
-- [`AccessCheckFacade`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/facade/AccessCheckFacade.java)：由实现方或调用方按接口定义对接。
-- [`AuthenticationFacade`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/facade/AuthenticationFacade.java)：由实现方或调用方按接口定义对接。
+- [`AccessCheckFacade`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/facade/AccessCheckFacade.java)
+  ：由实现方或调用方按接口定义对接。
+- [`AuthenticationFacade`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/facade/AuthenticationFacade.java)
+  ：由实现方或调用方按接口定义对接。
 - [`UserQueryFacade`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-client/src/main/java/io/github/loadup/modules/upms/client/facade/UserQueryFacade.java)：由实现方或调用方按接口定义对接。
 
 ### 设计取舍
@@ -86,4 +91,5 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 
 ### 敏感输出契约
 
-仅展示 DTO 依赖纯 Java `commons-masking` 注解，client 不依赖 WebMVC/Jackson 脱敏实现。查询入参、Command 与原值 DTO 不使用展示注解，避免入参或签名内容被修改。普通与明文输出类型分离，禁止通过权限动态切换同一 DTO 的 serializer。
+仅展示 DTO 依赖纯 Java `commons-masking` 注解，client 不依赖 WebMVC/Jackson 脱敏实现。查询入参、Command 与原值 DTO
+不使用展示注解，避免入参或签名内容被修改。普通与明文输出类型分离，禁止通过权限动态切换同一 DTO 的 serializer。

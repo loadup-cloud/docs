@@ -34,8 +34,8 @@ sidebar:
 
 ## 配置入口
 
-| 前缀 | 配置类 |
-|---|---|
+| 前缀             | 配置类                                                                                          |
+|------------------|-------------------------------------------------------------------------------------------------|
 | `loadup.captcha` | [`CaptchaProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/CaptchaProperties.java) |
 
 ## 对外契约
@@ -45,8 +45,9 @@ sidebar:
 
 ## 自动装配
 
-- [`CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java)
-  - 启用条件：`@ConditionalOnSingleCandidate(CaptchaProvider.class)`。
+- [
+  `CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfigure/CaptchaAutoConfiguration.java)
+    - 启用条件：`@ConditionalOnSingleCandidate(CaptchaProvider.class)`。
 
 ---
 
@@ -69,7 +70,8 @@ sidebar:
 
 主要入口文件：
 
-- [`CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java)
+- [
+  `CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfigure/CaptchaAutoConfiguration.java)
 - [`CaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/CaptchaProvider.java)
 - [`CaptchaTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/CaptchaTemplate.java)
 - [`DefaultCaptchaTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-api/src/main/java/io/github/loadup/components/captcha/DefaultCaptchaTemplate.java)
@@ -81,13 +83,16 @@ sidebar:
 ```text
 业务调用 → CaptchaTemplate → SPI/领域契约 → 运行时实现
 ```
+
 接口模块固定业务侧依赖方向；实现与基础设施通过独立模块接入。
 
 ### 装配规则
 
-- [`CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfig/CaptchaAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnSingleCandidate(CaptchaProvider.class)`
-  - `@ConditionalOnMissingBean(CaptchaTemplate.class)`
+- [
+  `CaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/autoconfigure/CaptchaAutoConfiguration.java)
+  是自动配置入口。
+    - `@ConditionalOnSingleCandidate(CaptchaProvider.class)`
+    - `@ConditionalOnMissingBean(CaptchaTemplate.class)`
 
 ### 扩展契约
 

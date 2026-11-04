@@ -28,7 +28,8 @@ loadup:
         maximum-size: 10000
 ```
 
-`caffeine` 是默认缓存类型；`maximum-size` 限制每个缓存实例的条目数。默认 TTL、按缓存名称的 TTL、随机过期和空值策略使用公共的 `loadup.cache.*` 配置，详见 [Cache README](../cache/)。内部结构见 [ARCHITECTURE.md](./#architecture)。
+`caffeine` 是默认缓存类型；`maximum-size` 限制每个缓存实例的条目数。默认 TTL、按缓存名称的 TTL、随机过期和空值策略使用公共的
+`loadup.cache.*` 配置，详见 [Cache README](../cache/)。内部结构见 [ARCHITECTURE.md](./#architecture)。
 
 ---
 
@@ -54,7 +55,8 @@ loadup:
 
 主要入口文件：
 
-- [`CaffeineCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/caffeine/autoconfig/CaffeineCacheAutoConfiguration.java)
+- [
+  `CaffeineCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/caffeine/autoconfigure/CaffeineCacheAutoConfiguration.java)
 
 ### 分层与调用路径
 
@@ -63,18 +65,23 @@ Spring Cache 调用进入当前 `CacheManager`，由选中的 binder 处理缓�
 ```text
 业务代码 → API/facade → 当前 binder → 第三方引擎或基础设施
 ```
+
 binder 实现框架契约，把实现库及其配置隔离在业务 API 之外。
 
 ### 装配规则
 
-- [`CaffeineCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/caffeine/autoconfig/CaffeineCacheAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnClass(Caffeine.class)`
-  - `@ConditionalOnProperty( prefix = "loadup.cache", name = "type", havingValue = CacheBackendType.CAFFEINE, matchIfMissing = true)`
-  - `@ConditionalOnMissingBean(CacheManager.class)`
+- [
+  `CaffeineCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/caffeine/autoconfigure/CaffeineCacheAutoConfiguration.java)
+  是自动配置入口。
+    - `@ConditionalOnClass(Caffeine.class)`
+    -
+    `@ConditionalOnProperty( prefix = "loadup.cache", name = "type", havingValue = CacheBackendType.CAFFEINE, matchIfMissing = true)`
+    - `@ConditionalOnMissingBean(CacheManager.class)`
 
 ### 配置归属
 
-- [`CaffeineCacheProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-caffeine/src/main/java/io/github/loadup/components/cache/caffeine/CaffeineCacheProperties.java) 绑定 `loadup.cache.binder.caffeine`。
+- [`CaffeineCacheProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-caffeine/src/main/java/io/github/loadup/components/cache/caffeine/CaffeineCacheProperties.java) 绑定
+  `loadup.cache.binder.caffeine`。
 
 ### 设计取舍
 

@@ -10,7 +10,7 @@ Cache 组件的 facade 模块：启用 Spring Cache 注解（`@EnableCaching`）
 `loadup.cache.*` 配置（`type` / `default-ttl` / 按 cache name 的 TTL、空值与随机过期），
 并提供跨 binder 共享的 JSON 值编解码器 `CacheJsonCodec` 与防雪崩语义 `RandomExpiration`。
 
-本模块**不提供手写缓存 CRUD 门面**——业务代码直接使用 Spring Cache 标准注解，底层实现由
+本模块 **不提供手写缓存 CRUD 门面**——业务代码直接使用 Spring Cache 标准注解，底层实现由
 `-binder-{caffeine|redis|jetcache}` 提供。Maven 坐标与用法见上层
 [loadup-components-cache](../cache/)。
 
@@ -27,13 +27,14 @@ Cache 组件的 facade 模块：启用 Spring Cache 注解（`@EnableCaching`）
 
 ## 配置入口
 
-| 前缀 | 配置类 |
-|---|---|
+| 前缀           | 配置类                                                                                                |
+|----------------|-------------------------------------------------------------------------------------------------------|
 | `loadup.cache` | [`LoadupCacheProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-api/src/main/java/io/github/loadup/components/cache/LoadupCacheProperties.java) |
 
 ## 自动装配
 
-- [`LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java)
+- [
+  `LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfigure/LoadupCacheAutoConfiguration.java)
 
 设计边界与装配路径见 [ARCHITECTURE.md](./#architecture)。
 
@@ -59,7 +60,8 @@ Cache 组件的 facade 模块：启用 Spring Cache 注解（`@EnableCaching`）
 
 主要入口文件：
 
-- [`LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java)
+- [
+  `LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfigure/LoadupCacheAutoConfiguration.java)
 
 ### 分层与调用路径
 
@@ -68,16 +70,20 @@ Spring Cache 调用进入当前 `CacheManager`，由选中的 binder 处理缓�
 ```text
 业务调用 → CacheManager → SPI/领域契约 → 运行时实现
 ```
+
 接口模块固定业务侧依赖方向；实现与基础设施通过独立模块接入。
 
 ### 装配规则
 
-- [`LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfig/LoadupCacheAutoConfiguration.java) 是自动配置入口。
-  - `@ConditionalOnClass(CacheManager.class)`
+- [
+  `LoadupCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/autoconfigure/LoadupCacheAutoConfiguration.java)
+  是自动配置入口。
+    - `@ConditionalOnClass(CacheManager.class)`
 
 ### 配置归属
 
-- [`LoadupCacheProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-api/src/main/java/io/github/loadup/components/cache/LoadupCacheProperties.java) 绑定 `loadup.cache`。
+- [`LoadupCacheProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-api/src/main/java/io/github/loadup/components/cache/LoadupCacheProperties.java) 绑定
+  `loadup.cache`。
 
 ### 设计取舍
 

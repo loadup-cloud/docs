@@ -30,15 +30,26 @@ title: "Loadup Commons"
 
 ## 展示脱敏
 
-- [`loadup-commons-masking`](loadup-commons-masking/)：纯 Java 展示规则与 `@Masked` 输出元数据，可供 WebMVC、显式日志与导出使用。
+- [`loadup-commons-masking`](loadup-commons-masking/)：纯 Java 展示规则与 `@Masked` 输出元数据，可供
+  WebMVC、显式日志与导出使用。
 
 ## 执行链上下文
 
-[`loadup-commons-context`](loadup-commons-context/) 提供 JDK 25 ScopedValue 类型化只读 `ContextHolder`、不可变 ExecutionContext 与可选 ServiceTemplate。租户数据复用该存储，登录身份和 Trace 仍采用各自标准上下文。
+[`loadup-commons-context`](loadup-commons-context/) 提供 JDK 25 ScopedValue 类型化只读 `ContextHolder`、不可变
+ExecutionContext 与可选 ServiceTemplate。租户数据复用该存储，登录身份和 Trace 仍采用各自标准上下文。
 
 ## JSON 诊断
 
-[commons-json](loadup-commons-json/) 统一提供 JsonUtil、日期序列化规则及受限、脱敏的 JSON `toString()`，供 DTO、领域数据和 DO 共用；WebMVC 复用其日期配置，诊断输出使用独立 mapper。
+[commons-json](loadup-commons-json/) 统一提供 JsonUtil、日期序列化规则及受限、脱敏的 JSON `toString()`，供
+DTO、领域数据和 DO 共用；WebMVC 复用其日期配置，诊断输出使用独立 mapper。
+
+## 共享值与业务时间
+
+commons-error 提供 JDK-only `DomainViolation`；commons-dto 提供 `BusinessTime`、通用 `EventEnvelope`、`ContractReference`
+、共享支付词汇和显式 `DomainChecks.cnyAmount` 守卫。它们不依赖技术组件；CNY 守卫不改变 Money 的多币种能力。BusinessTime
+每次读取系统默认 zone，不固定区域，不修改 JVM 默认值。Runtime 提供可覆盖的 `Clock.systemDefaultZone()` Bean。
+
+Spring Boot 装配统一位于 `loadup-components/platform/loadup-components-runtime`；commons 无 Spring 运行依赖。
 
 ---
 
@@ -51,7 +62,8 @@ Commons 位于依赖链底部，供技术组件和业务模块复用，不依赖
 - [Util](loadup-commons-util/)：JSON、日期、字符串等无业务归属的工具。
 - [Log](loadup-commons-log/)：日志格式及 MDC 键约定。
 
-数据库审计字段在 Java/JSON 中统一为 `createdAt`、`updatedAt`，列名为 `created_at`、`updated_at`。通用类型不承载业务授权、HTTP 路由或具体存储决策。
+数据库审计字段在 Java/JSON 中统一为 `createdAt`、`updatedAt`，列名为 `created_at`、`updated_at`。通用类型不承载业务授权、HTTP
+路由或具体存储决策。
 
 ### 分层与调用路径
 
@@ -70,4 +82,13 @@ loadup-commons
 
 ### 业务上下文
 
-`loadup-commons-context` 无运行时三方依赖，提供业务执行链共享数据；`commons-util` 的 TenantUtil 复用 TENANT_ID。核心基于 JDK 25 ScopedValue 绑定不可变 ExecutionContext，可选 ServiceTemplate 提供 init/clean。WebMVC 负责请求回调边界，Observability 通过 TaskDecorator 组合业务与标准 Micrometer 传播，核心不依赖它们。
+`loadup-commons-context` 无运行时三方依赖，提供业务执行链共享数据；`commons-util` 的 TenantUtil 复用 TENANT_ID。核心基于
+JDK 25 ScopedValue 绑定不可变 ExecutionContext，可选 ServiceTemplate 提供 init/clean。WebMVC 负责请求回调边界，Observability
+通过 TaskDecorator 组合业务与标准 Micrometer 传播，核心不依赖它们。
+
+### 时间与集成值
+
+commons-dto 的 BusinessTime 使用动态系统默认 zone，EventEnvelope/ContractReference 与共享支付词汇仅表达数据，不承载服务调用。
+Runtime 提供共享 `Clock` Bean，默认 `systemDefaultZone()`，应用可覆盖。gRPC/Spring Security 支持属于上层现有 gRPC binder，不放入 commons，避免依赖反转。
+
+Spring Boot 装配统一位于 `loadup-components/platform/loadup-components-runtime`；commons 无 Spring 运行依赖。
