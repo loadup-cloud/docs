@@ -60,7 +60,7 @@ dubbo:
     name: customer
     qos-enable: false
   scan:
-    base-packages: io.github.loadup.pay.customer
+    base-packages: io.github.loadup.pay.merchantcenter
   protocol:
     name: tri
     port: 50051
