@@ -14,7 +14,7 @@ title: "LoadUp BOM"
     <dependency>
       <groupId>io.github.loadup-cloud</groupId>
       <artifactId>loadup-dependencies</artifactId>
-      <version>0.0.2-SNAPSHOT</version>
+      <version>0.0.1-SNAPSHOT</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
