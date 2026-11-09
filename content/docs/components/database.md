@@ -106,6 +106,12 @@ Consumers that compile their own `@Table` entities add the processor to the comp
 Flyway support is optional; consumers using migrations must include Flyway and its PostgreSQL database module. Migration
 scripts assume a fresh PostgreSQL schema.
 
+`classpath:db/migration` scans matching locations across the classpath, including dependency JARs; it does not
+isolate the application. Configure `loadup.flyway.locations` with the application namespace and only approved
+framework module namespaces, such as `classpath:db/migration/pay/admin` and
+`classpath:db/migration/framework/upms`. Component templates remain under `db/schema`; freeze imported initial
+snapshots and append reviewed migrations for upgrades instead of overwriting existing versions.
+
 ## Business IDs and database sequences
 
 `BusinessIdGenerator` is the default `IdGenerator` when Sequence is available. Persistence code explicitly requests an
@@ -139,8 +145,8 @@ loadup:
       shard: 0
 ```
 
-Apply `classpath:db/migration/V2026101201__sequence_allocation.sql` before enabling traffic. Use the integrating
-application's migration procedure or add `classpath:db/migration` to its existing Flyway locations, retaining all other
+Apply the `db/schema/sequence_allocation.sql` template before enabling traffic. Copy it into the integrating
+application's own `classpath:db/migration` history (for example via `scripts/gen-migrations.py`), retaining all other
 module locations. The component does not create tables on the request path. Use one authoritative allocation database
 for each encoded site, preserve committed allocation maxima during failover/restoration, and restrict deletion/reset of
 allocation rows. The migration and allocation SQL target PostgreSQL.
@@ -214,6 +220,11 @@ mvnd clean test -pl loadup-components/data/loadup-components-database -am \
 The IT requires Docker and uses real PostgreSQL through the framework Testcontainers annotation. Consumer
 failover/restore rehearsals and P95/P99 capacity measurements are separate production acceptance work.
 
+## 持久化基类
+
+使用本组件的 `io.github.loadup.components.database.dataobject.BaseDO`。它保留 id、createdAt、updatedAt、deleted
+字段以及 MyBatis-Flex `@Id(keyType = KeyType.None)` 元数据；标识仍由应用显式提供，迁移不改变 JSON、数据库列或逻辑删除行为。
+
 ---
 
 <a id="architecture"></a>
@@ -240,7 +251,8 @@ DO extends BaseDO
       └─ explicit audit fields ──────────────────── createdAt / updatedAt / deleted
 ```
 
-`BaseDO` lives in `loadup-commons-dto` and is shared by framework modules. Its `id` is marked with
+`BaseDO` lives in `loadup-components-database` as
+`io.github.loadup.components.database.dataobject.BaseDO` and is shared by persistence adapters. Its `id` is marked with
 `@Id(keyType = KeyType.None)`, so MyBatis-Flex never generates or replaces an application-assigned identifier. Business
 tables do not contain `tenant_id`. Schema-per-tenant is the target isolation boundary, but runtime datasource routing
 and per-tenant Flyway orchestration are not implemented; the current application serves the configured default schema.
@@ -329,7 +341,10 @@ deletion is applied by the Flex global configuration for mapper operations and m
 Flyway support is optional; consumers using migrations include Flyway and its PostgreSQL module. Migration scripts are
 schema-agnostic (no schema-qualified names) and assume a fresh schema. `LoadUpFlywayAutoConfiguration` applies the
 configured default schema from `loadup.database.default-schema`; per-tenant execution is a
-deployment/routing responsibility.
+deployment/routing responsibility. Applications must select explicit migration namespaces: their own directory
+and approved `db/migration/framework/<module>` locations. The generic classpath migration root also discovers
+dependency JAR resources and is not an isolation mechanism. One application retains one Flyway history across
+its selected locations; published versioned migrations are immutable.
 
 ### ID generation and sequences
 

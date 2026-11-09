@@ -31,6 +31,14 @@ WebMVC 和 Observability 已传递引入本模块；非 Web 应用可直接引�
 缺少共享 Bean 应暴露装配错误，不在消费者中创建兜底实例。测试可显式传入测试 mapper / Clock。
 严格协议校验、诊断输出、JWT 协议、Redis 内部协议和启动早期配置解析保留专用实例，以免应用定制改变协议或启动语义。
 
+## MapStruct 共享配置
+
+`io.github.loadup.components.runtime.mapping.LoadUpMapStructConfig` 统一 Spring component model、构造器注入以及
+目标字段 ERROR / 来源字段 WARN 策略。转换器显式依赖 `loadup-components-runtime` 和 `org.mapstruct:mapstruct`，并使用
+`@Mapper(config = LoadUpMapStructConfig.class)`。该接口是编译期配置，不注册为 Spring Bean，也不加入 AutoConfiguration.imports。
+
+Runtime 将 MapStruct 标记为 optional；只使用 Clock、日志或 JSON 装配的应用不因此传递引入 MapStruct。
+
 ---
 
 <a id="architecture"></a>
@@ -46,3 +54,11 @@ JSON builder 定制复用 commons 的纯 Jackson 规则，mapper 实例由 Boot 
 避免容器启动前后行为变化及多个上下文相互覆盖。诊断 mapper 与 HTTP 脱敏继续由各自模块管理。
 
 原 Clock 和日志环境处理器测试随实现迁移；RuntimeAssemblyTest 覆盖非 Web JSON 装配与 commons mapper 隔离。
+
+### MapStruct 共享配置
+
+`io.github.loadup.components.runtime.mapping.LoadUpMapStructConfig` 统一 Spring component model、构造器注入以及
+目标字段 ERROR / 来源字段 WARN 策略。转换器显式依赖 `loadup-components-runtime` 和 `org.mapstruct:mapstruct`，并使用
+`@Mapper(config = LoadUpMapStructConfig.class)`。该接口是编译期配置，不注册为 Spring Bean，也不加入 AutoConfiguration.imports。
+
+Runtime 将 MapStruct 标记为 optional；只使用 Clock、日志或 JSON 装配的应用不因此传递引入 MapStruct。

@@ -284,9 +284,14 @@ SHA1。私有凭证与原件有界传输，不暴露浏览器。payment 通过�
 - `payment-channel-api` 的 JaCoCo 单模块报告为行 92.19%、分支 90.30%；core 为行 98.95%、分支 94.40%，均满足 Framework 的 ≥90% 门禁。
 - 两个厂商 binder 暂以 `loadup.coverage.skip=true` 排除覆盖率门禁：协议分支需要 wire-level 固定报文与签名夹具，当前测试只覆盖主要路径。
   该排除是明确的未完成项，不代表 binder 已达到框架质量门禁。
-- `io.github.loadup.commons.payment.{Channel,AccessMode,PaymentMethod}` 本轮仍保留在 `loadup-commons-dto`，避免同时修改 Pay
-  8 个模块约 200 个文件；后续可评估迁入本组件 API 或独立 payment 词汇模块。
+- 渠道基础词汇已移至 `loadup-components-payment-channel-contracts` 的 `io.github.loadup.components.payment.channel.contract`。
 - 未执行真实渠道调用、资金链路验收、数据库迁移或部署。
+
+## 基础契约归属
+
+`loadup-components-payment-channel-contracts` 提供 Channel、AccessMode、PaymentMethod 和 ChannelAmounts。
+API、core、binder 与共享词汇的消费方按需直接依赖它，不再从 commons-dto 引入支付词汇。
+本次归属迁移未运行构建、测试或真实渠道调用；前述历史验收不能代替当前变更的验证。
 
 ---
 
@@ -434,3 +439,9 @@ ChannelStatementFacade/Provider 使用独立 Registry，复用原 ChannelExecuti
 支付宝新增独立后端账单 grant 申请和私有原始响应凭证源码，下载/解析/StatementProvider 尚未实现；不会把 grant 当成
 ChannelStatement 结果。现有微信 receipt 的官方 SHA1 字段不能为支付宝伪造，后续须连同
 RPC/来源表显式扩展完整性模型。见 [支付宝来源边界](./#architecture)。
+
+### 基础契约归属
+
+`loadup-components-payment-channel-contracts` 提供 Channel、AccessMode、PaymentMethod 和 ChannelAmounts。
+API、core、binder 与共享词汇的消费方按需直接依赖它，不再从 commons-dto 引入支付词汇。
+本次归属迁移未运行构建、测试或真实渠道调用；前述历史验收不能代替当前变更的验证。
