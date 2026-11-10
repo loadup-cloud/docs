@@ -154,5 +154,5 @@ Nacos 以文件（`dataId + group`）为单位存储配置，LoadUp facade 是 k
 3. 写 `{Impl}ConfigCenterAutoConfiguration`，条件注解
    `@ConditionalOnProperty(prefix = "loadup.configcenter", name = "binder-type", havingValue = "{impl}")`
    并声明 `@AutoConfiguration(before = ConfigCenterAutoConfiguration.class)`；
-4. 在 `loadup-dependencies` BOM 注册坐标；
+4. 在 `loadup-framework-bom` BOM 注册坐标；
 5. 在 test 模块补充同一套 `ConfigCenterTemplate` 契约测试。

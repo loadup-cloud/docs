@@ -17,7 +17,7 @@ sidebar:
 </dependency>
 ```
 
-版本由 `loadup-dependencies` BOM 管理。程序化接入注入
+版本由 `loadup-framework-bom` BOM 管理。程序化接入注入
 `io.github.loadup.modules.notification.client.facade.InboxFacade`，对外返回 client DTO。应用需要 PostgreSQL `DataSource`；
 配置使用 `loadup.modules.notification.*`。
 

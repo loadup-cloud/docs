@@ -17,7 +17,7 @@ sidebar:
 </dependency>
 ```
 
-版本由 `loadup-dependencies` BOM 管理。程序化接入注入 `io.github.loadup.modules.file.client.facade.FileResourceFacade`
+版本由 `loadup-framework-bom` BOM 管理。程序化接入注入 `io.github.loadup.modules.file.client.facade.FileResourceFacade`
 ，对外返回 client DTO。自动带入默认持久化实现与 Flyway 迁移；配置使用 `loadup.modules.file.*`，所需 DFS/Gotone/PowerJob
 依赖与服务操作示例见上层接入手册。
 

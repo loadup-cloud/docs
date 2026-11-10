@@ -10,7 +10,7 @@ title: "LoadUp Cache Component"
 
 ## 引入
 
-先引入 `loadup-dependencies` BOM（版本由 BOM 统一管理），业务模块依赖 api，集成方工程按需加 binder：
+先引入 `loadup-framework-bom` BOM（版本由 BOM 统一管理），业务模块依赖 api，集成方工程按需加 binder：
 
 ```xml
 <dependency>

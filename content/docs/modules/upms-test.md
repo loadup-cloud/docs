@@ -19,14 +19,14 @@ sidebar:
 
 ```bash
 mvnd -B -ntp -T 1 clean verify \
-  -pl :loadup-dependencies,:loadup-modules-upms-test -am
+  -pl :loadup-framework-bom,:loadup-modules-upms-test -am
 ```
 
 仅回归真实数据库的用户创建用例，并使用 CI 配置：
 
 ```bash
 mvnd -B -ntp -T 1 clean verify \
-  -pl :loadup-dependencies,:loadup-modules-upms-test -am \
+  -pl :loadup-framework-bom,:loadup-modules-upms-test -am \
   -Dspring.profiles.active=ci -Dtestcontainers.reuse.enable=false \
   -Dskip.unit.tests=true -Dit.test=UserServiceIT \
   -Dfailsafe.failIfNoSpecifiedTests=false

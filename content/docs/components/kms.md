@@ -26,7 +26,7 @@ HSM 硬件保护。既有密钥的策略由运维检查，创建请求不会重�
 
 ## OpenBao 接入
 
-先引入 `loadup-dependencies` BOM，再添加：
+先引入 `loadup-framework-bom` BOM，再添加：
 
 ```xml
 <dependency>

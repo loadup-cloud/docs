@@ -15,7 +15,7 @@ optional provider capabilities and report `UnsupportedOperationException` when u
 
 ## 接入步骤
 
-在引入 `loadup-dependencies` BOM 的应用中添加：
+在引入 `loadup-framework-bom` BOM 的应用中添加：
 
 ```xml
 <dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-components-dfs-api</artifactId></dependency>

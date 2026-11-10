@@ -16,7 +16,7 @@ title: "LoadUp Commons"
 | `loadup-commons-dto` | 通用响应、分页、金额值、事件信封与通用校验 |
 | `loadup-commons-util` | 日期、字符串、金额计算及其他实际复用工具 |
 
-此目录仅作 Maven 聚合。消费工程引入 `loadup-dependencies` BOM 后，声明需要的具体 JAR；内部依赖由制品 POM 明确表达。
+此目录仅作 Maven 聚合。消费工程引入 `loadup-framework-bom` BOM 后，声明需要的具体 JAR；内部依赖由制品 POM 明确表达。
 
 Spring Boot 的 Clock、日志、JSON 装配与 MapStruct 共享配置由
 [runtime](../components/runtime/) 提供。

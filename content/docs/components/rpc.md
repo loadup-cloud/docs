@@ -21,7 +21,7 @@ rpc (pom)
 
 ## 引入
 
-消费工程先导入 `loadup-dependencies` BOM，再引入 binder；业务 `*-client` 模块引入 `rpc-proto`：
+消费工程先导入 `loadup-framework-bom` BOM，再引入 binder；业务 `*-client` 模块引入 `rpc-proto`：
 
 ```xml
 <dependency>
@@ -79,7 +79,7 @@ Protobuf 消息命中 Triple 的 IDL 分支，不产生 Wrapper 信封。业务�
 ### 职责与依赖
 
 RPC 属于 integration 分类。聚合 POM 下保留 Dubbo binder 与 Protobuf 标量辅助模块，父 POM 直接指向根 loadup-parent；
-对外版本由 loadup-dependencies 管理。
+对外版本由 loadup-framework-bom 管理。
 
 ```text
 rpc (pom)

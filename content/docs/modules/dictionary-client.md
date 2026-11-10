@@ -17,7 +17,7 @@ sidebar:
 </dependency>
 ```
 
-版本由 `loadup-dependencies` BOM 管理。协议包为 `io.github.loadup.modules.dictionary.client`，DTO 均为 record，响应字段与既有
+版本由 `loadup-framework-bom` BOM 管理。协议包为 `io.github.loadup.modules.dictionary.client`，DTO 均为 record，响应字段与既有
 HTTP 协议一致。请求中的身份与租户必须由适配入口校验。
 
 ## 能力契约

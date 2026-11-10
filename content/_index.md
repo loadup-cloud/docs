@@ -20,7 +20,7 @@ toc: false
       <div class="lu-visual-top"><span class="lu-visual-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>your-spring-boot-app</span><span class="lu-visual-ready">READY</span></div>
       <div class="lu-visual-body">
         <div class="lu-visual-heading"><span class="lu-visual-symbol">{ }</span><div><strong>按需装配</strong><small>从 BOM 到业务能力</small></div></div>
-        <div class="lu-visual-row"><span class="lu-row-index">01</span><span class="lu-row-icon">◆</span><span><strong>loadup-dependencies</strong><small>统一依赖版本</small></span><span class="lu-row-check">✓</span></div>
+        <div class="lu-visual-row"><span class="lu-row-index">01</span><span class="lu-row-icon">◆</span><span><strong>loadup-framework-bom</strong><small>统一依赖版本</small></span><span class="lu-row-check">✓</span></div>
         <div class="lu-visual-row"><span class="lu-row-index">02</span><span class="lu-row-icon">◈</span><span><strong>components / *</strong><small>缓存、认证、数据库等能力</small></span><span class="lu-row-check">✓</span></div>
         <div class="lu-visual-row"><span class="lu-row-index">03</span><span class="lu-row-icon">▣</span><span><strong>modules / *</strong><small>UPMS 等通用业务模块</small></span><span class="lu-row-check">✓</span></div>
         <div class="lu-visual-foot"><span class="lu-terminal-prompt">$</span> 选择能力，接入你的应用<span class="lu-cursor" aria-hidden="true"></span></div>
