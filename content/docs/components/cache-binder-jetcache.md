@@ -50,8 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [
-  `JetCacheCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/jetcache/autoconfigure/JetCacheCacheAutoConfiguration.java)
+- [ `JetCacheCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-jetcache/src/main/java/io/github/loadup/components/cache/jetcache/autoconfigure/JetCacheCacheAutoConfiguration.java)
     - 启用条件：
       `@ConditionalOnProperty(prefix = "loadup.cache", name = "type", havingValue = CacheBackendType.JETCACHE)`。
 
@@ -85,8 +84,7 @@ Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Cl
 
 主要入口文件：
 
-- [
-  `JetCacheCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/jetcache/autoconfigure/JetCacheCacheAutoConfiguration.java)
+- [ `JetCacheCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-jetcache/src/main/java/io/github/loadup/components/cache/jetcache/autoconfigure/JetCacheCacheAutoConfiguration.java)
 
 ### 分层与调用路径
 
@@ -100,8 +98,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `JetCacheCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/jetcache/autoconfigure/JetCacheCacheAutoConfiguration.java)
+- [ `JetCacheCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-jetcache/src/main/java/io/github/loadup/components/cache/jetcache/autoconfigure/JetCacheCacheAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnClass({SimpleCacheManager.class, CacheBuilderTemplate.class})`
     - `@ConditionalOnProperty(prefix = "loadup.cache", name = "type", havingValue = CacheBackendType.JETCACHE)`

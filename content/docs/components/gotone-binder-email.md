@@ -75,8 +75,7 @@ Production-ready（真实发送）。
 
 主要入口文件：
 
-- [
-  `EmailChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/email/config/EmailChannelAutoConfiguration.java)
+- [ `EmailChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-email/src/main/java/io/github/loadup/components/gotone/channel/email/config/EmailChannelAutoConfiguration.java)
 - [`SmtpEmailProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-email/src/main/java/io/github/loadup/components/gotone/channel/email/SmtpEmailProvider.java)
 
 ### 分层与调用路径
@@ -91,8 +90,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `EmailChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/email/config/EmailChannelAutoConfiguration.java)
+- [ `EmailChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-email/src/main/java/io/github/loadup/components/gotone/channel/email/config/EmailChannelAutoConfiguration.java)
   是自动配置入口。
     -
     `@ConditionalOnProperty( prefix = "loadup.gotone.binder.email.smtp", name = "enabled", havingValue = "true", matchIfMissing = true)`

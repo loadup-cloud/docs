@@ -24,8 +24,8 @@ title: "Loadup Common Utils"
 
 ## 租户上下文
 
-`TenantUtil` 复用 [commons-context](../loadup-commons-context/) 的只读 TENANT_ID，基于 JDK 25 ScopedValue。使用
-`runWithTenant` / `callWithTenant` 临时绑定租户并继承其他业务键，返回或抛异常后自动恢复。移除 setTenantId/clear；任务入口使用
+租户工具已随固定部署改造移除；非数据库命名空间由各组件配置决定，不再读取 ExecContext tenant。使用
+部署 code 由 `loadup-components-runtime` 的 `DeploymentIdentity` 提供；任务入口不绑定租户，使用
 ContextHolder.runWith/callWith 绑定不可变 ExecutionContext。
 
 ## 金额计算与格式化
@@ -60,7 +60,7 @@ String localized = MoneyFormatter.format(amount, Locale.US);
 
 ```bash
 mvnd clean test -pl loadup-commons/loadup-commons-util -am -Dtest=MoneyTest \
-  -Dsurefire.failIfNoSpecifiedTests=false -Dskip.spotless=true -Dskip.spotbugs=true
+  -Dsurefire.failIfNoSpecifiedTests=false -Dspotless.skip=true -Dspotbugs.skip=true
 ```
 
 ## 基础转换契约

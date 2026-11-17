@@ -83,7 +83,7 @@ Protobuf 消息命中 Dubbo 的 IDL 分支（`needWrapper=false`），因此不�
 @DubboReference
 private CustomerRpc customerRpc;
 
-public MerchantEligibilityDTO authorizeNewOrder(String tenant, String payee) {
+public MerchantEligibilityDTO authorizeNewOrder(String payee) {
     return RpcTokenContext.call(actor.customerAccessToken(), () ->
             CustomerRpcMapper.INSTANCE.fromWireMerchantEligibilityDTO(customerRpc.authorize(
                     CustomerRpcMapper.INSTANCE.toWireMerchantActionAuthorizeCommand(command))));
@@ -114,7 +114,7 @@ Dubbo 3.3.6 面向 Spring Boot 2.7/3.x 发布，本仓库运行在 Spring Boot 4
 
 ## Shared client defaults
 
-`RpcClientDefaults.bind(environment, prefix, targetApplication, settingsType)` binds an immutable client settings type with per-call-site values taking precedence over shared `loadup.rpc.client` defaults. The conventional defaults are tenant `__default__`, caller `spring.application.name`, audience equal to the target application name, and token file `/var/run/loadup/secrets/<targetApplication>.jwt`. An application or a dedicated API transport can supply its own prefix to override only the fields that differ. This helper resolves configuration only; credential validation and RPC transport behavior are unchanged.
+`RpcClientDefaults.bind(environment, prefix, targetApplication, settingsType)` binds an immutable client settings type with per-call-site values taking precedence over shared `loadup.rpc.client` defaults. The conventional defaults are caller `spring.application.name`, audience equal to the target application name, and token file `/var/run/loadup/secrets/<targetApplication>.jwt`. An application or a dedicated API transport can supply its own prefix to override only the fields that differ. This helper resolves configuration only; credential validation and RPC transport behavior are unchanged.
 
 ---
 

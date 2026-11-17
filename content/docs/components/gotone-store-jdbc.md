@@ -38,12 +38,11 @@ Mapper 由 APT 生成在 target 中，仅供存储实现使用。
 
 ## 自动装配
 
-- [
-  `GotoneStoreJdbcAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/store/config/GotoneStoreJdbcAutoConfiguration.java)
+- [ `GotoneStoreJdbcAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/config/GotoneStoreJdbcAutoConfiguration.java)
 
 ## 数据库迁移与记录语义
 
-通过框架 Flyway 集成应用本模块的 `classpath:db/migration` 脚本。V1 建立表结构，V2 为通知记录补充可空
+通过框架 Flyway 集成应用本模块生成的迁移脚本；DDL 模板为 `db/schema/gotone_store.sql`。V1 建立表结构，V2 为通知记录补充可空
 `trace_id VARCHAR(64)`；已有 V1 的数据库也需要应用 V2，否则当前 DO 的查询和写入会报未知列。V2 不回填 traceId。
 
 邮件、短信按逐收件人结果记录；Webhook 按整组投递结果记录各提及对象。记录成功表示投递成功，不表示用户已读。损坏的渠道 JSON
@@ -79,12 +78,9 @@ Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Cl
 
 主要入口文件：
 
-- [
-  `GotoneStoreJdbcAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/store/config/GotoneStoreJdbcAutoConfiguration.java)
-- [
-  `JdbcChannelConfigProvider`](src/main/java/io/github/loadup/components/gotone/store/config/JdbcChannelConfigProvider.java)
-- [
-  `JdbcServiceConfigProvider`](src/main/java/io/github/loadup/components/gotone/store/config/JdbcServiceConfigProvider.java)
+- [ `GotoneStoreJdbcAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/config/GotoneStoreJdbcAutoConfiguration.java)
+- [ `JdbcChannelConfigProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/config/JdbcChannelConfigProvider.java)
+- [ `JdbcServiceConfigProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/config/JdbcServiceConfigProvider.java)
 
 ### 分层与调用路径
 
@@ -96,8 +92,7 @@ Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Cl
 
 ### 装配规则
 
-- [
-  `GotoneStoreJdbcAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/store/config/GotoneStoreJdbcAutoConfiguration.java)
+- [ `GotoneStoreJdbcAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/loadup-components-gotone-store-jdbc/src/main/java/io/github/loadup/components/gotone/store/config/GotoneStoreJdbcAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnClass({ChannelConfigProvider.class, NamedParameterJdbcTemplate.class})`
 

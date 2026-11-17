@@ -11,11 +11,11 @@ binder。分类目录不是 Maven 模块，组件坐标、Java 包名、配置�
 
 | 目录           | 职责       | 组件                                                                                                                                                                                                                                                                                                                                                                                                 |
 |----------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `security/`    | 安全与身份 | [authorization](authorization/)、[authserver](authserver/)、[resource-server](resource-server/)、[captcha](captcha/)、[kms](kms/)、[signature](signature/)                   |
+| `security/`    | 安全与身份 | [authorization](authorization/)、[oauth-server](oauth-server/)、[captcha](captcha/)、[kms](kms/)、[signature](signature/)                   |
 | `web/`         | Web 接入   | [webmvc](webmvc/)、[springdoc](springdoc/)                                                                                                                                                                                                                                                                                             |
 | `data/`        | 数据与存储 | [cache](cache/)、[database](database/)、[dfs](dfs/)                                                                                                                                                                                                                                                  |
 | `integration/` | 外部集成   | [http](http/)、[gotone](gotone/)、[payment-channel](payment-channel/)                                                                                                                                                                                                          |
-| `reliability/` | 可靠性     | [DelayedTask](delayedtask/)、[async-result](async-result/)、[lock](lock/)、[outbox](outbox/)、[globalunique](globalunique/)、[resilience4j](resilience4j/) |
+| `reliability/` | 可靠性     | [Task](task/)、[async-result](async-result/)、[lock](lock/)、[globalunique](globalunique/)、[resilience4j](resilience4j/) |
 | `execution/`   | 任务与执行 | [Scheduler](scheduler/)、[pipeline](pipeline/)                                                                                                                                                                                                                                                                             |
 | `platform/`    | 平台基础   | [configcenter](configcenter/)、[extension](extension/)、[observability](observability/)、[testcontainers](testcontainers/)                                                                                                                           |
 
@@ -27,7 +27,7 @@ loadup-components/
 ├── web/            webmvc, springdoc
 ├── data/           cache, database, dfs
 ├── integration/    http, gotone, payment-channel
-├── reliability/    delayedtask, async-result, lock, outbox, globalunique, resilience4j
+├── reliability/    task, async-result, lock, globalunique, resilience4j
 ├── execution/      scheduler, pipeline
 └── platform/       configcenter, extension, observability, testcontainers
 ```
@@ -58,7 +58,7 @@ Docker，在仓库根目录依次执行：
 # 一次 clean 构建，完成测试并合并本次执行数据。
 mvnd -B -ntp -T 1 -Pcomponent-coverage clean install \
   -DskipTests=false -Dskip.unit.tests=false -Dskip.integration.tests=false \
-  -Dskip.spotless=true -Dskip.spotbugs=true -Dtestcontainers.reuse.enable=false
+  -Dspotless.skip=true -Dspotbugs.skip=true -Dtestcontainers.reuse.enable=false
 # 直接调用插件，不经过编译/测试生命周期；不要在这两步之间 clean 或修改源码。
 mvnd -B -ntp -T 1 -Pcomponent-coverage -pl '!loadup-framework-bom' --fail-at-end \
   enforcer:enforce@component-coverage-inputs \
@@ -79,7 +79,7 @@ JaCoCo CLI 或 Python 覆盖率脚本。先收齐全部组件及兄弟测试模�
 
 新增或移除组件时，同时维护该模块的 `loadup.coverage.skip`、聚合 POM 的依赖清单和预期 unit / IT
 文件清单。跳过测试、只运行部分模块或使用历史产物均不属于完整验收；详细限制见 [覆盖率架构](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-coverage/ARCHITECTURE.md)
-。本次原生配置迁移未运行构建或检查，等待手工验收。
+。原生配置绑定与运行效果需按消费应用验收。
 
 历史基线：2026-10-16 同一次完整本地运行的 **48/48 个运行时 jar 行、分支均 ≥90%**，653 项单测、148 项 IT
 通过。该历史结果不能证明当前原生配置或新提交已验收。
@@ -111,8 +111,8 @@ commons → components → modules → 消费工程
 | `web`         | Web 接入   | webmvc：JSON 报文和错误处理；springdoc：OpenAPI 与 Scalar                                                                                              |
 | `data`        | 数据与存储 | cache：缓存；database：数据库集成；dfs：文件存储                                                                                                       |
 | `integration` | 外部集成   | http：出站 HTTP；gotone：多渠道通知；payment-channel：支付收单渠道 SPI、路由与支付宝/微信协议 binder                       |
-| `reliability` | 可靠性     | async-result：异步业务结果等待与跨实例回传；lock：同步分布式互斥；outbox：可靠事务事件；globalunique：幂等控制；resilience4j：熔断、重试、限流         |
-| `execution`   | 任务与执行 | Scheduler：可切换本地 / PowerJob 唤醒（PowerJob 能力归属 binder）；DelayedTask（reliability）：持久化业务截止任务；pipeline：流水线编排                |
+| `reliability` | 可靠性     | async-result：异步业务结果等待与跨实例回传；lock：同步分布式互斥；task：事务内持久化任务、定时执行与可靠投递；globalunique：幂等控制；resilience4j：熔断、重试、限流         |
+| `execution`   | 任务与执行 | Scheduler：可切换本地 / PowerJob 唤醒（PowerJob 能力归属 binder）；pipeline：流水线编排                |
 | `platform`    | 平台基础   | configcenter：配置中心；extension：扩展机制；observability：Micrometer 指标与追踪；testcontainers：测试容器                                            |
 
 ### 分类目录与 Maven 边界

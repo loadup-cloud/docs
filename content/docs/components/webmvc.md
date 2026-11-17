@@ -119,6 +119,19 @@ ProtocolResponseTest 已补文本/JSON 原文、非 2xx、方法/类标记、普
 MvcThreadModelTest 使用独立配置名，在回环地址启动真实 Servlet 容器，分别检查平台/虚拟请求线程、并发合成身份与 ScopedValue 隔离、异常后清理。
 这是线程契约测试源码，不装配业务数据库/渠道，不证明真实 JWT 或金融等价。测试未运行，默认启用决策仍需消费方压测与发布验收。
 
+## 部署 code 入口校验
+
+`DeploymentCodeWebAutoConfiguration` 仅在 Servlet 应用注册 `DeploymentCodeFilter`，消费 runtime 的 `DeploymentIdentity`，
+不引入 database/JDBC/ORM。过滤器位于 `ExecutionContextFilter` 之后、认证与业务访问之前：REQUEST 只解析一次
+`X-Tenant-Code`，ASYNC/ERROR 复用请求内判定。
+
+- 单值、合法且等于本部署 code：继续原认证/权限/业务链。
+- 缺失、空白、重复头、多值/逗号合并、非法格式：返回 400 和 `DEPLOYMENT_CODE_REQUIRED` / `DEPLOYMENT_CODE_INVALID`。
+- 合法但不等于本部署 code：返回 403 和 `DEPLOYMENT_CODE_MISMATCH`，不读取业务库、不转发到其他部署。
+- CORS 真实预检与显式配置的探针/静态路径豁免；豁免按应用实际路径配置（`loadup.webmvc.deployment-code.excluded-paths`），
+  不用 `/actuator/**` 或 `/api/**` 泛化豁免。
+- 过滤器不建立 tenant 上下文、不选择 schema、不授予身份或权限；响应沿用现有错误 envelope。
+
 ---
 
 <a id="architecture"></a>
@@ -250,3 +263,16 @@ ProtocolResponseTest 已补文本/JSON 原文、非 2xx、方法/类标记、普
 组件沿用 Boot 原生 Servlet 执行模型，不创建请求线程池。消费方可用 spring.threads.virtual.enabled 试验虚拟线程，保持连接池和业务并发预算。
 MvcThreadModelTest 使用独立配置名，在回环地址启动真实 Servlet 容器，分别检查平台/虚拟请求线程、并发合成身份与 ScopedValue 隔离、异常后清理。
 这是线程契约测试源码，不装配业务数据库/渠道，不证明真实 JWT 或金融等价。测试未运行，默认启用决策仍需消费方压测与发布验收。
+
+### 部署 code 入口校验
+
+`DeploymentCodeWebAutoConfiguration` 仅在 Servlet 应用注册 `DeploymentCodeFilter`，消费 runtime 的 `DeploymentIdentity`，
+不引入 database/JDBC/ORM。过滤器位于 `ExecutionContextFilter` 之后、认证与业务访问之前：REQUEST 只解析一次
+`X-Tenant-Code`，ASYNC/ERROR 复用请求内判定。
+
+- 单值、合法且等于本部署 code：继续原认证/权限/业务链。
+- 缺失、空白、重复头、多值/逗号合并、非法格式：返回 400 和 `DEPLOYMENT_CODE_REQUIRED` / `DEPLOYMENT_CODE_INVALID`。
+- 合法但不等于本部署 code：返回 403 和 `DEPLOYMENT_CODE_MISMATCH`，不读取业务库、不转发到其他部署。
+- CORS 真实预检与显式配置的探针/静态路径豁免；豁免按应用实际路径配置（`loadup.webmvc.deployment-code.excluded-paths`），
+  不用 `/actuator/**` 或 `/api/**` 泛化豁免。
+- 过滤器不建立 tenant 上下文、不选择 schema、不授予身份或权限；响应沿用现有错误 envelope。

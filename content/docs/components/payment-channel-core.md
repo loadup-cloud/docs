@@ -33,7 +33,7 @@ Spring 收集 `ChannelProvider` 等策略并构造不可变注册表；同一渠
   `JsonMapper`。
 - 恢复/查询/关单/退款查证按渠道共享 Bulkhead 预算；`max-wait-duration` 必须为 0。
 - Facade 拒绝在本地事务内调用；真实渠道调用必须位于事务外。
-- `ChannelExecutionContext` 的租户必须与当前 `TenantUtil` 上下文一致。
+- `ChannelExecutionContext` 只携带不可变渠道绑定；请求入口校验部署 code，不建立租户上下文，也不做租户比对。
 
 ---
 

@@ -87,11 +87,11 @@ spring:
 | 异步发送                    | ✓                                        |
 | 模板渲染（`${var}`）        | ✓                                        |
 | 发送记录（可选）            | ✓（store-jdbc）                          |
-| 失败重试（跨实例）          | 消费方使用 PowerJob/Outbox 并保证业务幂等 |
+| 失败重试（跨实例）          | 消费方使用 PowerJob/Task 并保证业务幂等 |
 
 ## 后台任务与告警
 
-跨实例补偿由消费方的原生 PowerJob Processor / Outbox 编排，Gotone 只负责发送。旧的 RetryTask 专用通知桥已移除；按 PowerJob
+跨实例补偿由消费方的原生 PowerJob Processor / Task 编排，Gotone 只负责发送。旧的 RetryTask 专用通知桥已移除；按 PowerJob
 原生告警机制接入运维通知，不重复构建执行历史。
 
 ## 文档
@@ -219,7 +219,7 @@ loadup-components-gotone/
 
 #### 4.4 与后台任务的分工
 
-通知的进程内降级与重试由 Gotone 引擎处理；跨实例的最终一致性补偿由消费方的 PowerJob/Outbox 编排，业务需保证幂等。执行历史和平台告警使用
+通知的进程内降级与重试由 Gotone 引擎处理；跨实例的最终一致性补偿由消费方的 PowerJob/Task 编排，业务需保证幂等。执行历史和平台告警使用
 PowerJob 原生能力，Gotone 不反向依赖调度组件。API 模型继续使用不可变 record。
 
 ### 5. 扩展点

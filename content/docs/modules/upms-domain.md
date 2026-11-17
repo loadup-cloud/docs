@@ -28,12 +28,12 @@ UPMS 领域模型与网关接口，不直接依赖 HTTP 或 ORM 实现。
 
 ## 对外契约
 
-- [`DepartmentGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/DepartmentGateway.java)
-- [`PermissionGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/PermissionGateway.java)
-- [`LoginLogGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/LoginLogGateway.java)
-- [`RoleGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/RoleGateway.java)
-- [`UserGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserGateway.java)
-- [`UserOAuthBindingGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserOAuthBindingGateway.java)
+- [`DepartmentGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/DepartmentGateway.java)
+- [`PermissionGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/PermissionGateway.java)
+- [`LoginLogGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/LoginLogGateway.java)
+- [`RoleGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/RoleGateway.java)
+- [`UserGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserGateway.java)
+- [`UserOAuthBindingGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserOAuthBindingGateway.java)
 
 ---
 
@@ -54,14 +54,14 @@ UPMS 领域模型与网关接口，不直接依赖 HTTP 或 ORM 实现。
 
 主要入口文件：
 
-- [`AccessDecisionService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/service/AccessDecisionService.java)
-- [`DepartmentGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/DepartmentGateway.java)
-- [`LoginLogGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/LoginLogGateway.java)
-- [`PermissionGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/PermissionGateway.java)
-- [`RoleGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/RoleGateway.java)
-- [`UserGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserGateway.java)
-- [`UserOAuthBindingGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserOAuthBindingGateway.java)
-- [`UserPermissionService`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/service/UserPermissionService.java)
+- [`AccessDecisionService`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/service/AccessDecisionService.java)
+- [`DepartmentGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/DepartmentGateway.java)
+- [`LoginLogGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/LoginLogGateway.java)
+- [`PermissionGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/PermissionGateway.java)
+- [`RoleGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/RoleGateway.java)
+- [`UserGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserGateway.java)
+- [`UserOAuthBindingGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserOAuthBindingGateway.java)
+- [`UserPermissionService`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/service/UserPermissionService.java)
 
 ### 分层与调用路径
 
@@ -75,14 +75,14 @@ Web → App → Domain Gateway → Infrastructure；认证适配连接 UPMS 凭�
 
 ### 扩展契约
 
-- [`DepartmentGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/DepartmentGateway.java)
+- [`DepartmentGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/DepartmentGateway.java)
   ：由实现方或调用方按接口定义对接。
-- [`PermissionGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/PermissionGateway.java)
+- [`PermissionGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/PermissionGateway.java)
   ：由实现方或调用方按接口定义对接。
-- [`LoginLogGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/LoginLogGateway.java)：由实现方或调用方按接口定义对接。
-- [`RoleGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/RoleGateway.java)：由实现方或调用方按接口定义对接。
-- [`UserGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserGateway.java)：由实现方或调用方按接口定义对接。
-- [`UserOAuthBindingGateway`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserOAuthBindingGateway.java)
+- [`LoginLogGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/LoginLogGateway.java)：由实现方或调用方按接口定义对接。
+- [`RoleGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/RoleGateway.java)：由实现方或调用方按接口定义对接。
+- [`UserGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserGateway.java)：由实现方或调用方按接口定义对接。
+- [`UserOAuthBindingGateway`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-domain/src/main/java/io/github/loadup/modules/upms/domain/gateway/UserOAuthBindingGateway.java)
   ：由实现方或调用方按接口定义对接。
 
 ### 设计取舍

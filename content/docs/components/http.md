@@ -17,7 +17,7 @@ Boot 的 RestClient 定制、Jackson 配置及 HTTP Observation。
 ```
 
 第三方版本由 LoadUp BOM 继承的 Spring Boot BOM 管理，Apache HttpClient 5 在 LoadUp BOM 中明确声明。组件不启动 Web 服务器，不依赖
-UPMS、Outbox 或渠道 SDK。
+UPMS、Task 或渠道 SDK。
 
 ## 配置
 
@@ -25,6 +25,7 @@ UPMS、Outbox 或渠道 SDK。
 loadup:
   http:
     enabled: true
+    default-port: 8080
     clients:
       merchant:
         base-url: https://merchant.example.com
@@ -48,6 +49,10 @@ loadup:
             method: GET
             path: /statements/{date}
 ```
+
+`base-url` 可省略。省略时客户端名被当作目标应用名，地址按 `http://<client-name>:<default-port>` 解析，默认端口
+`8080`；该约定的目标同时允许私有/集群地址。显式 `base-url` 仍默认禁止私有目标，需要时配置
+`allow-private-addresses: true`。连接、池和大小限制均有默认值，只有与默认值不同的客户端才需要单独覆盖。
 
 配置中的客户端和操作名限定为 1–64 个字母、数字、下划线或连字符。路径模板与业务传入的变量分别处理，变量作为值编码，调用不能改变配置的
 origin。连接池等待、连接建立和响应读取超时分别配置；读取超时不是整个下载的总时长限制。
@@ -91,23 +96,30 @@ try (OutputStream output = Files.newOutputStream(targetPath)) {
 ## Spring HTTP Service Clients
 
 接口使用标准 `@HttpExchange` / `@PostExchange`，通过 `http.serviceClient("customer", CustomerHttpService.class)` 创建，
-然后在消费方配置类中将代理注册为 Bean。接口由提供方 client 模块持有，组件不扫描或绑定业务包。
+然后在消费方配置类中将代理注册为 Bean。接口由提供方 client 模块持有，组件不扫描或绑定业务包。客户端名等于目标应用名时可省略全部配置：
 
 ```yaml
 loadup:
   http:
     clients:
       customer:
-        base-url: ${CUSTOMER_BASE_URL:http://customer:8080}
-        allow-private-addresses: true
-        connect-timeout: 1s
-        acquire-timeout: 1s
-        read-timeout: 3s
-        max-request-bytes: 65536
+        # http://customer:8080, framework defaults
+```
+
+只有地址或协议参数不同于约定时才覆盖：
+
+```yaml
+loadup:
+  http:
+    clients:
+      customer:
+        base-url: ${CUSTOMER_BASE_URL:https://customer.example.com}
+        read-timeout: 5s
         max-response-bytes: 65536
 ```
 
-按服务配置基础地址，HTTP 方法和相对路径写在标准接口注解中，无需再配置 `operations` 或逐方法 URL。
+未在配置中声明的客户端在首次创建 Service Client 时按应用名约定建立，默认使用 `http://<name>:<default-port>`、
+框架默认超时/池/大小和私有地址放行；显式配置的同名客户端优先。命名操作（`exchange`）仍要求显式配置客户端和 operation。
 每个代理由标准 `HttpServiceProxyFactory` + `RestClientAdapter` 执行；共享同名 HttpTemplate 客户端的 Apache 连接池和
 Boot RestClient 定制/Observation，保留 TLS Bundle、DNS 地址策略及无自动重试/重定向/Cookie 状态。
 接口的绝对 URI 也不能改变配置的 origin，防止把当次凭证发送给其他主机。
@@ -145,7 +157,7 @@ URL、报文或底层异常消息；HTTP 错误状态由 ResponseEntity 返回�
 HTTP 指标；另有 `loadup.http.calls`，使用配置中的 client、operation 和固定 outcome 标签，不放入订单、租户或 traceId。
 
 **不自动重试、不跟随重定向、不使用共享 Cookie 状态。** Apache 自动重试明确关闭。需要业务重试时使用稳定渠道请求号或下游幂等协议，再由业务选择
-PowerJob/Outbox；不能让多个组件重复包装重试。
+PowerJob/Task；不能让多个组件重复包装重试。
 
 ## 能力矩阵
 
@@ -170,10 +182,10 @@ PowerJob/Outbox；不能让多个组件重复包装重试。
 mvnd clean test -pl loadup-components/integration/loadup-components-http -am \
   -Dmaven.test.skip=false -DskipTests=false -Dskip.unit.tests=false \
   -Dtest=HttpTemplateTest,HttpPoolMetricsTest,HttpServiceClientsTest,HttpServiceResponsesTest,HttpClientDefaultsTest,HttpAutoConfigurationTest,HttpTargetPolicyTest,HttpConfigurationContractTest \
-  -Dsurefire.failIfNoSpecifiedTests=false -Dskip.spotless=true -Dskip.spotbugs=true
+  -Dsurefire.failIfNoSpecifiedTests=false -Dspotless.skip=true -Dspotbugs.skip=true
 ```
 
-本次实现未执行构建或测试。设计见 [ARCHITECTURE.md](./#architecture)。
+签名、大小限制、超时及失败传播需运行验收，设计见 [ARCHITECTURE.md](./#architecture)。
 
 ## 统一指标
 
@@ -273,7 +285,7 @@ Provider 每次解析。
 目标 origin 来源仅限可信客户端配置，操作只能使用路径模板。变量预编码，不能改变 host、scheme 或 port。每次连接 DNS
 解析执行地址策略，额外预检查兼顾 IP 字面量；关闭重定向避免 Location 改变目标。该策略不是完整网络防火墙，生产仍需要出站网络隔离；显式代理必须在代理侧实施地址策略。
 
-默认不开启私有目标和 Cookie 状态，不禁用证书链或主机名验证。客户端私钥不进入请求配置、Outbox
+默认不开启私有目标和 Cookie 状态，不禁用证书链或主机名验证。客户端私钥不进入请求配置、Task
 或日志。传输拥有的请求头不得由业务覆盖，认证头在业务头之后应用。
 
 请求在发送前完成序列化和大小检查，响应根据 Content-Length
@@ -296,7 +308,7 @@ MeteredConnectionManager 仅包裹 lease/get 边界，TCP connect/upgrade、释�
 多个模板通过固定 scope 隔离；scope/client 重复时拒绝装配，不允许第二个模板静默接管第一个模板的 gauge。
 MeterRegistry 由应用共享，模板不关闭它；自定义 MeterFilter 须保留 scope/client，不应合并不同池的身份。
 
-组件不提供重试配置，Apache 自动重试关闭；需要重试时由业务确认幂等后接入现有任务或容错能力。Outbox
+组件不提供重试配置，Apache 自动重试关闭；需要重试时由业务确认幂等后接入现有任务或容错能力。Task
 的失败重投和外部请求的受理状态分别管理，下游已受理但响应丢失时仍可能再次发送同一业务请求。
 
 ### 签名下载路径（2026-10-28）
@@ -304,7 +316,7 @@ MeterRegistry 由应用共享，模板不关闭它；自定义 MeterFilter 须�
 带 signer 的流式下载与原始 exchange 共用 execute，避免业务为了签名先缓存完整响应或另拼编码不同的 URL。
 调用方可用有界输出流收紧单次大小上限；框架仍执行客户端 Content-Length/实际字节限制和响应关闭。
 输出流由调用方持有，写入失败不回滚已写字节，也不关闭该流；业务来源校验与正式提交在负责层完成。
-最终签名不改变固定 origin、DNS/代理约束、无自动重试/无重定向。新增测试源码未执行。
+最终签名不改变固定 origin、DNS/代理约束、无自动重试/无重定向。真实签名、代理约束和失败传播需运行验收。
 
 ### 声明式应用间调用
 
@@ -318,6 +330,14 @@ HttpTemplate.serviceClient 提供标准接口代理；内部仍由 HttpServicePr
 外层轻量代理只协调快照生命周期；每个快照缓存标准接口代理，refresh 后不复用旧 transport。
 整个标准调用在读锁内完成，写锁等待调用结束后才关闭旧池；业务身份由方法参数或 HttpCredentialProvider 当次解析，
 没有额外 ThreadLocal/token 缓存。内部入口鉴权和业务错误白名单属于应用，不属于传输组件。
+
+### 应用名约定与隐式客户端
+
+`HttpProperties.default-port`（默认 8080）和客户端名共同定义内部目标约定：省略 `base-url` 的客户端按
+`http://<client-name>:<default-port>` 解析，并默认允许私有/集群地址。命名操作客户端仍应在配置中显式列出，以便在启动时校验
+operation 表；声明式 Service Client 在首次创建时，如果同名客户端既不存在于显式配置也不存在于隐式集合，则按约定创建隐式客户端。
+显式配置优先于隐式客户端。刷新时保留仍然有效且未被显式配置接管的隐式客户端，重新解析默认端口并替换连接池；关闭模板时一并释放。
+隐式客户端与显式客户端使用相同的连接池、DNS 策略、指标注册和 origin 约束，不引入第二套传输。
 
 ### 共享业务信封验证
 

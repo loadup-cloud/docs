@@ -164,7 +164,7 @@ OpenBao 已验证。遵循仓库约定，本次不执行测试。用户可定向
 ```shell
 mvn clean -pl loadup-components/security/loadup-components-kms -am test \
   -Dtest=OpenBaoKmsTest,KmsAutoConfigurationTest \
-  -Dsurefire.failIfNoSpecifiedTests=false -Dskip.spotbugs=true -Dskip.spotless=true
+  -Dsurefire.failIfNoSpecifiedTests=false -Dspotbugs.skip=true -Dspotless.skip=true
 ```
 
 真实服务验收仍需覆盖密钥轮换、历史数据、BYOK、公钥导入、封印/重启、ACL、续租和故障恢复。设计见

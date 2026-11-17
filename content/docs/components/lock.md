@@ -81,13 +81,13 @@ DNS、连接/命令超时的端到端截止时间，这些参数由原生客户�
 
 ```java
 public OrderDTO submit(OrderCommand command) throws InterruptedException {
-    var key = LockKey.tenant("order-submit", trustedTenantId, command.orderId());
+    var key = LockKey.of("order-submit", command.orderId());
     return lockTemplate.execute(key, () -> executeBusiness(command));
 }
 ```
 
 租户必须来自可信认证/授权范围。全局资源显式使用 `LockKey.global("configuration", resourceId)`。key 按
-namespace/business/scope/tenant/resource 分段进行 Base64URL 编码，区分全局与租户，避免分隔符和 Redis Cluster hash tag
+namespace/business/resource 分段进行 Base64URL 编码，避免分隔符和 Redis Cluster hash tag；部署隔离由配置的 namespace 决定
 注入；编码不是加密，不保存秘密数据。
 
 `execute` 支持返回值及原始 checked exception；`run(key, Runnable)` 用于无返回值。回调在当前线程执行，平台/虚拟线程使用同一语义。原生高级能力仍可通过
@@ -128,7 +128,7 @@ return lockTemplate.execute(key,
 ```
 
 或者在未标注 Transactional 的编排入口内调用另一个 Spring Bean 的 Transactional 方法。不要在同类自调用上假设 Spring
-代理生效。事务提交后的异步监听/消息投递不自动包含在锁范围；可靠副作用使用 Outbox。
+代理生效。事务提交后的异步监听/消息投递不自动包含在锁范围；可靠副作用使用 Task。
 
 ServiceTemplate 用于入口生命周期，LockTemplate 只用于需要互斥的临界区，可以显式组合；普通 Service 不自动套锁。
 
@@ -147,7 +147,7 @@ ServiceTemplate 用于入口生命周期，LockTemplate 只用于需要互斥的
 | Fencing、业务幂等、exactly-once | 不提供；由受保护资源及业务契约实现          |
 
 锁控制当前并发，GlobalUnique 控制持久唯一声明，数据库唯一约束与状态条件更新保证最终数据正确性。租期/网络故障可能导致失去锁的执行者继续工作；收单状态更新必须保留数据库约束，要求
-fencing 时受保护资源必须验证 token。Outbox 自己的租约不替换为此锁。
+fencing 时受保护资源必须验证 token。Task 自己的租约不替换为此锁。
 
 ## 指标与日志
 
@@ -169,8 +169,8 @@ IT：独立客户端竞争、租户/全局隔离、虚拟线程、释放后再�
 在依赖已安装、Docker 可用时，由用户执行：
 
 ```bash
-mvn clean test -pl :loadup-components-lock -Dtest=LockTemplateTest,LockKeyOptionsTest,LockAutoConfigurationTest -Dskip.spotless=true -Dskip.spotbugs=true
-mvn clean verify -pl :loadup-components-lock -Dit.test=LockTemplateIT -Dskip.unit.tests=true -Dskip.spotless=true -Dskip.spotbugs=true
+mvn clean test -pl :loadup-components-lock -Dtest=LockTemplateTest,LockKeyOptionsTest,LockAutoConfigurationTest -Dspotless.skip=true -Dspotbugs.skip=true
+mvn clean verify -pl :loadup-components-lock -Dit.test=LockTemplateIT -Dskip.unit.tests=true -Dspotless.skip=true -Dspotbugs.skip=true
 ```
 
 生产验收还需覆盖部署环境的故障转移、长暂停、断网、固定租期过期及事务边界。设计见 [ARCHITECTURE.md](./#architecture)。
@@ -196,7 +196,7 @@ Lua、续期线程或锁协议。首版只有一个实现，采用单一 jar；�
 
 ### 公开类型
 
-- LockKey：显式业务/租户/资源，提供 global 和 tenant 工厂；namespace 为模板级应用隔离。
+- LockKey：显式业务/资源，提供 `of` 工厂；namespace 为模板级部署隔离，一套部署只使用自己的 namespace。
 - LockOptions：不可变等待/租期策略，WATCHDOG 无显式租期、FIXED 必填正租期。
 - LockTemplate：同步 execute/run 回调，支持 checked exception，中断使用标准 InterruptedException。
 - RedissonLockTemplate：单一实现，原生客户端和共享 Registry 构造器注入，不拥有客户端生命周期。
@@ -239,7 +239,7 @@ LockTemplate 会使默认模板退让，未配置 resource 时也不会创建无
 只表达有限失败原因；不使用动态业务键标签。计时记录 RuntimeException 用 LogUtil 记录，不阻断正常锁生命周期；组件不创建新的
 Registry/Tracer。
 
-Lock 与 GlobalUnique/Outbox/PowerJob 职责独立。租约锁不能保证 exactly-once，不能代替数据库约束、幂等、状态条件更新；要求防止旧持有者写入时由资源验证
+Lock 与 GlobalUnique/Task/PowerJob 职责独立。租约锁不能保证 exactly-once，不能代替数据库约束、幂等、状态条件更新；要求防止旧持有者写入时由资源验证
 fencing token。首版不提供注解切面、后端 SPI、HTTP 接口、管理页面或默认全服务加锁。
 
 ### 验证

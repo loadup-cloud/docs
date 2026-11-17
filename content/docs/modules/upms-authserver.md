@@ -22,7 +22,7 @@ UPMS 与授权服务器之间的可选认证适配模块。
 认证日志记录服务端观察到的客户端 IP；部署反向代理时应在可信网络边界处理转发地址，认证入口不会直接信任客户端提供的
 `X-Forwarded-For`。已签发 JWT 在有效期内不会因改密或锁定自动撤销。
 
-引入本模块和 `loadup-components-authserver-binder-sas` 后，前端调用 `POST /api/auth/login`，以 JSON 提交
+引入本模块和 `loadup-components-oauth-server-core` 后，前端调用 `POST /api/auth/login`，以 JSON 提交
 `{"username":"admin","password":"..."}`。成功响应的 `data` 包含 `accessToken`、`tokenType`、`expiresIn`；后续受保护请求携带
 `Authorization: Bearer <accessToken>`。失败响应同样使用 `result`、`data` 报文。设置
 `loadup.security.auth-server.protocol-endpoints-enabled: false` 可关闭不需要的 OAuth2 协议端点。
@@ -33,8 +33,7 @@ UPMS 与授权服务器之间的可选认证适配模块。
 
 ## 自动装配
 
-- [
-  `UpmsAuthServerAutoConfiguration`](src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
+- [ `UpmsAuthServerAutoConfiguration`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
 
 ## 设计
 
@@ -54,7 +53,7 @@ UPMS 与授权服务器之间的可选认证适配模块。
 直接依赖的框架模块：
 
 - `loadup-modules-upms-app`
-- `loadup-components-authserver-api`
+- `loadup-components-oauth-server-api`
 - `loadup-commons-dto`
 
 直接依赖的外部坐标（不含测试与 provided scope）：
@@ -67,10 +66,9 @@ UPMS 与授权服务器之间的可选认证适配模块。
 
 主要入口文件：
 
-- [
-  `UpmsAuthServerAutoConfiguration`](src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
-- [`UpmsAuthenticationProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthenticationProvider.java)
-- [`UpmsTokenController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsTokenController.java)
+- [ `UpmsAuthServerAutoConfiguration`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
+- [`UpmsAuthenticationProvider`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthenticationProvider.java)
+- [`UpmsTokenController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsTokenController.java)
 
 ### 分层与调用路径
 
@@ -82,8 +80,7 @@ POST /api/auth/login → UPMS AuthenticationService → JwtEncoder → JSON Toke
 
 ### 装配规则
 
-- [
-  `UpmsAuthServerAutoConfiguration`](src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
+- [ `UpmsAuthServerAutoConfiguration`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-authserver/src/main/java/io/github/loadup/modules/upms/authserver/UpmsAuthServerAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnMissingBean(UpmsAuthenticationProvider.class)`
     -

@@ -55,8 +55,7 @@ loadup:
 
 主要入口文件：
 
-- [
-  `CaffeineCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/caffeine/autoconfigure/CaffeineCacheAutoConfiguration.java)
+- [ `CaffeineCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-caffeine/src/main/java/io/github/loadup/components/cache/caffeine/autoconfigure/CaffeineCacheAutoConfiguration.java)
 
 ### 分层与调用路径
 
@@ -70,8 +69,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `CaffeineCacheAutoConfiguration`](src/main/java/io/github/loadup/components/cache/caffeine/autoconfigure/CaffeineCacheAutoConfiguration.java)
+- [ `CaffeineCacheAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-cache/loadup-components-cache-binder-caffeine/src/main/java/io/github/loadup/components/cache/caffeine/autoconfigure/CaffeineCacheAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnClass(Caffeine.class)`
     -

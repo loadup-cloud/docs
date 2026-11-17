@@ -25,7 +25,7 @@ sidebar:
 本制品不包含 Facade、Provider SPI、Spring 装配、厂商协议或 Pay 类型。只共享渠道词汇的 DTO、事件与领域数据可以独立消费。
 调用渠道操作时另外引入 `loadup-components-payment-channel-api`。
 
-枚举常量、JSON 表示和金额校验行为保持不变。金额策略回归源码位于 `ChannelAmountsTest`，本轮未执行构建或测试。
+枚举常量、JSON 表示和金额校验行为保持不变。金额策略回归入口为 `ChannelAmountsTest`；实际运行结果需按当前版本记录。
 
 ---
 

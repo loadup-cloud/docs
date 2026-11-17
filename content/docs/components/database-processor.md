@@ -69,7 +69,7 @@ Framework 内部只在拥有实体的模块接入本处理器；这些模块还�
 ```bash
 mvnd clean test -pl loadup-components/data/loadup-components-database-processor -am \
   -Dtest=LoadUpMyBatisFlexProcessorTest -Dsurefire.failIfNoSpecifiedTests=false \
-  -Dskip.spotless=true -Dskip.spotbugs=true
+  -Dspotless.skip=true -Dspotbugs.skip=true
 ```
 
 当前改动仅完成静态检查，尚未执行上述编译和测试。

@@ -50,8 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [
-  `TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
+- [ `TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
     - 启用条件：
       `@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "tianai", matchIfMissing = true)`。
 
@@ -83,8 +82,7 @@ Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Cl
 
 主要入口文件：
 
-- [
-  `TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
+- [ `TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
 - [`TianaiCaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/TianaiCaptchaProvider.java)
 
 ### 分层与调用路径
@@ -99,8 +97,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `TianaiCaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
+- [ `TianaiCaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-tianai/src/main/java/io/github/loadup/components/captcha/tianai/autoconfigure/TianaiCaptchaAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnClass(TACBuilder.class)`
     -

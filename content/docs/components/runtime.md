@@ -39,12 +39,22 @@ WebMVC 和 Observability 已传递引入本模块；非 Web 应用可直接引�
 
 Runtime 将 MapStruct 标记为 optional；只使用 Clock、日志或 JSON 装配的应用不因此传递引入 MapStruct。
 
+## 部署标识
+
+`DeploymentAutoConfiguration` 通过 `DeploymentProperties` 读取唯一配置 `loadup.deployment.code`，装配不可变
+`DeploymentIdentity`。code 匹配 `[a-z][a-z0-9-]{0,63}`，缺失或非法即启动失败，不提供默认部署、不读取请求值，也不回退到
+tenant 概念。
+
+`DeploymentIdentity` 只表达"本进程属于哪套部署"：它不包含数据库 schema、JDBC、Actor 身份或权限，也不写入
+ExecutionContext/ScopedValue。WebMVC 请求校验、内部命名 HTTP 客户端和非数据库资源命名空间按需读取该常量；业务用例和
+领域模型不依赖它选择数据。
+
 ---
 
 <a id="architecture"></a>
 ## 设计与实现
 
-本模块单向依赖 commons-json、commons-log 及 Spring Boot，commons 不反向依赖 runtime。
+本模块单向依赖 commons-json、commons-log、commons-context、commons-dto 及 Spring Boot，commons 不反向依赖 runtime。
 通过 AutoConfiguration.imports 注册 Clock、日志属性、JSON customizer 和容器访问工具，不依赖业务包扫描或 Servlet 环境。
 
 日志 EnvironmentPostProcessor 通过 spring.factories 注册，在日志系统初始化前添加最低优先级属性源，保持应用显式配置优先。
@@ -62,3 +72,13 @@ JSON builder 定制复用 commons 的纯 Jackson 规则，mapper 实例由 Boot 
 `@Mapper(config = LoadUpMapStructConfig.class)`。该接口是编译期配置，不注册为 Spring Bean，也不加入 AutoConfiguration.imports。
 
 Runtime 将 MapStruct 标记为 optional；只使用 Clock、日志或 JSON 装配的应用不因此传递引入 MapStruct。
+
+### 部署标识
+
+`DeploymentAutoConfiguration` 通过 `DeploymentProperties` 读取唯一配置 `loadup.deployment.code`，装配不可变
+`DeploymentIdentity`。code 匹配 `[a-z][a-z0-9-]{0,63}`，缺失或非法即启动失败，不提供默认部署、不读取请求值，也不回退到
+tenant 概念。
+
+`DeploymentIdentity` 只表达"本进程属于哪套部署"：它不包含数据库 schema、JDBC、Actor 身份或权限，也不写入
+ExecutionContext/ScopedValue。WebMVC 请求校验、内部命名 HTTP 客户端和非数据库资源命名空间按需读取该常量；业务用例和
+领域模型不依赖它选择数据。

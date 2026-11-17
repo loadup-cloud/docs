@@ -35,8 +35,7 @@ title: "Loadup Components Extension"
 
 ## 自动装配
 
-- [
-  `ExtensionAutoConfiguration`](src/main/java/io/github/loadup/components/extension/config/ExtensionAutoConfiguration.java)
+- [ `ExtensionAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-extension/src/main/java/io/github/loadup/components/extension/config/ExtensionAutoConfiguration.java)
 
 ---
 
@@ -59,8 +58,7 @@ title: "Loadup Components Extension"
 
 主要入口文件：
 
-- [
-  `ExtensionAutoConfiguration`](src/main/java/io/github/loadup/components/extension/config/ExtensionAutoConfiguration.java)
+- [ `ExtensionAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-extension/src/main/java/io/github/loadup/components/extension/config/ExtensionAutoConfiguration.java)
 - [`ExtensionProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-extension/src/main/java/io/github/loadup/components/extension/spi/ExtensionProvider.java)
 
 ### 分层与调用路径
@@ -71,8 +69,7 @@ title: "Loadup Components Extension"
 
 ### 装配规则
 
-- [
-  `ExtensionAutoConfiguration`](src/main/java/io/github/loadup/components/extension/config/ExtensionAutoConfiguration.java)
+- [ `ExtensionAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-extension/src/main/java/io/github/loadup/components/extension/config/ExtensionAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnClass({ExtensionExecutor.class, ExtensionRegistry.class})`
     - `@ConditionalOnMissingBean(BizScenarioInterceptor.class)`

@@ -49,8 +49,7 @@ presigned URL or multipart capability and requires a filesystem visible to the a
 
 主要入口文件：
 
-- [
-  `LocalDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
+- [ `LocalDfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
 - [`LocalDfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/LocalDfsProvider.java)
 
 ### 分层与调用路径
@@ -65,8 +64,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `LocalDfsAutoConfiguration`](src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
+- [ `LocalDfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
   是自动配置入口。
     -
     `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "local", matchIfMissing = true)`

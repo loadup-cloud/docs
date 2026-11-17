@@ -94,6 +94,13 @@ BUILT_IN / STANDALONE / CRON 任务：processorInfo=`loadupSchedulerProcessor`�
 FAILED，扫描正常返回不代表所有业务任务成功。失败任务通过现有 retry API 重排；RUNNING 不自动重排。业务处理器以 taskId
 幂等；Worker 崩溃后的租约、对账和恢复仍是待办。
 
+## Flyway 迁移目录
+
+正式迁移位于 `db/migration/framework/transfer/`，文件名、版本和 SQL 内容保持不变。消费应用在
+`loadup.flyway.locations` 中显式加入 `classpath:db/migration/framework/transfer`，与应用自己的迁移共同自动执行。
+不要用共享根 `classpath:db/migration` 表达应用隔离；它也会扫描依赖 JAR。已执行版本只追加升级，不改写历史。
+Transfer 依赖 File 业务模块，消费应用还需加入 `classpath:db/migration/framework/file`。
+
 ---
 
 <a id="architecture"></a>
@@ -128,7 +135,7 @@ FAILED 重排队和 SUCCEEDED 不可领取；执行结果应以目标环境的�
 真实空库验收发现 file/transfer 的 BaseDO 补字段脚本原先使用 12 位版本号，数值早于 14 位建表版本。已改为 V20261010000101 和
 V20261010000103，确保先建表后补字段。不对已部署库自动修复或重写 flyway_schema_history；已执行旧版迁移的消费工程升级前需单独核对历史。
 
-旧实现曾进行定向验收；本次 PostgreSQL 迁移后的构建与测试尚未运行。并发条件更新仅一个成功，RUNNING/SUCCEEDED 不再领取，FAILED
+当前 PostgreSQL 配置需独立运行验收。并发条件更新仅一个成功，RUNNING/SUCCEEDED 不再领取，FAILED
 仅显式重排队；QUEUED 的重复重试不重新建立源文件引用。
 
 队列候选查询对 Mapper 返回 null 或空列表统一返回空集合，不在空队列上触发空指针；非空候选保留查询顺序与批量上限。

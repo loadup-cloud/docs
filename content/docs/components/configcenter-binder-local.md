@@ -50,8 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [
-  `LocalConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/local/autoconfigure/LocalConfigCenterAutoConfiguration.java)
+- [ `LocalConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-local/src/main/java/io/github/loadup/components/configcenter/local/autoconfigure/LocalConfigCenterAutoConfiguration.java)
     - 启用条件：
       `@ConditionalOnProperty( prefix = "loadup.configcenter", name = "binder-type", havingValue = "local", matchIfMissing = true)`。
 
@@ -79,10 +78,8 @@ loadup:
 
 主要入口文件：
 
-- [
-  `LocalConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/local/autoconfigure/LocalConfigCenterAutoConfiguration.java)
-- [
-  `LocalConfigCenterProvider`](src/main/java/io/github/loadup/components/configcenter/local/LocalConfigCenterProvider.java)
+- [ `LocalConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-local/src/main/java/io/github/loadup/components/configcenter/local/autoconfigure/LocalConfigCenterAutoConfiguration.java)
+- [ `LocalConfigCenterProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-local/src/main/java/io/github/loadup/components/configcenter/local/LocalConfigCenterProvider.java)
 
 ### 分层与调用路径
 
@@ -96,16 +93,14 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `LocalConfigCenterAutoConfiguration`](src/main/java/io/github/loadup/components/configcenter/local/autoconfigure/LocalConfigCenterAutoConfiguration.java)
+- [ `LocalConfigCenterAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-local/src/main/java/io/github/loadup/components/configcenter/local/autoconfigure/LocalConfigCenterAutoConfiguration.java)
   是自动配置入口。
     -
     `@ConditionalOnProperty( prefix = "loadup.configcenter", name = "binder-type", havingValue = "local", matchIfMissing = true)`
 
 ### 配置归属
 
-- [
-  `LocalConfigCenterProperties`](src/main/java/io/github/loadup/components/configcenter/local/LocalConfigCenterProperties.java)
+- [ `LocalConfigCenterProperties`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/platform/loadup-components-configcenter/loadup-components-configcenter-binder-local/src/main/java/io/github/loadup/components/configcenter/local/LocalConfigCenterProperties.java)
   绑定 `loadup.configcenter.binder.local`。
 
 ### 设计取舍

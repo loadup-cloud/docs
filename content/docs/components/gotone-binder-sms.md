@@ -82,8 +82,7 @@ SDK/HTTP 传输尚未接入。业务侧通过逐收件人的状态与错误判�
 
 主要入口文件：
 
-- [
-  `SmsChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
+- [ `SmsChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
 - [`AliyunSmsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/AliyunSmsProvider.java)
 - [`HuaweiSmsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/HuaweiSmsProvider.java)
 - [`YunpianSmsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/YunpianSmsProvider.java)
@@ -100,8 +99,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `SmsChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
+- [ `SmsChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-sms/src/main/java/io/github/loadup/components/gotone/channel/sms/config/SmsChannelAutoConfiguration.java)
   是自动配置入口。
     -
     `@ConditionalOnProperty( prefix = "loadup.gotone.binder.sms.aliyun", name = "enabled", havingValue = "true", matchIfMissing = true)`

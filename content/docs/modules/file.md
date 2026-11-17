@@ -64,26 +64,9 @@ loadup:
 仅引入 core 时不注册 Controller；关闭 web 开关保留程序化服务，关闭模块 enabled 开关同时停止默认应用与持久化 Bean 装配。配置开关不控制
 Flyway 对已在 classpath 上的脚本执行。不要在已有数据库重复复制迁移脚本。
 
-## 统一接入契约
+## 公共分页与时间约定
 
-Java 消费方通过 `client.facade.XxxFacade` 注入公开业务入口；默认应用 Service 直接实现接口。引入 `*-core` 装配业务能力，引入
-`*-web` 才提供 Controller，Web 适配不再提供独立 enabled 开关。模块整体启停仍使用 `loadup.modules.file.enabled`。
-
-JSON Controller 显式返回 SuccessResponse，分页保留已有分页报文契约；异常由全局 WebMVC 处理。下载仍为流式响应。请求与 DTO
-字段声明 OpenAPI，凭证只写。持久化使用 Spring JDBC 和明确的数据映射；数据库连接与可信租户来源由消费工程配置。新 schema 迁移与本轮
-clean 编译、运行验证仍需本地执行。
-
-## 入参与分页约定
-
-写操作入参采用业务动作 Command，查询入参采用 Query，分页查询使用 PageQuery 后缀；纯 ID 查询复用公共 IdQuery。Facade 分页统一返回
-`PageDTO<T>`，HTTP 分页统一返回 `PageResponse<T>`：`result` 表示结果，`data` 为当前页数组，顶层 `pageInfo` 提供
-totalCount/pageIndex/pageSize。不再提供模块专用分页
-DTO。完整规则与示例见 [commons-dto](../../commons/loadup-commons-dto/)。
-
-## 通用输入与时间约定
-
-分页缺省 page=1、size=20，size 上限 100；非法输入使用稳定业务错误码。业务时间与持久化使用 Spring 共享的
-Clock，默认采用系统本地时区；测试或消费工程可提供 Clock Bean 覆盖默认值。
+分页请求、DTO、HTTP 响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。
 
 ## 错误码契约
 
@@ -91,24 +74,11 @@ Clock，默认采用系统本地时区；测试或消费工程可提供 Clock Be
 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的
 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
 
-## Unified pagination contract
+## Flyway 迁移目录
 
-Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fields remain `page` and `size`, with
-omitted/null values defaulting to 1 and 20; explicit invalid bounds are rejected and size is capped at 100. Business
-queries retain their filter fields and flat pagination fields but delegate policy to `PageQuery.normalized`, preserving
-their declared module error code. Mutable UPMS queries expose `pagination()` for validation at the service boundary.
-Sort whitelists remain business-specific.
-
-Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business
-Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and
-`PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and
-Controllers return PageResponse. No HTTP envelope enters a Gateway.
-
-The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page
-array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been
-removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed
-business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared
-contracts. No URL or frontend payload-field migration is required.
+正式迁移位于 `db/migration/framework/file/`，文件名、版本和 SQL 内容保持不变。消费应用在
+`loadup.flyway.locations` 中显式加入 `classpath:db/migration/framework/file`，与应用自己的迁移共同自动执行。
+不要用共享根 `classpath:db/migration` 表达应用隔离；它也会扫描依赖 JAR。已执行版本只追加升级，不改写历史。
 
 ---
 
@@ -164,7 +134,7 @@ web → app → domain
 - 所有子模块 parent 指向根 `loadup-parent`，所有内部依赖坐标由 BOM 管理。
 
 配置契约迁移到 `loadup.modules.file.*`，不保留旧前缀别名。自动装配、覆盖默认 Gateway 和关闭功能的回归源码见
-`FileAutoConfigurationTest`，本次未执行；真实数据库与 HTTP 验收仍需由消费工程完成。
+`FileAutoConfigurationTest`；真实数据库与 HTTP 验收由消费工程完成。
 
 ### 公共边界与映射约束
 

@@ -34,8 +34,7 @@ sidebar:
 
 ## 自动装配
 
-- [
-  `WebhookChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
+- [ `WebhookChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
     - 启用条件：
       `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.dingtalk", name = "enabled", havingValue = "true", matchIfMissing = true)`。
     - 启用条件：
@@ -68,14 +67,10 @@ Spring 装配使用 `loadup-components-runtime` 提供的应用 JSON mapper / Cl
 
 主要入口文件：
 
-- [
-  `WebhookChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
-- [
-  `DingtalkWebhookProvider`](src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/DingtalkWebhookProvider.java)
-- [
-  `FeishuWebhookProvider`](src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/FeishuWebhookProvider.java)
-- [
-  `WechatWebhookProvider`](src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/WechatWebhookProvider.java)
+- [ `WebhookChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
+- [ `DingtalkWebhookProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/DingtalkWebhookProvider.java)
+- [ `FeishuWebhookProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/FeishuWebhookProvider.java)
+- [ `WechatWebhookProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/provider/WechatWebhookProvider.java)
 
 ### 分层与调用路径
 
@@ -89,8 +84,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `WebhookChannelAutoConfiguration`](src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
+- [ `WebhookChannelAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/integration/loadup-components-gotone/channels/loadup-components-gotone-binder-webhook/src/main/java/io/github/loadup/components/gotone/channel/webhook/config/WebhookChannelAutoConfiguration.java)
   是自动配置入口。
     -
     `@ConditionalOnProperty( prefix = "loadup.gotone.binder.webhook.dingtalk", name = "enabled", havingValue = "true", matchIfMissing = true)`

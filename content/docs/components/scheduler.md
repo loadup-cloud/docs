@@ -15,7 +15,7 @@ title: "LoadUp Scheduler"
 | PowerJob            | 已实现   | 独立 Server，原生任务定义和运维       |
 | XXL-JOB / JobRunr   | 待实现   | 通过 SchedulerProvider 扩展           |
 | 单机重叠抑制        | 已实现   | 同名任务同一 JVM 同时只执行一次       |
-| 集群业务互斥        | 业务负责 | DelayedTask 使用数据库条件领取        |
+| 集群业务互斥        | 业务负责 | Task 使用数据库条件领取        |
 
 ## 接入
 
@@ -35,7 +35,9 @@ public class OrderScanner implements ScheduledTask {
 记录安全日志并继续其他任务，PowerJob binder 交给原生引擎判断实例失败。只引入 API 不启动调度；不存在 Provider 时不创建
 SchedulerTemplate，同时出现多个 Provider 则启动失败。
 
-DelayedTask 注册 `delayedtask.scan`，Transfer 注册 `transfer.scan`。按扫描频率及单次处理时长设置延迟 SLA；分钟轮询不是精确秒级定时器。
+Task 使用自身的 TaskWorker 轮询；Transfer 注册 `transfer.scan`。按扫描频率及单次处理时长设置延迟 SLA；分钟轮询不是精确秒级定时器。
+
+SchedulerTemplate 每次实际触发任务时，从当前 ExecutionContext 派生并绑定 runtime DeploymentDataScope，保留 PowerJob 等入口已建立的任务元数据，正常/异常退出均恢复外层绑定。同名重叠抑制、异常交给 binder 的语义保持不变。Transfer 等原生 ScheduledTask 扫描入口因此有明确部署范围；直接调用低层 dispatcher 的调用方仍须自行建立受信上下文。该范围不代表动态 schema 路由。
 
 ---
 
@@ -47,7 +49,7 @@ DelayedTask 注册 `delayedtask.scan`，Transfer 注册 `transfer.scan`。按扫
 ```text
 Local @Scheduled ─┐
                   ├─ SchedulerProvider → SchedulerTemplate → ScheduledTask
-PowerJob Worker ──┘                                      ├─ DelayedTaskDispatcher
+PowerJob Worker ──┘                                      ├─ TaskDispatcher
                                                         └─ TransferTaskProcessor
 ```
 

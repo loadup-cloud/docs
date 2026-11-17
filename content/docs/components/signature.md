@@ -204,7 +204,7 @@ Redis 调用契约测试不替代真实 Redis/OpenBao 验收。
 ```shell
 mvn clean -pl loadup-components/security/loadup-components-signature -am test \
   -Dtest=RequestSignatureTest,RequestSignatureAutoConfigurationTest,RedisRequestNonceStoreTest \
-  -Dsurefire.failIfNoSpecifiedTests=false -Dskip.spotbugs=true -Dskip.spotless=true
+  -Dsurefire.failIfNoSpecifiedTests=false -Dspotbugs.skip=true -Dspotless.skip=true
 ```
 
 ## 原有本地工具

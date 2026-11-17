@@ -54,7 +54,7 @@ JSON。接口返回的 `result`、`data` 以实际 HTTP 报文为准；SpringDoc
 
 ## 自动装配
 
-- [`UpmsWebAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UpmsWebAutoConfiguration.java)
+- [`UpmsWebAutoConfiguration`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UpmsWebAutoConfiguration.java)
 
 设计边界与装配路径见 [ARCHITECTURE.md](./#architecture)。
 
@@ -95,13 +95,13 @@ UPMS 的可选 Spring MVC Controller 适配模块。
 
 主要入口文件：
 
-- [`UpmsWebAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UpmsWebAutoConfiguration.java)
-- [`AuthenticationController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/AuthenticationController.java)
-- [`DepartmentController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/DepartmentController.java)
-- [`PermissionController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/PermissionController.java)
-- [`RoleController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/RoleController.java)
-- [`UserController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UserController.java)
-- [`AccountSecurityController`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/AccountSecurityController.java)
+- [`UpmsWebAutoConfiguration`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UpmsWebAutoConfiguration.java)
+- [`AuthenticationController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/AuthenticationController.java)
+- [`DepartmentController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/DepartmentController.java)
+- [`PermissionController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/PermissionController.java)
+- [`RoleController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/RoleController.java)
+- [`UserController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UserController.java)
+- [`AccountSecurityController`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/AccountSecurityController.java)
 
 ### 分层与调用路径
 
@@ -116,7 +116,7 @@ HTTP /api/** → Controller → App Service → Client DTO 响应
 
 ### 装配规则
 
-- [`UpmsWebAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-modules/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UpmsWebAutoConfiguration.java) 是自动配置入口。
+- [`UpmsWebAutoConfiguration`](https://github.com/loadup-cloud/loadup-modules/blob/main/loadup-modules-upms/loadup-modules-upms-web/src/main/java/io/github/loadup/modules/upms/web/UpmsWebAutoConfiguration.java) 是自动配置入口。
 
 ### 设计取舍
 

@@ -28,7 +28,7 @@ public void createOrder(OrderCreateCommand command) {
 }
 ```
 
-此组件不创建 HTTP `SecurityFilterChain`，也不验签。需要 JWT 认证时引入 `loadup-components-resource-server`；自定义认证场景可由应用自行提供
+此组件不创建 HTTP `SecurityFilterChain`，也不验签。需要 JWT 认证时引入 `loadup-components-oauth-server-core`；自定义认证场景可由应用自行提供
 `SecurityFilterChain`。
 
 `LoadUpUser` 实现 JDK `Principal`，`getName()` 返回稳定的 `userId`。因此 `Authentication.getName()` 与审计记录中的
@@ -63,8 +63,7 @@ public void createOrder(OrderCreateCommand command) {
 
 主要入口文件：
 
-- [
-  `AuthorizationAutoConfiguration`](src/main/java/io/github/loadup/components/authorization/config/AuthorizationAutoConfiguration.java)
+- [ `AuthorizationAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authorization/src/main/java/io/github/loadup/components/authorization/config/AuthorizationAutoConfiguration.java)
 
 ### 分层与调用路径
 
@@ -74,8 +73,7 @@ SecurityContext → Spring 方法安全拦截器 → @PreAuthorize / @Secured �
 
 ### 装配规则
 
-- [
-  `AuthorizationAutoConfiguration`](src/main/java/io/github/loadup/components/authorization/config/AuthorizationAutoConfiguration.java)
+- [ `AuthorizationAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-authorization/src/main/java/io/github/loadup/components/authorization/config/AuthorizationAutoConfiguration.java)
   是自动配置入口。
     -
     `@ConditionalOnProperty( prefix = "loadup.security.method-security", name = "enabled", havingValue = "true", matchIfMissing = true)`

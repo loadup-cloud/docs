@@ -39,7 +39,7 @@ loadup:
 应用提供 LocalKmsKeyStore Bean 时不读取上述文件或密码，保留代码装配入口。
 密钥的生成、导入和持久化由集成方负责；RSA 私钥条目需证书链，AES 使用 SecretKeyEntry。
 
-AuthServer 可通过 kms-api 复用签名和公钥读取，详见 [AuthServer 接入与轮换](../authserver/)。
+AuthServer 可通过 kms-api 复用签名和公钥读取，详见 [AuthServer 接入与轮换](../oauth-server/)。
 详细原生 KeyStore 示例及密文边界见 [KMS 接入](../kms/#local-binder)。
 
 ---
@@ -56,4 +56,4 @@ LocalKmsTemplate 支持 RSA SHA-256 PKCS1/PSS、AES-GCM、公钥和元数据；K
 不提供轮换或管理 Bean。local:v1: 密文保留原后端格式；不导出私钥。
 AuthServer 仅通过 kms-api 使用本组件，由集成应用选择 local binder；SAS 不依赖 local 的实现类。
 
-统一契约与边界见 [KMS 架构](../kms/#architecture)。本批次完成源码与静态检查，未执行构建或运行验收。
+统一契约与边界见 [KMS 架构](../kms/#architecture)。待验收：KeyStore 装载、密钥版本选择、重放及轮换。

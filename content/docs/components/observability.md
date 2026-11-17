@@ -72,8 +72,8 @@ EnvironmentPostProcessor 通过标准 `management.metrics.tags.application` 提�
 | JSON API 结果          | `loadup.api.responses`，`outcome=success/failure`                               |
 | 命名出站调用（含 KMS） | `loadup.http.calls`，配置中的 client、operation 与 `outcome=success/failure`    |
 | 分布式锁               | `loadup.lock.acquire`、`loadup.lock.hold`；有限 outcome/reason；释放失败计数    |
-| Outbox 投递与状态      | `loadup.outbox.delivery` 的 success/failure；pending、failed、oldest.age 状态量 |
-| Outbox handler Trace   | `loadup.outbox.handle` Observation                                              |
+| Task 投递与状态      | `loadup.task.delivery` 的 success/failure；pending、failed、oldest.age 状态量 |
+| Task handler Trace   | `loadup.task.handle` Observation                                              |
 | Resilience4j           | 官方 Micrometer binder 的标准名称和配置实例维度                                 |
 
 HTTP 非 2xx 与传输失败均计为 failure；标准 HTTP 客户端观测仍保留协议状态分类。组件从容器注入共享 `MeterRegistry` /
@@ -233,7 +233,7 @@ Servlet 请求
 `ObservabilityEnvironmentPostProcessor` 以最低优先级属性源补充 `management.metrics.tags.application`，不替换消费工程的显式设置；由
 Boot 自己将该标签装配到 Registry。输出日志默认值由传递引入的 commons-log 管理。
 
-HTTP、KMS、Outbox 和 Resilience4j 使用容器中的共享 Micrometer 实例，导出由 Boot 统一负责。HTTP/KMS 的命名操作计时、Outbox
+HTTP、KMS、Task 和 Resilience4j 使用容器中的共享 Micrometer 实例，导出由 Boot 统一负责。HTTP/KMS 的命名操作计时、Task
 的投递计时与状态量只采用有界配置/结果维度；自定义 outcome 统一 success/failure，官方原生指标保留标准名称和标签。不创建静态全局
 Registry 或新的导出 API。
 

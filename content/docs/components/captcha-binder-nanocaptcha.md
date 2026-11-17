@@ -50,8 +50,7 @@ loadup:
 
 ## 自动装配
 
-- [
-  `NanocaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
+- [ `NanocaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
     - 启用条件：`@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "nanocaptcha")`。
 
 ---
@@ -79,8 +78,7 @@ loadup:
 
 主要入口文件：
 
-- [
-  `NanocaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
+- [ `NanocaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
 - [`NanocaptchaProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/NanocaptchaProvider.java)
 
 ### 分层与调用路径
@@ -95,8 +93,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 装配规则
 
-- [
-  `NanocaptchaAutoConfiguration`](src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
+- [ `NanocaptchaAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/security/loadup-components-captcha/loadup-components-captcha-binder-nanocaptcha/src/main/java/io/github/loadup/components/captcha/nanocaptcha/autoconfigure/NanocaptchaAutoConfiguration.java)
   是自动配置入口。
     - `@ConditionalOnClass(ImageCaptcha.class)`
     - `@ConditionalOnProperty(prefix = "loadup.captcha", name = "binder-type", havingValue = "nanocaptcha")`

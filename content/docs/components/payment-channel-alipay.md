@@ -11,9 +11,9 @@ title: "Alipay 渠道适配"
 </dependency>
 ```
 
-本模块独立维护支付宝 OpenAPI v2 表单协议，并为 `ALIPAY_JSAPI` / `ALIPAY_H5` 注册
-`ChannelActionTypeCodec`；core 只按 kind/type 分发，不包含支付宝动作分支。AlipayProtocolClient、AlipayProtocolCodec、版本化凭证读取和测试已迁入；AlipayChannelProvider
-注册统一策略，退款操作委托 AlipayRefundAdapter；查单/关闭委托 AlipayPaymentAdapter。
+本模块维护支付宝 OpenAPI v2 表单协议，并为 `ALIPAY_JSAPI` / `ALIPAY_H5` 注册
+`ChannelActionTypeCodec`；core 只按 kind/type 分发，不包含支付宝动作分支。`AlipayChannelProvider` 注册统一策略，退款操作委托
+`AlipayRefundAdapter`，查单/关闭委托 `AlipayPaymentAdapter`。
 
 - 使用 loadup HttpTemplate 的 alipay 命名 HTTP 客户端及
   trade-pay、trade-create、trade-query、trade-close、trade-refund、refund-query 操作。URL 由可信配置提供，不接受商户传入任意网关地址。
@@ -27,14 +27,11 @@ title: "Alipay 渠道适配"
 - 时间源使用 Spring 共享的 Clock。运行/业务时区仍为系统本地；协议时间按支付宝官方 GMT+8 格式发送，成功时间按 GMT+8
   解释后转换为业务时区，不把无时区文本当成服务器当地时间。依据：[官方 SDK 时间常量](https://github.com/alipay/alipay-sdk-java-all/blob/master/v2/src/main/java/com/alipay/api/AlipayConstants.java)。
 
-支付宝启用时注册 Provider，已有付款码/JSAPI submit、直连 H5 本地动作、退款提交/查询和支付 query/close
-源码。动作持久化/商户返回、自动驱动、异步回调已有源码；服务商 H5 授权承载、证书模式与真实渠道验收仍待完成。直连 H5
-当前契约见 [H5 设计](../payment-channel/#architecture)。
+启用支付宝后注册 Provider，支持付款码/JSAPI 提交、直连 H5 本地动作、退款提交/查询、支付 query/close 与异步通知。
+动作快照及其客户端返回由 payment 维护。服务商 H5 授权承载、证书模式和真实渠道验收仍未完成。直连 H5 契约见[H5 设计](../payment-channel/#architecture)。
 
 协议依据：[支付宝官方 Java SDK](https://github.com/alipay/alipay-sdk-java-all/tree/master/v2)、[支付宝退款查询说明](https://aipay.alipay.com/docs/vibe-pay/ai-web-app-payment-qianyi/api-list/alipay-trade-fastpay-refund-query.html)
 。协议成功不等于资金成功；退款查询仍需核验退款状态和原请求身份。
-
-本批未执行测试、构建或真实渠道调用。
 
 ## 退款业务适配
 
@@ -60,9 +57,7 @@ NOT_FOUND 作为失败释放容量。
 payment 默认构建已包含插件。启用支付宝需选择 payment-alipay，后者配置支付宝 HTTPS 网关及
 trade-pay/trade-create/trade-query/trade-close/trade-refund/refund-query 六个命名操作，参见
 application-payment-alipay.yml；仅显式激活该运行 profile 才启用支付宝插件。凭证/授权 reference→version→绝对文件路径映射由可信
-Secret/外部配置注入，私钥仍由 KMS 持有。仅添加 profile 文件，未改动运行中 Kubernetes 配置。
-
-本批新增退款适配、Provider 注册及协议时间测试源码，均未编译或执行；未进行迁移、部署、密钥操作或真实支付/退款。
+Secret/外部配置注入，私钥仍由 KMS 持有。
 
 ## 支付查单与未付款关闭
 
@@ -83,10 +78,6 @@ revision 和实际 accountScopeHash。
 - 若关闭请求已到渠道但成功响应丢失，后续仅查到 TRADE_CLOSED 仍不足以证明未收款；后续需补持久操作日志/对账恢复，不能用缺字段或超时释放占用。该边界未以假成功掩盖。
 
 协议依据：[官方查单响应模型与状态定义](https://github.com/alipay/alipay-sdk-java-all/blob/master/v2/src/main/java/com/alipay/api/response/AlipayTradeQueryResponse.java)、[官方未付款关闭接口](https://developer.alibaba.com/docs/api.htm?apiId=1058&docType=4)。
-
-本批统一查单/关闭契约与调用方，复用 AlipayBindingGuard/AlipayResponseReader
-处理租户绑定和严格字段读取。新增状态映射、金额/身份防错、关闭竞态与复合来源测试源码，未执行验证。业务自动驱动已有源码，H5
-与微信仍待补；下节记录已补的付款码/JSAPI 提交源码。
 
 ## 付款码与 JSAPI 提交
 
@@ -109,9 +100,9 @@ out_trade_no，不自动重提或换号扣款。协议请求使用 GMT+8 的绝�
 
 依据：[官方付款码模型](https://github.com/alipay/alipay-sdk-java-all/blob/master/v2/src/main/java/com/alipay/api/domain/AlipayTradePayModel.java)、[官方 JSAPI 创单与应用作用域字段](https://github.com/alipay/alipay-sdk-java-all/blob/master/v2/src/main/java/com/alipay/api/domain/AlipayTradeCreateModel.java)。
 
-payment 已补动作快照、Y3 受理同事务记录和授权查询/重放返回；动作交易号须与受理观察一致，有效期不能延长。动作编解码归
-loadup-components-payment-channel-api/core，不由 payment 解释支付宝响应。Y2 前本地能力/参数预检及提交自动驱动已补源码；预检不加载凭证、不发送渠道请求。JSAPI
-创建响应/动作丢失后的原号查询恢复已有源码；支付宝签名回调/原号查证接线已有源码；待补：H5、关闭响应丢失恢复和真实沙箱验收。原指令只允许首次赢家提交，不能在任务重试时重建提交权。新增提交/请求工厂/身份与契约测试源码均未运行。
+payment 对动作快照与 Y3 受理在同一事务中记录；动作交易号须与受理观察一致，动作有效期不能延长。动作编解码归
+loadup-components-payment-channel-api/core，payment 不解析支付宝响应。Y2 前预检只检查本地能力和参数，不读取凭证或发送请求。JSAPI
+创建响应/动作丢失时沿原号查询恢复。首次提交权只授予原操作赢家，任务重试不能重建提交权。
 
 ## JSAPI 创单动作恢复
 
@@ -120,7 +111,7 @@ JSAPI、WAIT_BUYER_PAY 且原 payableUntil 按秒向下取整后尚未到期，�
 CREATE 的原绝对截止时间，重复查询不能延期，也不调用 CREATE/PAY。原付款码或买家输入不参与查询恢复。
 
 TRADE_SUCCESS/FINISHED 只返回真实成功观察；TRADE_CLOSED、NOT_FOUND/其他未知状态不能形成新动作或未收款证明。查询动作不是成功事实，payment
-仍在原门禁和生命周期下决定是否持久化/返回。协议映射与重复恢复/参数错配测试源码已补，未执行验证或实际调用。
+仍在原门禁和生命周期下决定是否持久化/返回。
 
 ## 原生签名通知
 
@@ -129,18 +120,17 @@ UTF-8 form/RSA2。解析拒绝重复字段、非法百分号/UTF-8 和超限收�
 sign/sign_type。签名之后必须匹配原请求号、签名应用、收款 seller、gross total_amount 与 trade_status_sync 类型。仅凭
 TRADE_SUCCESS/TRADE_CLOSED 文本不产生成功或未收款观察。
 
-AlipayCredentialReader.verificationKey 从原版本描述文件读取平台 RSA 公钥，核验 tenant/app/seller；无需解密商户私钥或服务商授权
+AlipayCredentialReader.verificationKey 从原版本描述文件读取平台 RSA 公钥，核验 app/seller/version；无需解密商户私钥或服务商授权
 token。payment 只有验证原绑定成功后才调用原号查询，成功时间仍沿标准查询 send_pay_date，避免回调 gmt_payment 与查单时间口径冲突。回调结果在
 Y3 提交后才返回 success，失败返回 failure。
 
-`loadup.payment.channel.alipay.notifications.notify-urls.<tenant>.<bindingRevisionId>` 是可信 HTTPS URL 目录，仅用于 CREATE
-附加 notify_url；不接受商户输入的任意通知地址。回调请求中的 tenant/endpoint
+`loadup.payment.channel.alipay.notifications.notify-urls.<bindingRevisionId>` 是可信 HTTPS URL 目录，仅用于 CREATE
+附加 notify_url；不接受商户输入的任意通知地址。回调请求中的 endpoint
 不能改变冻结收款账户。完整入口配置见消费应用的 payment 接入说明。
 
 依据：[官方异步通知](https://developer.alibaba.com/docs/doc.htm?articleId=105301&docType=1&treeId=193)、[官方 V1 RSA2 验签实现](https://github.com/alipay/alipay-sdk-java-all/blob/master/v2/src/main/java/com/alipay/api/internal/util/AlipaySignature.java)、[官方创单 notifyUrl 字段](https://github.com/alipay/alipay-sdk-java-all/blob/master/v2/src/main/java/com/alipay/api/request/AlipayTradeCreateRequest.java)
-。源码和测试源码未执行构建/测试或真实回调验收，证书模式/其他通知类型未在本批扩展。
 
-## 原退款号恢复（2026-10-24）
+## 原退款号恢复
 
 独立 recoverRefund 先调用原 alipay.trade.fastpay.refund.query，queryRefund 继续只读。只在原版本验签通过、code=10000、refund_status
 未返回，且 trade_no/out_trade_no/out_request_no 三项全部返回并精确匹配原固定退款时，才允许重复原 alipay.trade.refund。若
@@ -152,21 +142,20 @@ out_request_no 的幂等保证。提交即使成功也只受理，查询/提交�
 直接认领成功，不生成新退款号。恢复由原生任务调度，不在 HTTP 层自动循环。
 
 依据：[支付宝官方交易退款幂等说明](https://developer.alibaba.com/docs/doc.htm?articleId=106384&docType=1&treeId=327)
-。源码与测试源码已补，未运行构建、测试或真实退款；未满足上述明确条件的未知结果继续保留占用并等待后续查询/运维处置。
 
-## 2026-10-27 当前 H5 增量
-
-直连手机网站支付、本地动作独立来源及 UNKNOWN 原动作返回已补源码，配置与边界统一见 [H5 设计](../payment-channel/#architecture)
-。历史章节的 H5 未实现记录不代表当前源码。没有运行验证、部署、安装 SDK 或发起渠道调用。
-
-## 交易日账单地址申请（2026-10-28）
+## 交易日账单地址申请
 
 新增 `bill-download-url` 后端签名 operation、原始响应私有 exchange、直连/服务商原绑定的 AlipayStatementGrantClient。申请固定
 trade/账单日，明确缺失/限流错误，30 秒从请求发出计时；服务商 token 不进入凭证正文。仅返回隐藏 URL 的临时 grant，空文件标记不代表成功账单。
 
 实际 HTTPS 下载目标及可变明细 CSV 头尾尚待确认，未注册支付宝
 StatementProvider；现有官方来源仍仅微信。详见 [支付宝账单来源](../payment-channel/#architecture)
-。测试源码已补，未执行编译、测试或真实账单调用。
+
+## 验收状态与剩余事项
+
+未完成服务商 H5 授权承载、托管 cashier 授权、证书模式，以及账单下载/CSV 解析/支付宝 `StatementProvider`。原号退款恢复只在上文列明的已验签身份与状态条件下重提，`NOT_FOUND` 不能释放容量。
+
+待验收：真实沙箱/渠道的付款、退款、签名通知、原号恢复、关闭成功回复丢失和账单 grant；静态检查或测试源码不代表渠道与资金链路通过。
 
 ---
 

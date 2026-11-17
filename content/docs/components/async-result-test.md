@@ -29,12 +29,12 @@ mvnd clean spotless:apply verify \
   -pl :loadup-components-async-result-test -am \
   -Dtest=AsyncResultTest,AsyncResultAutoConfigurationTest,LocalAsyncResultProviderTest \
   -Dsurefire.failIfNoSpecifiedTests=false \
-  -Dit.test=RedisAsyncResultIT,AsyncResultOutboxIT,AsyncResultKafkaIT \
-  -Dfailsafe.failIfNoSpecifiedTests=false -Dskip.spotbugs=false
+  -Dit.test=RedisAsyncResultIT,AsyncResultTaskIT,AsyncResultKafkaIT \
+  -Dfailsafe.failIfNoSpecifiedTests=false -Dspotbugs.skip=false
 ```
 
-Kafka 用例创建独立 request/reply Topic，两个消费者完成真实双向通信，结果接收端通过另一 Redis 客户端完成等待。Outbox 用例使用真实
-MySQL，验证事务提交后的处理与事务中等待拒绝。容器 reuse=false，测试不连接业务数据库。原生 Kafka 客户端及 Outbox 仅为 test
+Kafka 用例创建独立 request/reply Topic，两个消费者完成真实双向通信，结果接收端通过另一 Redis 客户端完成等待。Task 用例使用真实
+MySQL，验证事务提交后的处理与事务中等待拒绝。容器 reuse=false，测试不连接业务数据库。原生 Kafka 客户端及 Task 仅为 test
 scope。
 
 ## 本次验收

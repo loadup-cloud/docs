@@ -31,9 +31,9 @@ UserServiceBatchIT 的执行顺序是 loadYaml → resolveVariables → resolveV
 ## 运行命令
 
 ```shell
-mvnd clean test -pl loadup-testify/loadup-testify-test -am   -Dtest=ScenarioAssertTest,TestifyAutoConfigurationTest   -Dsurefire.failIfNoSpecifiedTests=false
+mvnd clean test -pl loadup-testify-test -am   -Dtest=ScenarioAssertTest,TestifyAutoConfigurationTest   -Dsurefire.failIfNoSpecifiedTests=false
 
-mvnd clean test -pl loadup-testify/loadup-testify-test -am   -Dtest=UserServiceIT,UserServiceBatchIT   -Dsurefire.failIfNoSpecifiedTests=false
+mvnd clean test -pl loadup-testify-test -am   -Dtest=UserServiceIT,UserServiceBatchIT   -Dsurefire.failIfNoSpecifiedTests=false
 ```
 
 第二条使用 Surefire 显式选取 IT，要求可用 Docker，可能拉取 MySQL 镜像。容器复用不保证表数据隔离。已有示例整表清理与 schema
@@ -48,7 +48,7 @@ mvnd clean test -pl loadup-testify/loadup-testify-test -am   -Dtest=UserServiceI
 5. 固定需要重放的变量，明确同步/异步提交边界。
 6. 使用实际 HTTP 输出验证响应序列化，用数据库查询验证持久化副作用。
 
-本轮文档更新没有执行上述命令；源码覆盖范围不代表运行通过。完整入门见 [Testify README](../)。
+执行时记录版本和结果；源码覆盖范围不代表运行通过。完整入门见 [Testify README](../)。
 
 ---
 
@@ -58,7 +58,7 @@ mvnd clean test -pl loadup-testify/loadup-testify-test -am   -Dtest=UserServiceI
 ### 职责
 
 test 模块位于依赖图最上层，组合 Testify starter、Spring Boot Test、Testcontainers、MySQL driver 和示例服务。它验证组件行为，不是框架对外发布的业务
-API。
+API。示例集成测试使用 MySQL；这与 Pay 的 PostgreSQL 数据库基线不同，也不验证 PostgreSQL 方言兼容性。
 
 ### 分层
 

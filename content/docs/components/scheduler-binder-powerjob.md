@@ -23,8 +23,7 @@ powerjob:
 ```
 
 先部署 Server 并创建应用。在管理台创建 BUILT_IN / STANDALONE / CRON 任务：processorInfo=`loadupSchedulerProcessor`
-，jobParams=`delayedtask.scan`，cron=`0 * * * * ?`，建议 maxInstanceNum=1、instanceRetryNum=0、taskRetryNum=0。Transfer
-另建任务，jobParams=`transfer.scan`。业务重试由各业务组件管理，避免平台重试与业务重试叠加。
+，jobParams=`transfer.scan`，cron=`0 * * * * ?`，建议 maxInstanceNum=1、instanceRetryNum=0、taskRetryNum=0。Task 使用自身轮询器，无需创建 PowerJob 扫描任务。业务重试由各业务组件管理，避免平台重试与业务重试叠加。
 
 不使用 PowerJob 时不要引入此 binder；若主动保留两个 binder 依赖，必须额外关闭未使用的原生 Worker/Client，binder 选择不会覆盖
 PowerJob 官方配置。
@@ -175,7 +174,7 @@ payload。不同实例标识不进入指标标签，跨进程 Trace 不自动串
 
 ### 业务任务迁移
 
-旧引擎补丁和 RetryTask 模型已移除。新 Scheduler 仅抽象扫描器唤醒，DelayedTask 独立管理业务截止时间。Gotone 保持发送能力，告警集成由官方
+旧引擎补丁和 RetryTask 模型已移除。新 Scheduler 仅抽象扫描器唤醒，Task 独立管理业务截止时间。Gotone 保持发送能力，告警集成由官方
 PowerJob 与消费方明确接入。
 
 Transfer 是实际消费方：提交与源文件引用在业务数据库事务中完成，Scheduler 通过本地 @Scheduled 或 PowerJob binder 领取
@@ -188,5 +187,5 @@ binder 内单测验证配置校验、Client 覆盖/关闭、结果/异常观测�
 Observation 恢复及 ScheduledTask 分派。测试不启动独立 Server，不下载 Server jar；不再维护自定义 Server 启动器、Server
 专用测试模块或启动 profile。此前真实 Server 运行记录不代表当前仍保留自动化平台验收。
 
-平台通信、动态改期、实例重试、Server 重启恢复、多节点接管及容量由独立部署环境验收。Transfer / DelayedTask
+平台通信、动态改期、实例重试、Server 重启恢复、多节点接管及容量由独立部署环境验收。Transfer / Task
 的真实数据库测试仍验证其各自的持久化队列语义，不依赖 PowerJob Server。
