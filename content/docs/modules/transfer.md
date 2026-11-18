@@ -82,13 +82,18 @@ loadup:
 
 ## 调度配置
 
-应用引入 `loadup-components-scheduler-binder-local`，设置 `loadup.scheduler.binder-type=local` 即使用 Spring @Scheduled
-默认每分钟扫描。Transfer 注册名为 `transfer.scan`，业务模块仅依赖 Scheduler API，无 PowerJob 依赖。没有 binder 时任务保持
-QUEUED。
+Transfer 注册名为 `transfer.scan` 的任务。应用安装所需的 Scheduler binder，并在统一配置中指定扫描频率。
 
-使用 PowerJob 时改引入 `loadup-components-scheduler-binder-powerjob`，设置 binder-type=powerjob 并配置原生 Worker。在管理台创建
-BUILT_IN / STANDALONE / CRON 任务：processorInfo=`loadupSchedulerProcessor`、jobParams=`transfer.scan`，建议 cron=
-`0 * * * * ?`、maxInstanceNum=1、instanceRetryNum=0、taskRetryNum=0。
+```yaml
+loadup:
+  scheduler:
+    binder-type: local
+    tasks:
+      - name: transfer.scan
+        cron: "0 * * * * *"
+```
+
+PowerJob 部署使用 `binder-type: powerjob` 和相同的任务配置。任务由 PowerJob binder 同步。未配置扫描时，任务保持 QUEUED。
 
 每次扫描最多 `loadup.modules.transfer.dispatch-batch-size`（默认 20，上限 100）项 QUEUED 任务。扫描器遍历处理，单项失败存为
 FAILED，扫描正常返回不代表所有业务任务成功。失败任务通过现有 retry API 重排；RUNNING 不自动重排。业务处理器以 taskId
