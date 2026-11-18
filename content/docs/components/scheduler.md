@@ -41,7 +41,7 @@ Local 使用应用的 JVM 时区，PowerJob 使用 Server 的 JVM 时区。切�
 
 任务名以字母开头，最长 64 字符，可包含字母、数字、下划线、点和连字符。配置里列出的任务必须有同名 Bean，名称重复、Cron 非法或选定的 binder 缺失都会导致启动失败。未列出的 Bean 可通过 `SchedulerTemplate.trigger(name)` 手动执行。仅引入 API 可用于提供任务 Bean。
 
-现有应用从 `loadup.scheduler.local.interval` 和 `initial-delay` 迁移时，需要为每个任务填写 Cron。Cron 按日历时间触发。已手工创建 PowerJob 任务的部署按 binder 文档迁移。持久化 Task 继续由自己的 TaskWorker 轮询。
+现有应用从 `loadup.scheduler.local.interval` 和 `initial-delay` 迁移时，需要为每个任务填写 Cron。Cron 按日历时间触发。已手工创建 PowerJob 任务的部署按 binder 文档迁移。持久化 Task 默认本地轮询，也可配置 `loadup.task.trigger: scheduler` 使用同一个 Scheduler。Task 自动提供每分钟一次的 `loadup-task-scan` 默认计划；同名显式 Cron 优先。
 
 - [Local binder](../scheduler-binder-local/)
 - [PowerJob binder](../scheduler-binder-powerjob/)

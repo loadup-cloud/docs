@@ -43,8 +43,9 @@ loadup:
     db-type: pg
     table-prefix: loadup_
     worker-enabled: true
-    poll-interval: PT1S
-    batch-size: 20
+    trigger: local
+    poll-interval: PT1M
+    batch-size: 10
     max-attempts: 8
     lease: PT2M
     retry-delay: PT5S
@@ -60,7 +61,21 @@ loadup:
 
 `table-prefix` 默认是 `loadup_`，应用于 `task` 和 `task_operation`。前缀可留空，非空时以小写字母开头，只含小写字母、数字和下划线，最多 49 个字符。初始化脚本使用默认前缀。自定义时，先在应用的迁移中替换表及索引的 `loadup_` 前缀，再将同一值配置到 `loadup.task.table-prefix`。已有表的前缀变更由应用迁移处理。
 
-worker-enabled=false 仍允许登记和管理任务，独立执行节点可调用 TaskDispatcher.execute()。`loadup.task.task-type` 可限定本执行节点领取的任务类型，用于隔离慢任务与关键投递的执行容量；未设置时领取所有类型。Task 自带统一轮询，不再依赖 Scheduler binder；Scheduler 可继续用于其他扫描器。所有后台访问使用应用固定 schema，不恢复请求身份。
+`trigger` 选择扫描入口。默认 `local`，上一批结束后按 `poll-interval` 等待，默认 1 分钟。`scheduler` 关闭本地轮询，由 Scheduler 唤醒同一个 Dispatcher。每次最多处理 `batch-size` 条（默认 10），逐条领取后立即执行。
+
+使用 Scheduler 时，应用需引入一个 Scheduler binder（Local 或 PowerJob）。例如：
+
+```yaml
+loadup:
+  task:
+    trigger: scheduler
+  scheduler:
+    binder-type: local
+```
+
+Task 自动注册 `loadup-task-scan`，每分钟触发一次，可通过 `loadup.scheduler.tasks` 中同名条目的 `cron` 覆盖。Scheduler 模式忽略 `poll-interval`。同一部署的副本使用同一种触发方式；同一个 PowerJob App 的执行副本应使用相同的任务清单和 Handler 范围。
+
+实例只领取本地已注册 Handler 的任务类型。`loadup.task.task-type` 可进一步缩小范围；没有可执行 Handler 时不启动扫描。`worker-enabled: false` 关闭自动扫描，仍可登记和管理任务，也可手工调用 `TaskDispatcher.execute()`。所有后台访问使用应用固定 schema，不恢复请求身份。
 
 ## 管理
 
