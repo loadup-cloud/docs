@@ -90,7 +90,7 @@ BigDecimal 保留十进制语义，超出 JavaScript 安全整数范围但在 lo
 IntegerJsonContractTest 已补对应回归源码，尚未运行。MVC mapper 的既有定制及声明式 HTTP 客户端均沿用此配置。
 
 枚举只接受已声明的字符串符号；通过 Jackson 3 的 EnumFeature.FAIL_ON_NUMBERS_FOR_ENUMS 显式启用校验，
-不允许以数字 ordinal 替代，未知符号拒绝。该开关不再属于 DeserializationFeature，Jackson 3.2.3 默认关闭，不能直接删除配置后依赖默认值。
+不允许以数字 ordinal 替代，未知符号拒绝。该开关属于 EnumFeature，在当前 Jackson 版本中默认关闭。
 
 ---
 

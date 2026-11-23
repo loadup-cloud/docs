@@ -55,7 +55,7 @@ resilience4j:
 
 ## 设计说明
 
-- 版本跟随 Spring Cloud 2025.1.x 管理的 **2.3.0**（BOM 统一，勿单独改版本）
+- 版本跟随 Spring Cloud 2026.0.x 管理的 **2.4.0**（BOM 统一，勿单独改版本）
 - Boot 4 兼容：使用 `resilience4j-spring6` 自行装配，不依赖官方 `spring-boot3` starter
 - 扩展点：新增 `-binder-redis`（分布式熔断/限流状态）时，业务代码零修改
 - 内部消费者：gotone（provider 级熔断/重试）
@@ -132,7 +132,7 @@ resilience4j:
 
 ### 版本与兼容性
 
-- resilience4j 版本由 `loadup-framework-bom` BOM 统一管理（`resilience4j.version=2.3.0`，与 Spring Cloud 2025.1.x 管理版本一致，避免
+- resilience4j 版本由 `loadup-framework-bom` BOM 统一管理（`resilience4j.version=2.4.0`，与 Spring Cloud 2026.0.x 管理版本一致，避免
   first-declared-wins 覆盖）；
 - 本项目 Spring Boot 4.1 将 `spring-boot-starter-aop` 更名为 `spring-boot-starter-aspectj`，binder 使用后者；
 - 若 Resilience4j 官方发布 `spring-boot4` 模块，评估后可直接替换 binder 内部装配，facade 不变。

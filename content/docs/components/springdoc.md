@@ -45,22 +45,12 @@ scalar:
 
 ## Jackson 兼容性
 
-当前使用 SpringDoc 3.1.1，支持 Spring Boot 4 与业务侧 Jackson 3 共存；其 Swagger Core 2.2.55 仍使用 Jackson 2 进行 OpenAPI
-模型解析和文档序列化，因此组件并非纯 Jackson 3 依赖。
+SpringDoc 3.2.1 面向 Spring Boot 4.2，使用 Swagger Core 3.0.0 和 Jackson 3 解析模型并生成 OpenAPI 文档。直接声明 Swagger 注解时使用
+`io.swagger.core.v3:swagger-annotations`。Java 注解的导入仍为 `io.swagger.v3.oas.annotations`。
 
-| 用途                          | 坐标                                                           | BOM 版本 |
-|-------------------------------|----------------------------------------------------------------|----------|
-| 业务 JSON                     | `tools.jackson.core:jackson-core` / `jackson-databind`         | 3.2.3    |
-| SpringDoc / Swagger 内部 JSON | `com.fasterxml.jackson.core:jackson-core` / `jackson-databind` | 2.21.7   |
-| 共享注解                      | `com.fasterxml.jackson.core:jackson-annotations`               | 2.22     |
-
-两代 core/databind 的包名和坐标不同，可以共存。不要排除 SpringDoc 传递引入的 Jackson 2，或将它的 ObjectMapper 替换成
-Jackson 3。Jackson 3 继续使用 `com.fasterxml.jackson.annotation` 注解；该命名空间不代表业务 JSON 退回 Jackson 2。业务的
-Jackson 3 Module、序列化器配置不会自动成为 Swagger 内部 Jackson 2 的配置，定制 Schema 仍使用 SpringDoc / Swagger 的扩展点。
-
-Jackson 2 由 LoadUp BOM 的 `jackson-2-bom.version=2.21.7` 统一管理，包括 YAML、JSR310 等模块；消费方不需要单独给 core
-添加版本。官方兼容说明见 [SpringDoc](https://springdoc.org/)，上游两代 Jackson
-依赖背景见 [SpringDoc #3169](https://github.com/springdoc/springdoc-openapi/issues/3169)。
+MVC 业务 JSON 与 Swagger 分别配置各自的 Jackson 3 mapper。定制 OpenAPI Schema 时使用 SpringDoc / Swagger 的扩展点。
+Swagger Core 的 mapper 可通过 `ObjectMapperFactory.addCustomizer` 配置。详见
+[SpringDoc 3.2.1 发布说明](https://github.com/springdoc/springdoc-openapi/releases/tag/v3.2.1)。
 
 ---
 
@@ -100,13 +90,7 @@ Bean；应用自定义 `OpenAPI` Bean 时自动退让。
 
 ### Jackson 职责边界
 
-SpringDoc 3.1.1 通过 Swagger Core 2.2.55 使用 `com.fasterxml.jackson` 的 Jackson 2 模型解析器和序列化器。Boot 4 的 HTTP
-消息转换及 LoadUp 业务 JSON 使用 `tools.jackson` 的 Jackson 3；LoadUp 不创建第二套业务 ObjectMapper，也不让 Swagger 的
-mapper 接管 MVC。
+SpringDoc 3.2.1 通过 Swagger Core 3.0.0 的 Jackson 3 mapper 解析模型并序列化 OpenAPI。MVC 的业务 JSON 由应用的消息转换器
+处理。Swagger mapper 与 MVC mapper 各自装配。
 
-BOM 独立管理两代依赖：Jackson 3 为 3.2.3，Jackson 2 BOM 为 2.21.7；共享 annotations 显式固定为 2.22。保留上游 Jackson 2
-依赖，统一升级其 core/databind/dataformat/datatype，避免单独替换 core 或排除依赖引起文档生成失败。上游迁移到 Jackson 3
-后再评估移除旧依赖，不通过强制替换包名实现迁移。
-
-`SpringDocHttpIT` 使用真实嵌入式服务器验证 `/v3/api-docs` 元数据、Schema、安全配置和业务 JSON
-请求/响应；它验证两代依赖共存，不等同于所有业务自定义序列化规则都能被 OpenAPI 自动推导。
+`SpringDocHttpIT` 覆盖真实嵌入式服务器上的 `/v3/api-docs` 元数据、Schema、安全配置和业务 JSON 请求/响应。

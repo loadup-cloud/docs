@@ -108,7 +108,7 @@ public MerchantEligibilityDTO authorizeNewOrder(String payee) {
 跨进程只传 protobuf 消息；字段号、`reserved`、`optional` presence 和未知枚举拒绝语义与传统 IDL 一致。
 MapStruct 只负责 Wire↔client DTO 转换，`RpcScalarMapper` 处理 `Timestamp`/`OffsetDateTime`/`BigDecimal`。
 
-Dubbo 3.3.6 面向 Spring Boot 2.7/3.x 发布，本仓库运行在 Spring Boot 4.1.1。编译期已验证，运行时仍需在真实环境完成
+Dubbo 3.3.6 面向 Spring Boot 2.7/3.x 发布，本仓库运行在 Spring Boot 4.2.0。仍需在真实环境完成
 启动、JWT、protobuf 编解码和滚动发布验收。原生配置参考：
 [Dubbo Triple IDL](https://dubbo.apache.org/en/overview/mannual/java-sdk/tasks/protocols/triple/idl/)。
 
