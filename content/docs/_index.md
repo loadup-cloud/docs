@@ -17,3 +17,5 @@ LoadUp 是供 Spring Boot 应用按需引入的框架/SDK。使用 `loadup-frame
 | 编写集成测试 | [Testify](testing/) |
 
 每个能力的页面先介绍用途、接入与配置，再说明内部设计。技术子模块可从所属能力页继续查看。
+
+[Pay 支付渠道](pay/)提供支付渠道契约、执行 API 和厂商适配器。

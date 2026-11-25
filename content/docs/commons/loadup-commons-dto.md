@@ -101,7 +101,7 @@ contracts. No URL or frontend payload-field migration is required.
 
 持久化基类使用 `io.github.loadup.components.database.dataobject.BaseDO`，来自 `loadup-components-database`。
 共享映射配置使用 `io.github.loadup.components.runtime.mapping.LoadUpMapStructConfig`，来自 `loadup-components-runtime`。
-渠道基础词汇和 `ChannelAmounts.cnyAmount` 来自 `loadup-components-payment-channel-contracts`；商业合约引用来自 Pay
+渠道基础词汇和 `ChannelAmounts.cnyAmount` 来自 `loadup-pay-payment-channel-contracts`；商业合约引用来自 Pay
 的 `pay-contracts-commercial`。消费方按实际源码直接声明依赖，不通过 DTO 隐式引入这些能力。
 
 ---
@@ -194,5 +194,5 @@ contracts. No URL or frontend payload-field migration is required.
 
 持久化基类使用 `io.github.loadup.components.database.dataobject.BaseDO`，来自 `loadup-components-database`。
 共享映射配置使用 `io.github.loadup.components.runtime.mapping.LoadUpMapStructConfig`，来自 `loadup-components-runtime`。
-渠道基础词汇和 `ChannelAmounts.cnyAmount` 来自 `loadup-components-payment-channel-contracts`；商业合约引用来自 Pay
+渠道基础词汇和 `ChannelAmounts.cnyAmount` 来自 `loadup-pay-payment-channel-contracts`；商业合约引用来自 Pay
 的 `pay-contracts-commercial`。消费方按实际源码直接声明依赖，不通过 DTO 隐式引入这些能力。

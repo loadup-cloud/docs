@@ -58,7 +58,7 @@ resilience4j:
 - 版本跟随 Spring Cloud 2026.0.x 管理的 **2.4.0**（BOM 统一，勿单独改版本）
 - Boot 4 兼容：使用 `resilience4j-spring6` 自行装配，不依赖官方 `spring-boot3` starter
 - 扩展点：新增 `-binder-redis`（分布式熔断/限流状态）时，业务代码零修改
-- 内部消费者：gotone（provider 级熔断/重试）
+- Modules Notification 的 [Gotone](../../modules/notification-gotone/) 使用 Provider 级熔断与重试。
 
 ---
 

@@ -23,7 +23,7 @@ title: "LoadUp Modules"
 
 随后引入 `loadup-modules-upms-web`、`loadup-modules-file-client` 等具体 JAR 时省略 version。
 Modules BOM 已导入配套的 `loadup-framework-bom`，可同时管理直接使用的框架依赖版本；配套 Framework 版本在 Modules BOM 内维护。
-[Modules BOM](bom/) 覆盖当前 21 个发布 JAR，不管理聚合目录或内部测试模块。
+[Modules BOM](bom/) 覆盖当前发布的 JAR，不管理聚合目录或内部测试模块。
 
 ## 发布
 
@@ -49,7 +49,7 @@ mvnd clean deploy -Prelease
 | [Audit](audit/)               | 审计记录、查询与可选 MVC 采集           |
 | [Dictionary](dictionary/)     | 字典类型、条目及启用选项                |
 | [File](file/)                 | 文件元数据、访问控制、引用与清理        |
-| [Notification](notification/) | 持久化收件箱与 Gotone IN_APP 渠道       |
+| [Notification](notification/) | 站内收件箱与 [Gotone 多渠道投递](notification-gotone/)       |
 | [Transfer](transfer/)         | 导入导出任务、进度、结果与重试          |
 
 ## 分层选择
