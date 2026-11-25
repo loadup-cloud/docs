@@ -15,20 +15,20 @@ title: "LoadUp Cache Component"
 ```xml
 <dependency>
     <groupId>io.github.loadup-cloud</groupId>
-    <artifactId>loadup-components-cache-api</artifactId>
+    <artifactId>loadup-components-kv-api</artifactId>
 </dependency>
 <!-- 三选一，与 loadup.cache.type 对应 -->
 <dependency>
     <groupId>io.github.loadup-cloud</groupId>
-    <artifactId>loadup-components-cache-binder-caffeine</artifactId>
+    <artifactId>loadup-components-kv-binder-caffeine</artifactId>
 </dependency>
 <dependency>
     <groupId>io.github.loadup-cloud</groupId>
-    <artifactId>loadup-components-cache-binder-redis</artifactId>
+    <artifactId>loadup-components-kv-binder-redis</artifactId>
 </dependency>
 <dependency>
     <groupId>io.github.loadup-cloud</groupId>
-    <artifactId>loadup-components-cache-binder-jetcache</artifactId>
+    <artifactId>loadup-components-kv-binder-jetcache</artifactId>
 </dependency>
 ```
 

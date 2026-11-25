@@ -42,6 +42,10 @@ loadup:
 AuthServer 可通过 kms-api 复用签名和公钥读取，详见 [AuthServer 接入与轮换](../oauth-server/)。
 详细原生 KeyStore 示例及密文边界见 [KMS 接入](../kms/#local-binder)。
 
+## 保留历史验签公钥
+
+更换同名 RSA 签名密钥前，将旧证书以 `<alias>.history.<label>` 作为受信证书条目导入新 KeyStore，例如 `payments.history.2026-11`。保留 `payments` 作为当前私钥条目。用新 KeyStore 重启后，binder 按公钥指纹查询和验证新旧签名。证书条目可在旧签名失效后移除。
+
 ---
 
 <a id="architecture"></a>
@@ -52,7 +56,7 @@ LocalKmsProperties 绑定 loadup.kms.local，默认 PKCS12，通过 ResourceLoad
 密码从指定的 Spring Environment 属性名获取；临时 char[] 在加载结束时清空，LocalKmsKeyStore 保留自身的防御性副本。
 应用自定义 LocalKmsKeyStore 时跳过文件与密码读取。无配置或加载失败时终止装配，不生成临时替代密钥。
 
-LocalKmsTemplate 支持 RSA SHA-256 PKCS1/PSS、AES-GCM、公钥和元数据；KeyStore alias 对应名称，只支持版本 1。
+LocalKmsTemplate 在 Local binder 中装配，密码操作由 [共享 KeyStore 模块](../kms-keystore/#architecture) 实现。
 不提供轮换或管理 Bean。local:v1: 密文保留原后端格式；不导出私钥。
 AuthServer 仅通过 kms-api 使用本组件，由集成应用选择 local binder；SAS 不依赖 local 的实现类。
 

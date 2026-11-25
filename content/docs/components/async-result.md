@@ -55,7 +55,10 @@ loadup:
       max-retained: 100000
 ```
 
-默认 enabled=false，binder-type=local，启用时 namespace 必填。max-pending 同时限制每个 Template
+默认 enabled=false，binder-type=local，启用时 namespace 必填。应用选择 binder 后，默认 Template 需要一个可注入的
+`AsyncResultProvider`。缺少 Provider 或存在多个无法选定的 Provider 时，应用启动失败。也可以提供自己的 `AsyncResultTemplate`。
+
+max-pending 同时限制每个 Template
 的本地等待数量和仍在执行的发送回调；等待超时不会立即归还尚未退出的回调执行许可，防止阻塞回调无限累积。max-retained 仅限制
 Local 存储条数，满时拒绝注册，不驱逐正在等待的记录。Redis 的存储预算由 TTL、应用流量和 Redis 容量共同控制，不提供全局条数配额。结果大小按业务
 payload 的 UTF-8 字节数计算；MQ 和 HTTP 入口还应配置自身载荷上限。
@@ -139,7 +142,7 @@ loadup.async_result.pending、loadup.async_result.wait（outcome）、loadup.asy
 loadup.async_result.read_failures；不把订单号、租户或 correlationId 用作标签。不打印结果 payload、凭证及 Jackson
 异常消息。内部协议无日期字段；业务 DTO 日期格式沿用应用的 Jackson 配置和本地时区契约。
 
-测试及命令见 [test README](../async-result-test/)，包括 Local 并发、Redis 两客户端、Kafka
+测试位于 Local 与 Redis binder，包括 Local 并发、Redis 两客户端、Kafka
 request/reply 和真实 PostgreSQL Task 提交顺序。测试编写不代表已执行；运行时应记录所执行的测试、环境及结果。内部设计见
 [ARCHITECTURE.md](./#architecture)。
 
@@ -153,6 +156,10 @@ request/reply 和真实 PostgreSQL Task 提交顺序。测试编写不代表已�
 Mode A：API 提供 AsyncResultTemplate、AsyncDispatch、AsyncReplyKey 与单后端 SPI AsyncResultProvider；Local 使用
 Caffeine，Redis 使用 Redisson。API 不依赖任何 binder，不引入 MQ。test 模块通过真实 Kafka/MySQL/Redis 验证组合路径，传输依赖仅为
 test scope。所有子模块直接继承根 parent，版本通过 BOM 管理。
+
+各 binder 通过自己的 `AutoConfiguration.imports` 注册配置，并按 `binder-type` 提供 `AsyncResultProvider`。
+启用组件后，公共配置通过 Bean 方法参数注入 Provider 创建 Template。Spring 在创建 Template 时解析依赖，因此 binder 可以在公共配置之后注册。
+应用自定义 `AsyncResultTemplate` 时，默认 Template 退让。
 
 ### 状态与并发
 

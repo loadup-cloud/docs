@@ -19,7 +19,7 @@ Cache 组件的 facade 模块：启用 Spring Cache 注解（`@EnableCaching`）
 在引入 `loadup-framework-bom` BOM 的应用中添加：
 
 ```xml
-<dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-components-cache-api</artifactId></dependency>
+<dependency><groupId>io.github.loadup-cloud</groupId><artifactId>loadup-components-kv-api</artifactId></dependency>
 ```
 
 通过 `loadup.cache.type` 选择 Caffeine、Redis 或 JetCache；业务层使用 Spring Cache 注解与 CacheManager。

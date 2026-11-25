@@ -13,7 +13,7 @@ sidebar:
 ```xml
 <dependency>
   <groupId>io.github.loadup-cloud</groupId>
-  <artifactId>loadup-components-cache-binder-caffeine</artifactId>
+  <artifactId>loadup-components-kv-binder-caffeine</artifactId>
 </dependency>
 ```
 

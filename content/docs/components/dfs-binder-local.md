@@ -1,5 +1,5 @@
 ---
-title: "DFS local binder"
+title: "DFS Binder Local"
 sidebar:
   exclude: true
 ---
@@ -50,11 +50,11 @@ presigned URL or multipart capability and requires a filesystem visible to the a
 主要入口文件：
 
 - [ `LocalDfsAutoConfiguration`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/autoconfigure/LocalDfsAutoConfiguration.java)
-- [`LocalDfsProvider`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/LocalDfsProvider.java)
+- [`LocalDfsTemplate`](https://github.com/loadup-cloud/loadup-framework/blob/main/loadup-components/data/loadup-components-dfs/loadup-components-dfs-binder-local/src/main/java/io/github/loadup/components/dfs/local/LocalDfsTemplate.java)
 
 ### 分层与调用路径
 
-`DefaultDfsService` 把对象操作委派给唯一的 `DfsProvider`；预签名与分片操作取决于 provider 能力。
+`LocalDfsTemplate` 直接实现 `DfsTemplate`，处理本地文件和元数据。
 
 ```text
 业务代码 → API/facade → 当前 binder → 第三方引擎或基础设施
@@ -68,7 +68,7 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
   是自动配置入口。
     -
     `@ConditionalOnProperty(prefix = "loadup.dfs", name = "binder-type", havingValue = "local", matchIfMissing = true)`
-    - `@ConditionalOnMissingBean(DfsProvider.class)`
+    - `@ConditionalOnMissingBean(DfsTemplate.class)`
 
 ### 配置归属
 
@@ -77,6 +77,6 @@ binder 实现框架契约，把实现库及其配置隔离在业务 API 之外�
 
 ### 设计取舍
 
-选择独立 binder，使文件存储实现的依赖留在集成应用；替换底层实现时，业务侧仍使用 `DfsService` 契约。
+选择独立 binder，使文件存储实现的依赖留在集成应用；替换底层实现时，业务侧仍使用 `DfsTemplate` 契约。
 
 集成方式与配置示例见 [README.md](./)。

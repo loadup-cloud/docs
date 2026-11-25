@@ -14,7 +14,7 @@ binder，并提供可用的 `RedisConnectionFactory`。
 ```xml
 <dependency>
   <groupId>io.github.loadup-cloud</groupId>
-  <artifactId>loadup-components-cache-binder-redis</artifactId>
+  <artifactId>loadup-components-kv-binder-redis</artifactId>
 </dependency>
 ```
 

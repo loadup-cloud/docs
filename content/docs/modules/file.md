@@ -87,12 +87,12 @@ result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖
 
 ### 边界
 
-`FileResourceService` 管理业务文件 ID、租户、所有者、元数据、引用和删除状态。它通过 `DfsService` 存取字节，不重新实现本地文件、数据库或对象存储
+`FileResourceService` 管理业务文件 ID、租户、所有者、元数据、引用和删除状态。它通过 `DfsTemplate` 存取字节，不重新实现本地文件、数据库或对象存储
 binder。`FileResourceGateway` 隔离 PostgreSQL；可选 Web 模块负责身份与 HTTP 流式传输。模块不依赖 UPMS 或审计中心。
 
 ```text
 业务/API → FileResourceService ┬→ FileResourceGateway → PostgreSQL
-                           └→ DfsService → 选定 DFS binder
+                           └→ DfsTemplate → 选定 DFS binder
 ```
 
 ### 数据与一致性
@@ -126,8 +126,8 @@ web → app → domain
   MapStruct Spring 模式映射。
 - `FilePersistenceAutoConfiguration` 归 infrastructure，按 DataSource 和 `loadup.modules.file.enabled` 提供默认
   Gateway，消费者可覆盖接口 Bean。
-- app 在持久化装配之后按 Gateway 及所需组件条件创建 `FileResourceService`。生成的 converter 通过显式 `@Import` 注册，避免
-  REGISTER_BEAN 阶段条件与组件扫描冲突。
+- app 在持久化装配和 DFS binder 装配之后检查 `FileResourceGateway` 与 `DfsTemplate`，两者可用时创建 `FileResourceService`。
+  生成的 converter 通过显式 `@Import` 注册。
 - web 只负责路由、可信身份/租户、方法授权和 HTTP 投影；请求契约归 client。全局响应、Jackson 与 `/api` 前缀由 WebMVC 组件处理。
 - 仓储使用 Spring JDBC，保留租户、锁与状态条件更新；无外键场景下，引用创建和删除请求在同一事务锁定并校验父记录。初始 Flyway
   脚本针对 PostgreSQL 新库。
