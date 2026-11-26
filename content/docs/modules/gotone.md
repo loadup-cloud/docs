@@ -6,14 +6,16 @@ Gotone 按 `serviceCode` 展开 SMS、Email、Push、站内信和 Webhook。一�
 | Maven 坐标后缀 | 用途 |
 | --- | --- |
 | `loadup-modules-gotone-client` | 业务调用方依赖。提供 `GotoneFacade`、投递查询和配置管理契约。 |
-| `loadup-modules-gotone-core` | 配置、模板、持久化受理、Task、渠道适配器和 PostgreSQL 初始化。 |
+| `loadup-modules-gotone-core` | 配置、模板、持久化受理、Task、渠道适配器和数据库迁移。 |
 | `loadup-modules-gotone-web` | HTTP 接入，传递依赖 core 和 client。 |
 
-坐标由 `loadup-modules-bom` 管理，groupId 为 `io.github.loadup-cloud`。宿主使用同一 PostgreSQL DataSource、JDBC 事务管理器及 Framework Task。选用 Flyway 位置 `classpath:db/migration/modules/gotone`，并准备 Framework 的 Task 和序列分配表。初始化脚本面向新 schema。Boot 和 Pay NotificationCenter 同时装配 Gotone 与 Inbox，并启用两个模块的 Flyway 位置。
+坐标由 `loadup-modules-bom` 管理，groupId 为 `io.github.loadup-cloud`。现有宿主使用 PostgreSQL，宿主还须提供 Framework Task。Gotone 建表 DDL 已在 MySQL 8.0、H2 2.4 验证可创建 11 张表，但其他引擎的完整接入尚未验证。选择 Flyway 位置 `classpath:db/migration/modules/gotone`，并准备 Framework 的 Task 和序列分配表。迁移只建表和索引，不插入示例服务、账号或渠道数据。Boot 和 Pay NotificationCenter 同时装配 Gotone 与 Inbox。
 
 ## 配置与投递
 
 超级管理员在「通知管理 → 服务编码」选择渠道、声明参数并填写各渠道模板。表达式 `${orderNo}` 引用同名参数。草稿只对创建人可见，发布后整版生效。历史模板可以恢复并发布成新版本。邮件 HTML 中的变量只用于文字内容，Webhook JSON 变量放在字符串值中。Inbox 跳转地址须为站内路径。
+
+审批提醒使用 `approval.pending` 服务编码。首次启用前，管理员须声明 `actionUrl` 并发布一个 `IN_APP` 模板，例如 `category=APPROVAL`、`title=待办审批`、`body=你有一项审批待处理`、`actionPath=${actionUrl}`。迁移不会预置此服务或模板。
 
 「系统发送配置」维护独立的供应商账号、优先级、连接超时、凭证引用和短信备案映射。账号运行时从 `kms:<名称>` 或 `env:GOTONE_SECRET_<名称>` 读取秘密。
 
