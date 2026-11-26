@@ -128,7 +128,7 @@ commons → components → modules → 消费工程
 ### 组件内部结构
 
 一次选择一个后端的组件使用 API + binder。只有一个实现的组件采用单一 JAR。
-[Gotone](../modules/notification-gotone/) 由 Modules Notification 提供，[Payment Channel](../pay/payment-channel/) 由 Pay 提供。
+[Gotone](../modules/gotone/) 由 Modules 提供，[Payment Channel](../pay/payment-channel/) 由 Pay 提供。
 
 ### 文档与开发工具
 

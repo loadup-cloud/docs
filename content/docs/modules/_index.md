@@ -49,7 +49,8 @@ mvnd clean deploy -Prelease
 | [Audit](audit/)               | 审计记录、查询与可选 MVC 采集           |
 | [Dictionary](dictionary/)     | 字典类型、条目及启用选项                |
 | [File](file/)                 | 文件元数据、访问控制、引用与清理        |
-| [Notification](notification/) | 站内收件箱与 [Gotone 多渠道投递](notification-gotone/)       |
+| [Gotone](gotone/) | 服务编码、系统账号及异步多渠道投递 |
+| [Inbox](inbox/) | 站内消息的幂等接收、收件箱查询、已读及归档 |
 | [Transfer](transfer/)         | 导入导出任务、进度、结果与重试          |
 
 ## 分层选择
@@ -106,7 +107,7 @@ loadup:
 业务能力位于 `commons → components → modules → 消费工程` 的第三层。modules 只按业务领域组织聚合目录，模块边界按真实消费方式划分，
 不把代码分层直接变成 Maven 模块边界。
 
-默认小型业务（audit、dictionary、file、notification、transfer）：
+默认小型业务（audit、dictionary、file、gotone、inbox、transfer）：
 
 ```text
 loadup-modules/
@@ -160,7 +161,7 @@ Transfer core 显式复用 File core 的权限、业务引用和 DFS 生命周�
 
 ### 本次调整范围
 
-原顶层 audit/dictionary/file/notification/transfer 与各自 sibling web 已归入业务聚合目录。小型业务把 domain/app/infrastructure
+原顶层 audit/dictionary/file/gotone/transfer 与各自 sibling web 已归入业务聚合目录。小型业务把 domain/app/infrastructure
 合并为可复用的 `core` JAR，同时保留包边界；UPMS 保留完整分层。保留路由、JSON 字段、数据库历史脚本与事务语义。各模块 README
 说明其定向验证范围；未执行的回归仍须单独记录，不能视作通过。
 
