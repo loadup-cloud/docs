@@ -114,7 +114,7 @@ Dubbo 3.3.6 面向 Spring Boot 2.7/3.x 发布，本仓库运行在 Spring Boot 4
 
 ## Shared client defaults
 
-`RpcClientDefaults.bind(environment, prefix, targetApplication, settingsType)` binds an immutable client settings type with per-call-site values taking precedence over shared `loadup.rpc.client` defaults. The conventional defaults are caller `spring.application.name`, audience equal to the target application name, and token file `/var/run/loadup/secrets/<targetApplication>.jwt`. An application or a dedicated API transport can supply its own prefix to override only the fields that differ. This helper resolves configuration only; credential validation and RPC transport behavior are unchanged.
+`RpcClientDefaults.bind(environment, prefix, targetApplication, settingsType)` 绑定不可变客户端配置，调用位置的显式设置优先于共享的 `loadup.rpc.client` 默认值。调用方缺省为 `spring.application.name`，受众缺省为目标应用名，令牌文件缺省为 `/var/run/loadup/secrets/<targetApplication>.jwt`。应用或专用传输可按自己的前缀覆盖所需字段。该辅助类只解析配置，凭证校验与传输由原 RPC 适配负责。
 
 ---
 

@@ -51,10 +51,15 @@ Local 使用应用的 JVM 时区，PowerJob 使用 Server 的 JVM 时区。切�
 <a id="architecture"></a>
 ## 设计与实现
 
-```text
-loadup.scheduler.tasks → SchedulerTemplate → SchedulerProvider
- ScheduledTask beans ────────┘      ↑              │
-                                    └── 任务名回调 ─┘
+### 注册与触发
+
+```mermaid
+flowchart LR
+    Config["Cron 配置"] --> Template["SchedulerTemplate"]
+    Beans["ScheduledTask Bean"] --> Template
+    Template --> Binder["本地或 PowerJob Provider"]
+    Binder -->|按任务名回调| Template
+    Template --> Scanner["业务扫描器"]
 ```
 
 Scheduler API 绑定并校验全部任务定义，`SchedulerTemplate` 管理任务分派和生命周期。自动触发限定在配置的任务名中，手动触发可使用任意已注册的任务。同一 JVM 的同名任务重叠时跳过本次触发，处理失败后释放执行标记。业务异常由 binder 接收。

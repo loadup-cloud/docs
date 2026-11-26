@@ -61,6 +61,24 @@ Core 包含授权端签发、资源端验证、标准 JDBC 持久化、配置绑
 Core 直接依赖 Spring Security OAuth2 库，不引入 Boot Authorization Server starter，避免仅引入组件就触发 Boot 默认授权服务装配。
 JDBC 和 Boot SQL 依赖可选；应用主动引入 JDBC starter。协议签发与资源端同时启用时，资源端 decoder 负责 issuer/audience/token_use；本地签发 decoder 不覆盖它。同一应用同时签发和验签、且 issuer 相同且未显式指定外部公钥/JWKS 时，资源端直接使用本地公钥，但仍完整校验 issuer、audience、时效和用途。
 
+### 签发与访问受保护资源
+
+```mermaid
+sequenceDiagram
+    participant Client as OAuth 客户端
+    participant Issuer as OAuth 授权服务
+    participant KMS as KMS binder
+    participant Resource as 资源服务
+    Client->>Issuer: 使用已注册凭证请求令牌
+    Issuer->>Issuer: 校验客户端状态与授权
+    Issuer->>KMS: 使用当前签名密钥签发
+    Issuer-->>Client: 返回带 kid 的 JWT
+    Client->>Resource: 携带 Bearer token 发起业务请求
+    Resource->>Issuer: 按需获取或刷新 JWKS
+    Resource->>Resource: 核对签名、时效、issuer、audience 与用途
+    Resource-->>Client: 执行业务授权后的结果
+```
+
 ### 标准接口与数据所有权
 
 协议客户端存储使用 `RegisteredClientRepository` / `RegisteredClient`；授权和同意使用 `OAuth2AuthorizationService` / `OAuth2AuthorizationConsentService`。实现分别为 Spring 的 JDBC 实现，允许通过标准 Bean 替换。

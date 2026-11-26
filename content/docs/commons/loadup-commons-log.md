@@ -111,70 +111,18 @@ Spring Boot 配置属性、EnvironmentPostProcessor 和自动配置已迁至 `lo
 <a id="architecture"></a>
 ## 设计与实现
 
-### 1. Boundary
+### 日志契约
 
-`loadup-commons-log` owns the logging contract shared by applications and framework components:
+`loadup-commons-log` 定义通用日志格式常量、`traceId`、`spanId`、`requestId` 的 MDC 键及 `LogContext`。应用选择 SLF4J 后端。`LogUtil` 的显式来源类重载用于框架和应用日志，参数化格式及末尾 Throwable 语义沿用 SLF4J。直接调用重载通过 JDK `StackWalker` 获取调用类。第三方适配可通过 `LogUtil.getLogger` 获取原生 Logger。
 
-- framework logging pattern constants (Spring Boot assembly belongs to runtime);
-- stable MDC keys for `traceId`, `spanId`, and `requestId`;
-- a small `LogContext` utility for framework integrations.
+### Spring Boot 装配
 
-It does not select a logging implementation, ship a Logback configuration, or implement tracing.
+Runtime 中的 `LoadupLogEnvironmentPostProcessor` 为 console/file 添加最低优先级的格式默认值，应用的 `logging.pattern.*` 优先。文件未配置独立格式时沿用 LoadUp console pattern。结构化输出配置使用 Spring Boot 的 `logging.structured.format.*`。`LoadupLogAutoConfiguration` 绑定框架日志属性。
 
-### 2. Startup flow
+### 追踪与服务摘要
 
-```
-SpringApplication
-      |
-      v
-LoadupLogEnvironmentPostProcessor
-      |
-      +-- add lowest-precedence logging.pattern.console/file defaults
-      v
-LoadupLogAutoConfiguration
-      |
-      +-- bind loadup.log.* properties
-      v
-Application logging backend
-```
+Spring Boot Micrometer Tracing 为当前追踪写入标准 MDC 键，日志格式读取这些值。业务日志的 trace 和 span 生命周期由追踪组件负责。
 
-The post processor uses a low-precedence property source, so normal application configuration wins.
+`@ServiceDigest` 是可用于类、方法和组合注解的运行期标记。Observability 负责注册 advisor、计时和调用摘要；摘要契约仅记录调用状态等元数据，参数和返回值留在业务代码。代理拦截与异步完成语义见 [Observability 接入](../../components/observability/)。
 
-### 3. Trace integration
-
-`loadup-components-observability` uses Spring Boot's Micrometer Tracing integration, which populates the
-standard `traceId` and `spanId` MDC keys. The log module only defines their names and output patterns:
-
-```
-loadup-commons-log  <-  MVC application  ->  loadup-components-observability
-```
-
-The log module neither creates spans nor depends on a tracer SDK.
-
-### 4. LogUtil
-
-`LogUtil` provides two equivalent styles:
-
-- `LogUtil.info(MyService.class, ...)` and other explicit-source methods for application logs;
-- direct `LogUtil.info(...)` / `debug(...)` / `warn(...)` / `error(...)` calls for development diagnostics.
-
-Both styles delegate to SLF4J parameterized logging. Direct calls resolve the calling class with the JDK
-`StackWalker`, so the emitted logger name remains useful for filtering and searching.
-
-### 统一入口与输出
-
-框架源码的日志打印统一走 `LogUtil` 显式来源类重载，保留 SLF4J 的级别、参数化和末尾 Throwable 语义。第三方日志适配可通过
-`LogUtil.getLogger` 获得原生 Logger。调用入口不创建 Trace 或 MeterRegistry，也不修改 MDC 的 traceId/spanId。
-
-EnvironmentPostProcessor 同时提供 console/file 默认 pattern，file 未单独配置时沿用 LoadUp console pattern。标准
-`logging.pattern.*` 属性优先于组件默认值。JSON 使用 Boot `logging.structured.format.*`，启动器不再维护重复的 Logback 配置。
-
-### Service digest annotation
-
-`annotation.ServiceDigest` is a runtime, inherited marker for classes, methods and composed annotations. It has no
-Spring AOP dependency. The Observability component owns advisor registration, Stopwatch timing and invocation logging;
-commons-log only supplies the marker, LogUtil and existing MDC conventions. Neither arguments nor return values are
-captured by this contract. Spring proxy interception and asynchronous completion semantics are documented in the
-Observability README.
-
-Spring Boot 配置属性、EnvironmentPostProcessor 和自动配置已迁至 `loadup-components-runtime`，仅引入 commons-log 不触发装配。
+[日志使用方式](./) · [Runtime 架构](../../components/runtime/#architecture)

@@ -22,7 +22,7 @@ Flyway 时，按应用现有配置处理 baseline。需要 HTTP 接口时再引�
 
 ## 业务 API
 
-注入 `DictionaryService`，通过 `listEnabledItems(tenantId, typeCode)`
+注入 `DictionaryService`，通过 `listEnabledItems(typeCode)`
 读取有效条目。类型或条目禁用后立即不再出现在结果中；管理端列表仍能查看禁用记录。类型编码创建后不可更改，统一转为小写；条目
 value 创建后不可更改。同一租户内类型编码唯一，同一类型内 value 唯一。
 
@@ -35,11 +35,11 @@ value 创建后不可更改。同一租户内类型编码唯一，同一类型�
 
 本目录的 Maven 坐标 `loadup-modules-dictionary` 为聚合 POM。业务接入选择具体 jar，版本由根 BOM 管理：
 
-| 子模块 | 用途 |
-| --- | --- |
-| [`client`](../dictionary-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现 |
-| [`core`](../dictionary-core/) | 领域模型、用例服务、DTO 映射、JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
-| [`web`](../dictionary-web/) | 可选 Spring MVC 适配；自动引入 core |
+| 子模块                                                 | 用途                                                                      |
+|--------------------------------------------------------|---------------------------------------------------------------------------|
+| [`client`](../dictionary-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现                            |
+| [`core`](../dictionary-core/)     | 领域模型、用例服务、DTO 映射、JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
+| [`web`](../dictionary-web/)       | 可选 Spring MVC 适配；自动引入 core                                       |
 
 `DictionaryService` 现在位于 `io.github.loadup.modules.dictionary.app.service`；公开结果位于
 `io.github.loadup.modules.dictionary.client.dto`。领域 Gateway 不引用客户端 DTO，也不引用数据库或 Spring API。HTTP
@@ -56,14 +56,17 @@ loadup:
         enabled: true
 ```
 
-仅引入 core 时不注册 Controller；关闭 web 开关保留程序化服务，关闭模块 enabled 开关同时停止默认应用与持久化 Bean 装配。配置开关不控制
+仅引入 core 时不注册 Controller；关闭 web 开关保留程序化服务，关闭模块 enabled 开关同时停止默认应用与持久化 Bean
+装配。配置开关不控制
 Flyway 对已在 classpath 上的脚本执行。不要在已有数据库重复复制迁移脚本。
 
 ## 公共分页与时间约定
 
-分页请求、DTO、HTTP 响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。
+分页请求、DTO、HTTP
+响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。
 
-字典创建项直接提交 `{typeCode, value, label, description, sortOrder, enabled}`；更新类型或条目直接提交 `{id, ...更新字段}`。
+字典创建项直接提交 `{typeCode, value, label, description, sortOrder, enabled}`；更新类型或条目直接提交
+`{id, ...更新字段}`。
 
 ## 错误码契约
 
@@ -102,8 +105,10 @@ result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖
 
 ### 租户与扩展
 
-租户身份仍由可信执行上下文传递，不接受客户端在请求体中指定租户；但 Repository 不使用 `tenant_id` 行谓词。当前 `TenantFilter` 绑定默认租户，
-schema 路由未实现，因此该模块目前只在默认 schema 中运行，不提供租户间数据库隔离。详见[数据库 README](../../components/database/)。模块提供 Flyway 迁移，不声明必需的数据库厂商；数据库连接与驱动由消费应用配置，Pay 消费基线为 PostgreSQL。
+客户端不能在请求体中指定隔离范围；一套部署固定使用自己的 schema，Repository 不使用 `tenant_id` 行谓词。入口只校验部署 code，
+schema 路由未实现，因此该模块目前只在默认 schema
+中运行，不提供租户间数据库隔离。详见[数据库 README](../../components/database/)
+。模块提供 Flyway 迁移，不声明必需的数据库厂商；数据库连接与驱动由消费应用配置，Pay 消费基线为 PostgreSQL。
 
 接入方式见 [README.md](./)。
 
@@ -155,21 +160,10 @@ Clock，默认采用系统本地时区；测试或消费工程可提供 Clock Be
 开头。服务/领域/仓储使用 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的
 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
 
-### Unified pagination contract
+### 分页契约
 
-Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fields remain `page` and `size`, with
-omitted/null values defaulting to 1 and 20; explicit invalid bounds are rejected and size is capped at 100. Business
-queries retain their filter fields and flat pagination fields but delegate policy to `PageQuery.normalized`, preserving
-their declared module error code. Mutable UPMS queries expose `pagination()` for validation at the service boundary.
-Sort whitelists remain business-specific.
+纯分页输入使用 `io.github.loadup.commons.dto.PageQuery`。HTTP 字段为 `page` 与 `size`，缺失或为 null 时分别取 1 与 20。显式非法值会被拒绝，每页上限为 100。业务查询保留自身筛选字段及平面分页字段，通过 `PageQuery.normalized` 复用规则并保留所属模块错误码。可变的 UPMS 查询在服务边界通过 `pagination()` 校验。各业务维护自己的排序白名单。
 
-Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business
-Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and
-`PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and
-Controllers return PageResponse. No HTTP envelope enters a Gateway.
+领域 Gateway 返回 `io.github.loadup.commons.domain.PageResult<T>`。应用层通过 Spring 注入的 MapStruct converter 和 `PageResult.map` 转换元素，使用 `PageDTO.of(result)` 保留数量、页码和每页长度。Facade 返回 `PageDTO`，Controller 返回 `PageResponse`。
 
-The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page
-array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been
-removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed
-business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared
-contracts. No URL or frontend payload-field migration is required.
+分页 JSON 形如 `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`，`data` 为当前页数组。`SuccessResponse` 用于普通成功响应。空 `PageDTO` 使用空数组与 0/1/20 作为元数据默认值。原有业务分页包装、`DictionaryTypePageQuery`、`AccountLoginPageQuery` 或 `SuccessResponse.ofPage` 的 Java 调用方需切换到共享契约。HTTP URL 和载荷字段保持原有契约。

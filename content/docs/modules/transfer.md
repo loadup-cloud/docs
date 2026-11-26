@@ -32,7 +32,7 @@ binder；本地 @Scheduled 不需要独立 Server。
 
 ## 服务 API
 
-`TransferTaskService.submit(tenantId, ownerId, kind, handlerKey, sourceFileId, options)` 创建任务并排队。`get` 与 `list`
+`TransferTaskService.submit(ownerId, kind, handlerKey, sourceFileId, options)` 创建任务并排队。`get` 与 `list`
 按租户和所有者查询；`retry` 可重发 `QUEUED` 或重试 `FAILED` 任务。结果的 `resultFileId`
 可交给文件资源模块下载。导入源文件在处理期间被任务引用，完成或失败后释放。未知处理器、无权访问的源文件及超限文件会被拒绝。
 
@@ -56,11 +56,11 @@ ThreadLocal 传播到任务来绕过校验。
 
 本目录的 Maven 坐标 `loadup-modules-transfer` 为聚合 POM。业务接入选择具体 jar，版本由根 BOM 管理：
 
-| 子模块 | 用途 |
-| --- | --- |
-| [`client`](../transfer-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现 |
-| [`core`](../transfer-core/) | 领域模型、用例服务、DTO 映射、默认 Spring JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
-| [`web`](../transfer-web/) | 可选 Spring MVC 适配；自动引入 core |
+| 子模块                                               | 用途                                                                                  |
+|------------------------------------------------------|---------------------------------------------------------------------------------------|
+| [`client`](../transfer-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现                                        |
+| [`core`](../transfer-core/)     | 领域模型、用例服务、DTO 映射、默认 Spring JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
+| [`web`](../transfer-web/)       | 可选 Spring MVC 适配；自动引入 core                                                   |
 
 `TransferTaskService` 现在位于 `io.github.loadup.modules.transfer.app.service`；公开结果位于
 `io.github.loadup.modules.transfer.client.dto`。领域 Gateway 不引用客户端 DTO，也不引用数据库或 Spring API。HTTP
@@ -118,10 +118,20 @@ transfer.scan），只调用 service 的有界队列扫描。文件操作复用 
 
 ### 事务与执行
 
+```mermaid
+stateDiagram-v2
+    [*] --> QUEUED: 提交并建立文件引用
+    QUEUED --> RUNNING: 扫描器条件领取
+    RUNNING --> SUCCEEDED: 保存处理结果
+    RUNNING --> FAILED: 执行失败并完成清理
+    FAILED --> QUEUED: 显式重试
+    SUCCEEDED --> [*]
+```
+
 提交在同一业务数据库事务内建立源文件引用并插入 QUEUED 记录；显式重试在事务内 CAS 重排队并保护输入引用。不调用远程调度
 API，消除“业务库已提交、远程任务未注册”的双写窗口。文件资源表与任务表必须使用同一事务 DataSource。
 
-Scheduler 本地或 PowerJob binder 触发 transfer.scan，读取跨租户有界候选 ID，再根据数据库中可信租户绑定 TenantUtil，使用
+Scheduler 本地或 PowerJob binder 触发 transfer.scan，读取本部署有界候选 ID，使用
 QUEUED → RUNNING 条件更新抢占。RUNNING 不属于可领取条件，重复投递不会并发再次执行同一任务。扫描单个失败不阻断后续项，失败项保留
 FAILED 等待人工重试，业务失败由持久化状态供运维观测，扫描正常结束不保证每个业务项成功。
 

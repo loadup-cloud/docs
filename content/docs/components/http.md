@@ -29,6 +29,8 @@ loadup:
     clients:
       merchant:
         base-url: https://merchant.example.com
+        # Explicit URLs are external by default. Set true only for a trusted internal service.
+        internal-service: false
         connect-timeout: 3s
         read-timeout: 10s
         acquire-timeout: 3s
@@ -51,8 +53,8 @@ loadup:
 ```
 
 `base-url` 可省略。省略时客户端名被当作目标应用名，地址按 `http://<client-name>:<default-port>` 解析，默认端口
-`8080`；该约定的目标同时允许私有/集群地址。显式 `base-url` 仍默认禁止私有目标，需要时配置
-`allow-private-addresses: true`。连接、池和大小限制均有默认值，只有与默认值不同的客户端才需要单独覆盖。
+`8080`，并按内部服务处理。显式 `base-url` 默认作为外部目标；只有明确配置 `internal-service: true` 才会附加部署标识头。
+私有地址策略仍由 `allow-private-addresses` 单独控制。连接、池和大小限制均有默认值，只有与默认值不同的客户端才需要单独覆盖。
 
 配置中的客户端和操作名限定为 1–64 个字母、数字、下划线或连字符。路径模板与业务传入的变量分别处理，变量作为值编码，调用不能改变配置的
 origin。连接池等待、连接建立和响应读取超时分别配置；读取超时不是整个下载的总时长限制。
@@ -138,7 +140,7 @@ HTTP 非 2xx（含 3xx）抛出安全的 HttpCallException，不暴露原响应�
 ## 凭证与配置更新
 
 提供一个 `HttpCredentialProvider` Bean，将 `credential-ref`
-解析为认证头。每次调用解析引用，允许秘密设施自行轮换值；不把私钥、令牌直接放入普通操作配置。合并顺序为客户端头、操作头、调用头、凭证头；最后的凭证头优先。组件拒绝
+解析为认证头。每次调用解析引用，允许秘密设施自行轮换值；不把私钥、令牌直接放入普通操作配置。合并顺序为客户端头、操作头、调用头、凭证头、signer 签名头，后者覆盖前者。最后组件移除调用方提供的部署头；仅对内部服务客户端写入本部署标识，因此外部请求不会携带该头。组件拒绝
 CR/LF、Host、Content-Length 等非法或传输层管理的头。
 
 ```java
@@ -255,16 +257,16 @@ service-id 默认调用方 spring.application.name，audience 默认目标应用
 
 ### 调用流程
 
-```text
-读取不可变客户端快照
-→ 解析配置中的操作及编码变量
-→ 校验目标与认证头
-→ 将请求体序列化为受限 byte[]
-→ 可选 signer 接收最终 method/URI/原字节，签名头最后合并
-→ RestClient exchange
-→ 读取受限响应或复制到调用方输出流
-→ 保留协议状态与头
-→ 释放响应及快照读锁
+```mermaid
+flowchart TD
+    Read["读取不可变客户端快照"] --> Target["解析操作并校验目标"]
+    Target --> Bytes["生成有大小限制的请求字节"]
+    Bytes --> Headers["合并允许的请求头与凭证"]
+    Headers --> Sign["按需签名最终 URI 与原始字节"]
+    Sign --> Deploy["为内部服务写入部署标识"]
+    Deploy --> Request["通过 RestClient 发送"]
+    Request --> Response["有界读取响应或复制到输出流"]
+    Response --> Close["返回协议状态和头并释放资源"]
 ```
 
 HTTP 状态错误与传输失败分别表达。4xx/5xx 不触发自动异常或重试，调用方检查业务协议；传输异常只保留安全分类，不暴露可能包含敏感
@@ -334,7 +336,7 @@ HttpTemplate.serviceClient 提供标准接口代理；内部仍由 HttpServicePr
 ### 应用名约定与隐式客户端
 
 `HttpProperties.default-port`（默认 8080）和客户端名共同定义内部目标约定：省略 `base-url` 的客户端按
-`http://<client-name>:<default-port>` 解析，并默认允许私有/集群地址。命名操作客户端仍应在配置中显式列出，以便在启动时校验
+`http://<client-name>:<default-port>` 解析，并默认视为内部服务且允许私有/集群地址。显式 `base-url` 默认视为外部服务；需要内部部署标识头时，显式设置 `internal-service: true`。命名操作客户端仍应在配置中显式列出，以便在启动时校验
 operation 表；声明式 Service Client 在首次创建时，如果同名客户端既不存在于显式配置也不存在于隐式集合，则按约定创建隐式客户端。
 显式配置优先于隐式客户端。刷新时保留仍然有效且未被显式配置接管的隐式客户端，重新解析默认端口并替换连接池；关闭模板时一并释放。
 隐式客户端与显式客户端使用相同的连接池、DNS 策略、指标注册和 origin 约束，不引入第二套传输。

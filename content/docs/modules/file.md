@@ -23,11 +23,11 @@ ID。适用于单体应用中的附件、头像和导出文件。
 
 ## 业务 API
 
-注入 `FileResourceService`。`upload(tenantId, ownerId, filename, contentType, size, InputStream)` 上传并记录元数据，调用者关闭输入流。返回的
+注入 `FileResourceService`。`upload(ownerId, filename, contentType, size, InputStream)` 上传并记录元数据，调用者关闭输入流。返回的
 `FileResource.id` 是业务文件 ID，`storageId` 仅供内部定位 DFS 对象。`get`、`list` 和 `download` 均校验租户及所有者，管理员权限由调用方传入；下载返回的
 `FileDownloadResponse` 必须关闭。
 
-业务记录落库后可调用 `attach(tenantId, fileId, actorId, admin, referenceType, referenceId)` 建立引用。业务记录删除时调用
+业务记录落库后可调用 `attach(id, actorId, admin, referenceType, referenceId)` 建立引用。业务记录删除时调用
 `detach`。有引用的文件不能删除。引用类型和引用 ID 只用于记录关联；业务系统负责确认引用对象的真实性及访问授权，不应把任意用户输入直接传给这两个
 API。
 
@@ -40,11 +40,11 @@ Web API 与配置见 [Web 适配说明](../file-web/)，设计见 [ARCHITECTURE.
 
 本目录的 Maven 坐标 `loadup-modules-file` 为聚合 POM。业务接入选择具体 jar，版本由根 BOM 管理：
 
-| 子模块 | 用途 |
-| --- | --- |
-| [`client`](../file-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现 |
-| [`core`](../file-core/) | 领域模型、用例服务、DTO 映射、默认 Spring JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
-| [`web`](../file-web/) | 可选 Spring MVC 适配；自动引入 core |
+| 子模块                                           | 用途                                                                                  |
+|--------------------------------------------------|---------------------------------------------------------------------------------------|
+| [`client`](../file-client/) | 对外 DTO、请求契约；不依赖 Spring 或持久化实现                                        |
+| [`core`](../file-core/)     | 领域模型、用例服务、DTO 映射、默认 Spring JDBC Gateway 与 Flyway 迁移；程序化接入入口 |
+| [`web`](../file-web/)       | 可选 Spring MVC 适配；自动引入 core                                                   |
 
 `FileResourceService` 现在位于 `io.github.loadup.modules.file.app.service`；公开结果位于
 `io.github.loadup.modules.file.client.dto`。领域 Gateway 不引用客户端 DTO，也不引用数据库或 Spring API。HTTP
@@ -61,12 +61,14 @@ loadup:
         enabled: true
 ```
 
-仅引入 core 时不注册 Controller；关闭 web 开关保留程序化服务，关闭模块 enabled 开关同时停止默认应用与持久化 Bean 装配。配置开关不控制
+仅引入 core 时不注册 Controller；关闭 web 开关保留程序化服务，关闭模块 enabled 开关同时停止默认应用与持久化 Bean
+装配。配置开关不控制
 Flyway 对已在 classpath 上的脚本执行。不要在已有数据库重复复制迁移脚本。
 
 ## 公共分页与时间约定
 
-分页请求、DTO、HTTP 响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。
+分页请求、DTO、HTTP
+响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。
 
 ## 错误码契约
 
@@ -87,12 +89,24 @@ result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖
 
 ### 边界
 
-`FileResourceService` 管理业务文件 ID、租户、所有者、元数据、引用和删除状态。它通过 `DfsTemplate` 存取字节，不重新实现本地文件、数据库或对象存储
+`FileResourceService` 管理业务文件 ID、所有者、元数据、引用和删除状态。它通过 `DfsTemplate` 存取字节，不重新实现本地文件、数据库或对象存储
 binder。`FileResourceGateway` 隔离 PostgreSQL；可选 Web 模块负责身份与 HTTP 流式传输。模块不依赖 UPMS 或审计中心。
 
-```text
-业务/API → FileResourceService ┬→ FileResourceGateway → PostgreSQL
-                           └→ DfsTemplate → 选定 DFS binder
+```mermaid
+sequenceDiagram
+    participant App as 调用方
+    participant File as FileResourceService
+    participant DFS as DFS binder
+    participant DB as PostgreSQL
+    App->>File: 上传文件
+    File->>DFS: 保存文件字节
+    File->>DB: 保存业务 ID 与对象映射
+    alt 元数据提交成功
+        File-->>App: 返回业务文件 ID
+    else 元数据写入失败
+        File->>DFS: 尝试删除已写入对象
+        File-->>App: 返回失败
+    end
 ```
 
 ### 数据与一致性
@@ -107,7 +121,10 @@ DFS 不承诺原子事务。
 
 ### 安全与部署
 
-Web 入口从受信认证主体与租户上下文取得 owner/tenant，不接受请求体覆盖；租户身份也用于 DFS 对象命名空间，保留其独立作用。关系型元数据当前仅使用默认 schema，不按 `tenant_id` 行过滤，运行时 schema 路由尚未实现；因此数据库不提供租户间隔离，详见[数据库 README](../../components/database/)。只有所有者和超级管理员可读取或删除文件。Web
+Web 入口从受信认证主体取得 owner，不接受请求体覆盖；DFS 对象命名空间由部署配置固定。关系型元数据使用固定
+`loadup.database.schema`，不按 `tenant_id` 行过滤，也不存在运行时 schema
+路由，详见[数据库 README](../../components/database/)
+。只有所有者和超级管理员可读取或删除文件。Web
 下载采用附件模式、`nosniff` 和流式传输；不会生成公开直链。业务引用不自动授予文件读取权限，业务域需要单独决定谁能查看附件。
 
 HTTP 上传受 Spring Multipart 大小限制。对高风险文件类型的病毒扫描、内容审核、下载水印、保留期限和跨租户共享应在消费应用的业务规则中实现；首版不开放公开访问。
@@ -126,7 +143,8 @@ web → app → domain
   MapStruct Spring 模式映射。
 - `FilePersistenceAutoConfiguration` 归 infrastructure，按 DataSource 和 `loadup.modules.file.enabled` 提供默认
   Gateway，消费者可覆盖接口 Bean。
-- app 在持久化装配和 DFS binder 装配之后检查 `FileResourceGateway` 与 `DfsTemplate`，两者可用时创建 `FileResourceService`。
+- app 在持久化装配和 DFS binder 装配之后检查 `FileResourceGateway` 与 `DfsTemplate`，两者可用时创建
+  `FileResourceService`。
   生成的 converter 通过显式 `@Import` 注册。
 - web 只负责路由、可信身份/租户、方法授权和 HTTP 投影；请求契约归 client。全局响应、Jackson 与 `/api` 前缀由 WebMVC 组件处理。
 - 仓储使用 Spring JDBC，保留租户、锁与状态条件更新；无外键场景下，引用创建和删除请求在同一事务锁定并校验父记录。初始 Flyway
@@ -164,24 +182,13 @@ Clock，默认采用系统本地时区；测试或消费工程可提供 Clock Be
 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的
 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
 
-### Unified pagination contract
+### 分页契约
 
-Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fields remain `page` and `size`, with
-omitted/null values defaulting to 1 and 20; explicit invalid bounds are rejected and size is capped at 100. Business
-queries retain their filter fields and flat pagination fields but delegate policy to `PageQuery.normalized`, preserving
-their declared module error code. Mutable UPMS queries expose `pagination()` for validation at the service boundary.
-Sort whitelists remain business-specific.
+纯分页输入使用 `io.github.loadup.commons.dto.PageQuery`。HTTP 字段为 `page` 与 `size`，缺失或为 null 时分别取 1 与 20。显式非法值会被拒绝，每页上限为 100。业务查询保留自身筛选字段及平面分页字段，通过 `PageQuery.normalized` 复用规则并保留所属模块错误码。可变的 UPMS 查询在服务边界通过 `pagination()` 校验。各业务维护自己的排序白名单。
 
-Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business
-Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and
-`PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and
-Controllers return PageResponse. No HTTP envelope enters a Gateway.
+领域 Gateway 返回 `io.github.loadup.commons.domain.PageResult<T>`。应用层通过 Spring 注入的 MapStruct converter 和 `PageResult.map` 转换元素，使用 `PageDTO.of(result)` 保留数量、页码和每页长度。Facade 返回 `PageDTO`，Controller 返回 `PageResponse`。
 
-The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page
-array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been
-removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed
-business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared
-contracts. No URL or frontend payload-field migration is required.
+分页 JSON 形如 `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`，`data` 为当前页数组。`SuccessResponse` 用于普通成功响应。空 `PageDTO` 使用空数组与 0/1/20 作为元数据默认值。原有业务分页包装、`DictionaryTypePageQuery`、`AccountLoginPageQuery` 或 `SuccessResponse.ofPage` 的 Java 调用方需切换到共享契约。HTTP URL 和载荷字段保持原有契约。
 
 ### 迁移顺序
 

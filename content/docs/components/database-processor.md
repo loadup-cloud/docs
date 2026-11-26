@@ -79,23 +79,25 @@ mvnd clean test -pl loadup-components/data/loadup-components-database-processor 
 <a id="architecture"></a>
 ## 设计与实现
 
-This build-time module owns LoadUp's fixed MyBatis-Flex generation policy. It has no dependency on Spring or the
-runtime database component. The framework BOM manages its version and the official processor version together.
+### 编译期职责
 
-`LoadUpMyBatisFlexProcessor` extends the official processor. Before the upstream `init`, it writes the bundled
-UTF-8 policy into the current compilation's CLASS_OUTPUT and verifies that the upstream filesystem search can
-locate a Maven/Gradle root. Policy preparation failures emit a compiler error and preserve the original cause.
-The upstream processor retains annotation handling, generation, supported types and source version behavior.
+`LoadUpMyBatisFlexProcessor` 继承官方 MyBatis-Flex 处理器，在上游初始化之前将随包发布的 UTF-8 生成策略写入本次编译的 `CLASS_OUTPUT`。随后确认上游可定位 Maven 或 Gradle 工程根目录。策略准备失败时输出编译错误并保留原始原因。注解识别、生成逻辑、支持类型和源版本继续由上游实现负责。
 
-The compiler plugin explicitly selects the LoadUp entry because the upstream transitive dependency also advertises
-an SPI provider. Consumers must not select the upstream entry as well. MapStruct and Spring Boot metadata processing
-remain independent entries on the same path. The processor disables processing when compiling its own sources.
+```mermaid
+flowchart LR
+    Java["带 @Table 的业务 DO"] --> Compiler["Java 编译器"]
+    Compiler --> LoadUp["LoadUpMyBatisFlexProcessor"]
+    LoadUp --> Policy["写入本次 CLASS_OUTPUT 的生成策略"]
+    Policy --> Flex["官方 Flex 处理器"]
+    Flex --> Output["生成 Mapper、TableDef 和 Tables"]
+```
 
-Entity modules keep no policy copies. The output policy stops ancestor lookup, making generation independent of
-module-local and repository-local configuration. Main and test compilation each prepare their own output policy.
-Framework entity modules use a provided/optional dependency to establish reactor ordering without runtime export;
-independent consumer repositories resolve the published processor through annotationProcessorPaths.
+### 装配与隔离
 
-The JDK compiler regression tests check generated source compilation, fixed package/naming conventions, main/test
-output isolation and failure to prepare the policy. These tests are also the compatibility boundary for upstream
-processor upgrades; no upstream implementation is copied or modified.
+编译器显式选择 LoadUp 入口，因为上游传递依赖也注册了 SPI。MapStruct 与 Spring Boot 元数据处理器各用独立入口。处理器模块编译自身时禁用注解处理，依赖位于编译期，运行时 Database 工件独立发布。
+
+主源码和测试源码各自在独立输出目录准备策略，`stopBubbling=true` 使模块与祖先目录的本地文件无法覆盖该策略。Framework 内的实体模块通过 provided/optional 依赖保证 reactor 顺序。独立仓库通过 `annotationProcessorPaths` 解析已发布版本，版本由 Framework BOM 对齐。
+
+JDK 编译回归测试覆盖生成源码可编译、固定包名和类型名、主测试输出隔离以及策略准备失败。升级上游处理器时验证这些契约。
+
+[编译器配置](./) · [运行时 Database](../database/#architecture)

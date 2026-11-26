@@ -78,24 +78,13 @@ PageResponse<FileResourceDTO> response = PageResponse.of(page);
 ResultCode 与 CommonException 由 [commons-error](../loadup-commons-error/) 提供。Result 是不可变响应元数据，失败工厂只接收枚举
 ResultCode。FailureResponse.of (code) 或 of (code, traceId) 不接收字符串错误码/文案；读取外部报文仍支持 Jackson creator。
 
-## Unified pagination contract
+## 分页契约
 
-Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fields remain `page` and `size`, with
-omitted/null values defaulting to 1 and 20; explicit invalid bounds are rejected and size is capped at 100. Business
-queries retain their filter fields and flat pagination fields but delegate policy to `PageQuery.normalized`, preserving
-their declared module error code. Mutable UPMS queries expose `pagination()` for validation at the service boundary.
-Sort whitelists remain business-specific.
+纯分页输入使用 `io.github.loadup.commons.dto.PageQuery`。HTTP 字段为 `page` 与 `size`，缺失或为 null 时分别取 1 与 20。显式非法值会被拒绝，每页上限为 100。业务查询保留自身筛选字段及平面分页字段，通过 `PageQuery.normalized` 复用规则并保留所属模块错误码。可变的 UPMS 查询在服务边界通过 `pagination()` 校验。各业务维护自己的排序白名单。
 
-Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business
-Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and
-`PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and
-Controllers return PageResponse. No HTTP envelope enters a Gateway.
+领域 Gateway 返回 `io.github.loadup.commons.domain.PageResult<T>`。应用层通过 Spring 注入的 MapStruct converter 和 `PageResult.map` 转换元素，使用 `PageDTO.of(result)` 保留数量、页码和每页长度。Facade 返回 `PageDTO`，Controller 返回 `PageResponse`。
 
-The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page
-array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been
-removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed
-business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared
-contracts. No URL or frontend payload-field migration is required.
+分页 JSON 形如 `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`，`data` 为当前页数组。`SuccessResponse` 用于普通成功响应。空 `PageDTO` 使用空数组与 0/1/20 作为元数据默认值。原有业务分页包装、`DictionaryTypePageQuery`、`AccountLoginPageQuery` 或 `SuccessResponse.ofPage` 的 Java 调用方需切换到共享契约。HTTP URL 和载荷字段保持原有契约。
 
 ## 职责迁移
 
@@ -171,24 +160,13 @@ pageInfo.totalCount。字典命令合并原有 Request 包装，直接携带 id/
 ResultCode 与 CommonException 由 [commons-error](../loadup-commons-error/) 提供。Result 是不可变响应元数据，失败工厂只接收枚举
 ResultCode。FailureResponse.of (code) 或 of (code, traceId) 不接收字符串错误码/文案；读取外部报文仍支持 Jackson creator。
 
-### Unified pagination contract
+### 分页契约
 
-Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fields remain `page` and `size`, with
-omitted/null values defaulting to 1 and 20; explicit invalid bounds are rejected and size is capped at 100. Business
-queries retain their filter fields and flat pagination fields but delegate policy to `PageQuery.normalized`, preserving
-their declared module error code. Mutable UPMS queries expose `pagination()` for validation at the service boundary.
-Sort whitelists remain business-specific.
+纯分页输入使用 `io.github.loadup.commons.dto.PageQuery`。HTTP 字段为 `page` 与 `size`，缺失或为 null 时分别取 1 与 20。显式非法值会被拒绝，每页上限为 100。业务查询保留自身筛选字段及平面分页字段，通过 `PageQuery.normalized` 复用规则并保留所属模块错误码。可变的 UPMS 查询在服务边界通过 `pagination()` 校验。各业务维护自己的排序白名单。
 
-Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business
-Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and
-`PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and
-Controllers return PageResponse. No HTTP envelope enters a Gateway.
+领域 Gateway 返回 `io.github.loadup.commons.domain.PageResult<T>`。应用层通过 Spring 注入的 MapStruct converter 和 `PageResult.map` 转换元素，使用 `PageDTO.of(result)` 保留数量、页码和每页长度。Facade 返回 `PageDTO`，Controller 返回 `PageResponse`。
 
-The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page
-array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been
-removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed
-business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared
-contracts. No URL or frontend payload-field migration is required.
+分页 JSON 形如 `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`，`data` 为当前页数组。`SuccessResponse` 用于普通成功响应。空 `PageDTO` 使用空数组与 0/1/20 作为元数据默认值。原有业务分页包装、`DictionaryTypePageQuery`、`AccountLoginPageQuery` 或 `SuccessResponse.ofPage` 的 Java 调用方需切换到共享契约。HTTP URL 和载荷字段保持原有契约。
 
 ### 职责迁移
 

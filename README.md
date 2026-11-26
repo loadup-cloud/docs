@@ -2,12 +2,14 @@
 
 本仓库是 Hugo + Hextra 阅读站。项目入口见 [文档首页](content/docs/_index.md)；Framework、Modules、Testify 的 README 和 ARCHITECTURE 是正文来源，源仓库与本站并列放置。
 
+[站点架构](ARCHITECTURE.md)
+
 ## 维护入口
 
 | 内容 | 修改位置 |
 |---|---|
 | Framework 组件、Commons、BOM | `../loadup-framework/` 对应模块的 README.md / ARCHITECTURE.md |
-| UPMS、审计、字典、文件、通知、Transfer | `../loadup-modules/` 对应模块的 README.md / ARCHITECTURE.md |
+| UPMS、审计、字典、文件、动态表单、审批、Gotone、Inbox、Transfer | `../loadup-modules/` 对应模块的 README.md / ARCHITECTURE.md |
 | Testify | `../loadup-testify/` 对应模块的 README.md / ARCHITECTURE.md |
 | 站点首页、总导航、Hugo 配置 | 本仓库 |
 | Pay 和管理端前端 | 各自仓库 README；本站当前不生成这两个项目的完整文档 |
@@ -28,13 +30,4 @@ python3 ../loadup-framework/doc-sync-agent.py \
   --module loadup-components/security/loadup-components-oauth-server --apply
 ```
 
-API/core 等子模块分别用 `--module` 指定，可重复传入。此入口不负责独立 Modules/Testify reactor；它们的页面在本轮复用现有渲染器按当前源文档重新生成，持续自动同步仍需扩展工具的仓库范围与页面所有权判定。全量 `--check` 报告不同步，不代表其他仓库页面可以删除。
-
-## 本轮静态核对
-
-- OAuth Server 页面迁移到 oauth-server、oauth-server-api、oauth-server-core，旧 authserver 页面及已不属于 reactor 的 resource-server 页面移除。
-- Testify 断言能力入口改为 loadup-testify-core。
-- 总导航移除不存在的 application 页面。
-- 源文档与站点链接分别按文件路径、Hugo 路由检查。
-
-本轮没有执行 Hugo 构建或浏览器验收。后续站点构建应另行记录结果；链接静态有效不代表页面布局已验证。
+API/core 等子模块分别用 `--module` 指定，可重复传入。此入口不负责独立 Modules/Testify reactor；独立仓库页面同步需要各自的来源映射。持续自动同步取决于工具对仓库范围与页面所有权的识别。全量 `--check` 报告不同步，不代表其他仓库页面可以删除。

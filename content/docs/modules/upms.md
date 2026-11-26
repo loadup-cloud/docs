@@ -23,6 +23,11 @@ Roadmap。
   <groupId>io.github.loadup-cloud</groupId>
   <artifactId>loadup-modules-upms-app</artifactId>
 </dependency>
+<!-- Default persistence is an explicit consumer choice. -->
+<dependency>
+  <groupId>io.github.loadup-cloud</groupId>
+  <artifactId>loadup-modules-upms-infrastructure</artifactId>
+</dependency>
 ```
 
 前后端分离的用户名密码登录需引入 `loadup-modules-upms-authserver` 与 `loadup-components-oauth-server-core`，通过
@@ -56,8 +61,8 @@ loadup:
 | RBAC + 资源属性判定 API | `loadup-modules-upms-client`、`-app`            |
 | 可选 HTTP Controller    | `loadup-modules-upms-web`                       |
 | SAS 用户认证适配        | `loadup-modules-upms-authserver`                |
-| 令牌签发与刷新          | `loadup-components-oauth-server-core`       |
-| Bearer 验签             | `loadup-components-oauth-server-core`             |
+| 令牌签发与刷新          | `loadup-components-oauth-server-core`           |
+| Bearer 验签             | `loadup-components-oauth-server-core`           |
 | 方法级授权              | `loadup-components-authorization`               |
 
 ## 敏感数据展示与明文读取
@@ -76,7 +81,7 @@ purpose 只允许 `PROFILE_CORRECTION`、`CUSTOMER_SUPPORT`、`SECURITY_REVIEW`�
 `result/data`，data 只含 id、realName、email、mobile；响应为 `Cache-Control: no-store`。
 
 明文返回前必须有 `SensitiveReadAudit` 同步持久化访问记录。消费工程显式引入 `loadup-modules-audit` 后，Web
-适配器提供默认桥接，以独立事务记录 actor、目标 ID、用途、tenant 与 traceId，不记录字段原文。缺失审计组件或写入/提交失败则拒绝明文；也可提供自己的可靠
+适配器提供默认桥接，以独立事务记录 actor、目标 ID、用途与 traceId，不记录字段原文。缺失审计组件或写入/提交失败则拒绝明文；也可提供自己的可靠
 recorder。
 
 ## 业务配置命名空间
@@ -87,9 +92,13 @@ recorder。
 
 ## 输入与安全约定
 
-新密码至少为 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免 BCrypt 截断。验证码不写日志，邮箱和手机号显式脱敏。敏感数据展示和明文读取约束见上文。
+新密码至少为 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免
+BCrypt 截断。验证码不写日志，邮箱和手机号显式脱敏。敏感数据展示和明文读取约束见上文。
 
-分页请求、DTO、HTTP 响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。用户排序字段限于 `createdAt`、`username`、`nickname`、`id`，角色查询只接受已声明字段白名单。业务与持久化时间使用 Spring 共享的 Clock，默认采用系统本地时区。
+分页请求、DTO、HTTP
+响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。用户排序字段限于
+`createdAt`、`username`、`nickname`、`id`，角色查询只接受已声明字段白名单。业务与持久化时间使用 Spring 共享的
+Clock，默认采用系统本地时区。
 
 ## 错误码契约
 
@@ -102,6 +111,9 @@ result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖
 正式迁移位于 `db/migration/framework/upms/`，文件名、版本和 SQL 内容保持不变。消费应用在
 `loadup.flyway.locations` 中显式加入 `classpath:db/migration/framework/upms`，与应用自己的迁移共同自动执行。
 不要用共享根 `classpath:db/migration` 表达应用隔离；它也会扫描依赖 JAR。已执行版本只追加升级，不改写历史。
+
+阶段 1C 已分开 app 与默认持久化装配。仅使用自定义 Gateway 时可只引入 app；Web/AuthServer 已显式包含默认
+infrastructure，应用可逐接口替换 Gateway。未改登录策略、身份、权限、token 协议、SQL 或部署配置。源码及回归源码已同步，未构建或测试。
 
 ---
 
@@ -141,8 +153,15 @@ UPMS 领域对象、对外 DTO 和持久化对象的审计时间统一为 `creat
 `BaseDO` 一致。
 
 - UPMS 核心模块依赖 commons/components，不依赖 SAS 实现；可选 `upms-web` 提供 Controller。
-- `loadup-modules-upms-authserver` 依赖 UPMS app 与 AuthServer API，允许应用按需引入。
-- 资源服务器认证和业务授权直接作用于 Controller；外部 API 调用由未来独立的 HTTP 客户端组件承担。
+- `loadup-modules-upms-authserver` 当前依赖 UPMS app 与 `loadup-components-oauth-server-core`，包含实际安全协议装配，允许应用按需引入；不是只依赖
+  AuthServer API。
+- 资源服务器认证和业务授权作用于相应入口/用例；当前 HTTP 调用能力由 Framework 的 HTTP 组件提供，不再描述为尚未存在的未来组件。
+- 阶段 1C 已移除 UPMS app 对 infrastructure 的生产依赖；UpmsAutoConfiguration 仅扫描
+  app，保留原密码编码及领域权限服务。UpmsPersistenceAutoConfiguration 独立登记六类默认 Gateway，逐接口
+  ConditionalOnMissingBean，并用 beforeName 明确先于 app。Web/AuthServer 和 Pay admin 显式选择
+  infrastructure；源码及回归源码已同步，未构建或测试。完整依赖及例外见[阶段 0 基线](https://github.com/loadup-cloud/loadup-pay/blob/main/design/PHASE0_BASELINE.md)。
+- GitHubOAuthProvider 当前仍在 app 内直接创建 RestTemplate 调用第三方 token/userinfo，是登记的传输适配例外；不能用现有
+  HTTP 组件或目标分层说明它已经完成迁移。
 - `loadup-components-authorization` 提供 `@PreAuthorize` 方法安全和 `UserContext`，不注册 HTTP 放行链。
 
 ### RBAC 与 ABAC
@@ -176,7 +195,8 @@ UPMS 重新校验及授权撤销存储。
 
 `upms-web` 的独立 Controller 从认证主体取得 actor，不接受客户端指定调用者；静态方法授权与 app 中最新角色/资源范围校验同时存在。purpose
 为枚举，audit SPI 不接受任何敏感原文。审计模块是 web 的 optional 依赖，app/domain 无 audit 横向依赖；默认桥接仅在
-AuditService 存在时装配，并以 REQUIRES_NEW 事务确保成功提交后才能返回。缺少 recorder 时普通查询继续可用，明文请求失败。
+AuditFacade 存在时装配，并以 REQUIRES_NEW 事务确保成功提交后才能返回。当前 web 的 Maven optional 依赖为
+audit-core，自动配置还引用其 AuditAutoConfiguration；app/domain 不直接依赖审计模块。缺少 recorder 时普通查询继续可用，明文请求失败。
 
 普通输出不因角色权限变成明文；明文 DTO 的 toString 只输出 ID，且响应不可缓存。调用方仍须避免记录 HTTP body、DTO JSON
 或敏感字段异常。首版未提供通用明文导出，导出处理器须显式执行展示脱敏。
@@ -211,21 +231,10 @@ Spring 共享的 Clock，默认采用系统本地时区。
 `CommonException(enum)`；系统原因可作为 cause 保留，响应文案仅来自枚举。WebMVC 统一返回 HTTP 200 的
 result/data。枚举码按稳定公开契约维护，不用字符串消息覆盖。
 
-### Unified pagination contract
+### 分页契约
 
-Pure pagination inputs reuse `io.github.loadup.commons.dto.PageQuery`. HTTP fields remain `page` and `size`, with
-omitted/null values defaulting to 1 and 20; explicit invalid bounds are rejected and size is capped at 100. Business
-queries retain their filter fields and flat pagination fields but delegate policy to `PageQuery.normalized`, preserving
-their declared module error code. Mutable UPMS queries expose `pagination()` for validation at the service boundary.
-Sort whitelists remain business-specific.
+纯分页输入使用 `io.github.loadup.commons.dto.PageQuery`。HTTP 字段为 `page` 与 `size`，缺失或为 null 时分别取 1 与 20。显式非法值会被拒绝，每页上限为 100。业务查询保留自身筛选字段及平面分页字段，通过 `PageQuery.normalized` 复用规则并保留所属模块错误码。可变的 UPMS 查询在服务边界通过 `pagination()` 校验。各业务维护自己的排序白名单。
 
-Domain Gateway results use `io.github.loadup.commons.domain.PageResult<T>`, shared with UPMS. Seven duplicate business
-Page wrappers have been removed. Application mapping uses the injected Spring MapStruct item converter and
-`PageResult.map`; `PageDTO.of(result)` adapts the unchanged total/page/size metadata. Facades return PageDTO, and
-Controllers return PageResponse. No HTTP envelope enters a Gateway.
+领域 Gateway 返回 `io.github.loadup.commons.domain.PageResult<T>`。应用层通过 Spring 注入的 MapStruct converter 和 `PageResult.map` 转换元素，使用 `PageDTO.of(result)` 保留数量、页码和每页长度。Facade 返回 `PageDTO`，Controller 返回 `PageResponse`。
 
-The response remains `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`; data is the current-page
-array. SuccessResponse serves ordinary success data only; its duplicate pagination field and ofPage factories have been
-removed. Empty PageDTO defaults to an empty array and metadata 0/1/20. Existing consumer code referencing removed
-business Page wrappers, DictionaryTypePageQuery, AccountLoginPageQuery or SuccessResponse.ofPage must use the shared
-contracts. No URL or frontend payload-field migration is required.
+分页 JSON 形如 `{result, data: [...], pageInfo: {totalCount, pageIndex, pageSize, ...}}`，`data` 为当前页数组。`SuccessResponse` 用于普通成功响应。空 `PageDTO` 使用空数组与 0/1/20 作为元数据默认值。原有业务分页包装、`DictionaryTypePageQuery`、`AccountLoginPageQuery` 或 `SuccessResponse.ofPage` 的 Java 调用方需切换到共享契约。HTTP URL 和载荷字段保持原有契约。
