@@ -76,6 +76,8 @@ Task 自动注册 `loadup-task-scan`，每分钟触发一次，可通过 `loadup
 
 实例只领取本地已注册 Handler 的任务类型。`loadup.task.task-type` 可进一步缩小范围；没有可执行 Handler 时不启动扫描。`worker-enabled: false` 关闭自动扫描，仍可登记和管理任务，也可手工调用 `TaskDispatcher.execute()`。所有后台访问使用应用固定 schema，不恢复请求身份。
 
+Handler 可通过 `supportsConcurrentExecution()` 启用并发处理独立任务。Dispatcher 单批最多执行四个任务；未启用的 Handler 在扫描线程中依次运行。
+
 ## 管理
 
 submit 返回任务 ID；find(id) 查询完整任务，find(type,bizId) 返回最新登记项，仅供业务定位。cancel(id) 支持 PENDING/RUNNING/FAILED；reschedule(id,time) 支持 PENDING/FAILED/CANCELLED；retryFailed(id,operator,reason) 只接受 FAILED，保留任务 ID、payload 和原计划时间并记录人工操作。
@@ -132,7 +134,7 @@ sequenceDiagram
 事务外：调用 Handler。
 确认事务：按 id、RUNNING、token 和有效租约条件删除或延后。
 
-TaskDispatcher 挂起调用方事务；领取、确认与人工操作使用独立短事务。数据库时间决定就绪、租约与重试，避免节点时钟差。逐条领取执行，不预领整批。任务行只保留下次执行时间与提交时的尝试上限。领取和失败时读取类型配置，分别计算租约截止时间和重试时间。业务截止时间仍由业务表维护。
+TaskDispatcher 挂起调用方事务；领取、确认与人工操作使用独立短事务。数据库时间决定就绪、租约与重试，避免节点时钟差。按空闲执行容量逐条领取，不预领整批。任务行只保留下次执行时间与提交时的尝试上限。领取和失败时读取类型配置，分别计算租约截止时间和重试时间。业务截止时间仍由业务表维护。
 
 PENDING → RUNNING → 成功确认后删除；异常返回 PENDING 或耗尽进入 FAILED。过期 RUNNING 可重领或进入 FAILED。取消清空 token；改期和人工重试清零 attempts。旧执行者不能回写新状态，但可能仍产生外部副作用，业务幂等依然必要。
 
@@ -140,6 +142,6 @@ PENDING → RUNNING → 成功确认后删除；异常返回 PENDING 或耗尽�
 
 完成后查询从业务状态读取结果。应用可以从已提交的业务结果推导完成，任务尝试次数随队列行一起删除。
 
-本地 TaskWorker 是默认触发入口，按固定延迟扫描。选择 Scheduler 后，本地 Worker 停止，由已有 binder 按 Cron 唤醒同一个 Dispatcher。两个入口默认每分钟扫描，每批最多 10 条，逐条领取并串行处理。Dispatcher 根据本地 Handler 生成类型白名单，task-type 只能缩小范围；白名单为空不扫描。慢任务和关键投递可分别部署执行节点。
+本地 TaskWorker 是默认触发入口，按固定延迟扫描。选择 Scheduler 后，本地 Worker 停止，由已有 binder 按 Cron 唤醒同一个 Dispatcher。两个入口默认每分钟扫描，每批最多 10 条。Handler 默认串行处理；显式启用并发的 Handler 通过虚拟线程执行，单批最多同时执行四条。每条任务独立领取、确认或重试。Dispatcher 根据本地 Handler 生成类型白名单，task-type 只能缩小范围；白名单为空不扫描。慢任务和关键投递可分别部署执行节点。
 
 Scheduler 只负责触发；提交、领取和确认的接口不依赖 Scheduler binder、PowerJob、ORM 或消息中间件。同一 JDBC 实现根据配置加载 PostgreSQL 或 MySQL 语句。表前缀通过白名单校验，其余数据均通过 JDBC 参数绑定。测试源码与静态审阅不代表实际数据库故障恢复验收。
