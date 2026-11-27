@@ -178,8 +178,7 @@ UPMS 领域对象、对外 DTO 和持久化对象的审计时间统一为 `creat
   app，保留原密码编码及领域权限服务。UpmsPersistenceAutoConfiguration 独立登记六类默认 Gateway，逐接口
   ConditionalOnMissingBean，并用 beforeName 明确先于 app。Web/AuthServer 和 Pay admin 显式选择
   infrastructure；源码及回归源码已同步，未构建或测试。完整依赖及例外见[阶段 0 基线](https://github.com/loadup-cloud/loadup-pay/blob/main/design/PHASE0_BASELINE.md)。
-- GitHubOAuthProvider 当前仍在 app 内直接创建 RestTemplate 调用第三方 token/userinfo，是登记的传输适配例外；不能用现有
-  HTTP 组件或目标分层说明它已经完成迁移。
+- `GitHubOAuthProvider` 在 app 内通过 Spring `RestClient` 调用 GitHub 的 token 和 userinfo 接口，是已登记的传输适配例外。
 - `loadup-components-authorization` 提供 `@PreAuthorize` 方法安全和 `UserContext`，不注册 HTTP 放行链。
 
 ### RBAC 与 ABAC
