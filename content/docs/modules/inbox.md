@@ -39,19 +39,23 @@ Gotone 的 `IN_APP` 任务传入收件人 ID、渲染内容和稳定的 `deliver
 ---
 
 <a id="architecture"></a>
+
 ## 设计与实现
 
-Inbox 保存按收件人隔离的已渲染消息。消息写入后，标题、正文和站内跳转路径固定；用户可分页查看、读取未读数、标记已读和归档。模块整体边界见[README](./)。
+Inbox
+保存按收件人隔离的已渲染消息。消息写入后，标题、正文和站内跳转路径固定；用户可分页查看、读取未读数、标记已读和归档。模块整体边界见[README](./)。
 
 ### 分层与存储
 
-| 层 | 责任 |
-|---|---|
-| `inbox-client` | `InboxReceiver` 接收已渲染通知；`InboxFacade` 提供收件人查询和状态操作。 |
-| `inbox-core` | `InboxReceiverService`、`InboxService` 校验输入并执行用例；`InboxGatewayImpl` 通过 MyBatis-Flex 读写 `inbox_message`。 |
-| `inbox-web` | 从登录主体取得收件人 ID，映射查询和状态 API。 |
+| 层             | 责任                                                                                                                   |
+|----------------|------------------------------------------------------------------------------------------------------------------------|
+| `inbox-client` | `InboxReceiver` 接收已渲染通知；`InboxFacade` 提供收件人查询和状态操作。                                               |
+| `inbox-core`   | `InboxReceiverService`、`InboxService` 校验输入并执行用例；`InboxGatewayImpl` 通过 MyBatis-Flex 读写 `inbox_message`。 |
+| `inbox-web`    | 从登录主体取得收件人 ID，映射查询和状态 API。                                                                          |
 
-Flyway 脚本 `db/migration/modules/inbox/V20261126000001__create_inbox.sql` 建立消息表，并以 `(recipient_id, request_key)` 唯一约束保证同一收件人的重复投递不会新增消息。Core 持久化自动配置要求单一 DataSource 且 `loadup.modules.inbox.enabled` 未关闭；Web 自动配置要求 `InboxFacade` 可用且 `loadup.modules.inbox.web.enabled` 未关闭。
+Flyway 脚本 `db/migration/modules/inbox/V20261126000001__create_inbox.sql` 建立消息表，并以 `(recipient_id, request_key)`
+唯一约束保证同一收件人的重复投递不会新增消息。Core 持久化自动配置要求单一 DataSource 且 `loadup.modules.inbox.enabled`
+未关闭；Web 自动配置要求 `InboxFacade` 可用且 `loadup.modules.inbox.web.enabled` 未关闭。
 
 ### 通知投递与重放
 
@@ -74,7 +78,9 @@ sequenceDiagram
     DB-->>H: 同一事务提交
 ```
 
-Gotone 的 `InboxDeliveryHandler` 在一个 `TransactionTemplate` 内写 Inbox 并将 delivery 标记为 `SENT`。`InboxReceiverService` 校验内容和站内路径后调用 Gateway；Gateway 用嵌套事务保存点处理唯一键冲突，使重复调用可安全完成外层任务。宿主应把 Inbox 和 Gotone 装配在同一应用，使用同一 PostgreSQL DataSource 和 JDBC 事务管理器。
+Gotone 的 `InboxDeliveryHandler` 在一个 `TransactionTemplate` 内写 Inbox 并将 delivery 标记为 `SENT`。
+`InboxReceiverService` 校验内容和站内路径后调用 Gateway；Gateway 用嵌套事务保存点处理唯一键冲突，使重复调用可安全完成外层任务。宿主应把
+Inbox 和 Gotone 装配在同一应用，使用同一 PostgreSQL DataSource 和 JDBC 事务管理器。
 
 ### 收件人读取和状态更新
 
@@ -87,6 +93,8 @@ flowchart LR
     G -->|recipient_id 条件| DB[(inbox_message)]
 ```
 
-控制器不接受请求体提供的收件人身份。列表、未读计数、已读和归档操作都使用登录用户 ID；Gateway 的读写查询再以 `recipient_id` 限定所有权。归档消息从正常列表隐藏，历史记录仍保留。
+控制器不接受请求体提供的收件人身份。列表、未读计数、已读和归档操作都使用登录用户 ID；Gateway 的读写查询再以 `recipient_id`
+限定所有权。归档消息从正常列表隐藏，历史记录仍保留。
 
-Controller 基路径为 `/inbox`，包含 `POST /list`、`/unread-count`、`/read`、`/read-all` 和 `/archive`；LoadUp WebMVC 默认外部路径含 `/api`。更多模块接入与接口摘要见[README](./)。
+Controller 基路径为 `/inbox`，包含 `POST /list`、`/unread-count`、`/read`、`/read-all` 和 `/archive`；LoadUp WebMVC 默认外部路径含
+`/api`。更多模块接入与接口摘要见[README](./)。
