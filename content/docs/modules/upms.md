@@ -9,7 +9,7 @@ AuthServer 完成。
 
 账号安全自助接口由 `loadup-modules-upms-web` 提供：`GET /api/account/security/overview` 查看本人状态，
 `GET /api/account/security/logins` 查看本人登录记录，`POST /api/account/security/password` 使用旧密码修改本人密码。用户 ID
-从认证主体取得，不接受请求指定其他账号。新密码至少 8 字符、最多 72 个 UTF-8 字节且必须不同于旧密码。管理员的锁定与解锁接口仍在
+从认证主体取得，不接受请求指定其他账号。新密码必须符合当前强度规则并与旧密码不同。管理员的锁定与解锁接口仍在
 `/api/upms/user/**`。
 
 登录失败达到配置阈值后临时锁定；到期后的下一次登录会自动解锁。管理员手动锁定不会自动解锁。HTTP 登录记录使用服务端观察到的
@@ -90,10 +90,28 @@ recorder。
 `loadup.modules.upms.security.login`，OAuth 为 `loadup.modules.upms.security.oauth`。认证协议与令牌校验继续使用全局
 `loadup.security.*`。
 
+## 密码强度配置
+
+在 ConfigCenter 发布键 `loadup.modules.upms.security.password-strength`，值填写 `normal` 或 `strong`。
+
+| 选项 | 新密码要求 |
+| --- | --- |
+| `normal`（默认） | 至少 8 个 Unicode 字符，最多 72 个 UTF-8 字节 |
+| `strong` | 至少 12 个 Unicode 字符，须包含大写字母、小写字母、十进制数字和标点或符号，同样最多 72 个 UTF-8 字节 |
+
+选择 ConfigCenter binder 由宿主负责。未配置 binder、远端键缺失或删除时，使用同名 Spring 配置，默认 `normal`。已发布的合法值会动态生效，非法远端值记录告警并保留当前规则。创建用户、注册、修改和重置密码均使用当前规则。已有密码继续用于登录。
+
+`GET /api/auth/password-policy` 公开当前规则名、最少字符数、UTF-8 字节上限及所需字符类型。Admin 的修改密码与重置密码表单读取此接口。
+
+邮箱重置使用 `POST /api/auth/password-reset/code` 请求验证码，再调用 `POST /api/auth/password-reset` 提交账号、验证码及新密码。宿主应配置 `PasswordResetEmailSender`，验证码只发给账号已验证的邮箱。验证码在签发实例保存，多实例部署需将请求验证码和提交重置路由到同一实例。
+
+## 角色菜单
+
+登录后以当前账号调用 `POST /api/upms/permission/user-menu`，请求体为 `{}`。返回账号有效角色及继承角色可见的菜单，按层级和排序字段排列。为角色分配二级菜单后，启用且可见的无路径上级分组会自动显示。页面菜单单独授权，分组本身不授予其子菜单。
+
 ## 输入与安全约定
 
-新密码至少为 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`，避免
-BCrypt 截断。验证码不写日志，邮箱和手机号显式脱敏。敏感数据展示和明文读取约束见上文。
+验证码不写日志，邮箱和手机号显式脱敏。敏感数据展示和明文读取约束见上文。
 
 分页请求、DTO、HTTP
 响应结构及共享时间规则见 [commons-dto 文档](../../commons/loadup-commons-dto/)。用户排序字段限于
@@ -220,8 +238,13 @@ HTTP envelope。
 
 ### 输入与安全约定
 
-新密码统一为至少 8 个 Unicode 字符、最多 72 个 UTF-8 字节；创建、注册、修改和重置共用 `PasswordPolicy` 与 `@ValidPassword`
-，避免 BCrypt 截断。查询默认 page=1、size=20，最多 100 条；用户排序字段为
+`PasswordPolicy` 定义各档规则和前端读取的约束数据。`PasswordPolicySettings` 订阅 ConfigCenter 配置并提供当前策略。创建、注册、修改和重置在编码或写入前使用当前策略。`@ValidPassword` 在请求绑定时检查 `normal` 的基础约束。
+
+邮箱重置码绑定账号 ID、已验证邮箱和重置用途，有效期 5 分钟。应用在内存中原子地限制重发和验证次数，并在验证成功后作废该码。写入新密码时重新核对账号状态、已验证邮箱和原密码哈希。邮件由宿主提供的 `PasswordResetEmailSender` 发送。
+
+`PermissionService` 使用有效角色权限生成可见菜单树。它补齐启用且可见的无路径祖先分组，并按排序字段输出同级项。分组不会赋予页面权限。
+
+查询默认 page=1、size=20，最多 100 条；用户排序字段为
 createdAt、username、nickname、id，角色按已声明字段白名单排序。验证码不写日志，邮箱和手机号显式脱敏。业务时间和数据库审计字段使用
 Spring 共享的 Clock，默认采用系统本地时区。
 

@@ -20,7 +20,7 @@ sidebar:
 模块自动引入 UPMS app、方法授权组件和 `loadup-components-webmvc`。Controller 声明 `/auth/register`、`/upms/**` 和
 `/account/security/**`，由 `loadup-components-webmvc` 统一添加 `/api` 前缀并处理 `result`、`data` 和错误报文；认证拒绝由
 Resource Server 处理。用户名密码登录由 `loadup-modules-upms-authserver` 提供 `/api/auth/login`；在
-`loadup.security.resource-server.permit-all` 中放行登录与注册。
+`loadup.security.resource-server.permit-all` 中放行应用开放的登录与注册路径。Admin 使用邮箱重置时同时放行上表中的规则查询和重置路径。
 
 ## HTTP 接口
 
@@ -34,6 +34,8 @@ Controller 接口使用 POST + JSON body。路径如下：
 | 权限         | `/api/upms/permission/{create,update,delete,detail,tree,user-menu}`                                         |
 | 部门         | `/api/upms/department/{create,update,delete,detail,tree,move}`                                              |
 | 本人账号安全 | `/api/account/security/{overview,logins,password}`                                                          |
+| 密码规则查询 | `GET /api/auth/password-policy` |
+| 邮箱密码重置 | `POST /api/auth/password-reset/code`、`POST /api/auth/password-reset` |
 
 账号安全接口从认证主体取得用户 ID；改密请求只需 `oldPassword`、`newPassword`、`confirmPassword`。已签发 JWT 不会因改密立即失效。
 
@@ -45,7 +47,7 @@ JSON。接口返回的 `result`、`data` 以实际 HTTP 报文为准；SpringDoc
 
 ## 配置
 
-本模块没有专属配置键。UPMS 登录策略使用 `loadup.modules.upms.security.login`；公开路径使用
+UPMS 登录策略使用 `loadup.modules.upms.security.login`，新密码强度使用 `loadup.modules.upms.security.password-strength`，公开路径使用
 `loadup.security.resource-server.permit-all`。
 
 ## 接入步骤
